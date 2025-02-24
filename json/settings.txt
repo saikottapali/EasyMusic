@@ -1,0 +1,11 @@
+  "settings": [
+    {
+      "volume": 75,
+      "difficulty": "Intermediate"
+    },
+    {
+      "volume": 50,
+      "difficulty": "Beginner"
+    }
+  ]
+

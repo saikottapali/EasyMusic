@@ -1,0 +1,23 @@
+
+  "users": [
+    {
+      "username": "music_lover",
+      "password": "securePass123",
+      "email": "music@example.com",
+      "firstName": "John",
+      "lastName": "Doe",
+      "practiceStreak": 10,
+      "selectedInstrument": "Guitar",
+      "composedSongs": ["My First Song"]
+    },
+    {
+      "username": "pianist_123",
+      "password": "pianoPass456",
+      "email": "piano@example.com",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "practiceStreak": 5,
+      "selectedInstrument": "Piano",
+      "composedSongs": ["Moonlight Sonata"]
+    }
+  ]

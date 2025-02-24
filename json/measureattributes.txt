@@ -1,0 +1,7 @@
+ "measureAttributes": [
+    {
+      "notes": ["C4", "E4", "G4"],
+      "tempo": 120,
+      "timeSignature": "4/4"
+    }
+  ]
