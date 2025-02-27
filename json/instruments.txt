@@ -1,0 +1,16 @@
+ "instruments": [
+    {
+      "name": "Piano",
+      "description": "A keyboard instrument with 88 keys.",
+      "minNote": "A0",
+      "maxNote": "C8",
+      "type": "Keyboard"
+    },
+    {
+      "name": "Guitar",
+      "description": "A string instrument with six strings.",
+      "minNote": "E2",
+      "maxNote": "E6",
+      "type": "String"
+    }
+  ]

@@ -1,0 +1,10 @@
+ "instructors": [
+    {
+      "name": "Mr. Smith",
+      "students": ["Alice Johnson"]
+    },
+    {
+      "name": "Ms. Davis",
+      "students": ["Bob Williams"]
+    }
+  ]

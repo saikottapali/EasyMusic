@@ -1,0 +1,20 @@
+  "songs": [
+    {
+      "title": "Let It Be",
+      "composer": "The Beatles",
+      "difficultyLevel": "Beginner",
+      "date": "1970-03-06",
+      "sheetMusic": "let_it_be.pdf",
+      "audioFile": "let_it_be.mp3",
+      "isPublic": true
+    },
+    {
+      "title": "Bohemian Rhapsody",
+      "composer": "Queen",
+      "difficultyLevel": "Advanced",
+      "date": "1975-10-31",
+      "sheetMusic": "bohemian_rhapsody.pdf",
+      "audioFile": "bohemian_rhapsody.mp3",
+      "isPublic": false
+    }
+  ]
