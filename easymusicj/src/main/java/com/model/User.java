@@ -21,25 +21,21 @@ public class User {
         this.lastName = lastName;
     }
 
-    public void createAccount() {
-        System.out.println("Account created for: " + username);
-    }
-
     public void logIn() {
         System.out.println(username + " logged in.");
     }
 
-    public boolean verifyPassword(String enteredPassword) {
-        return this.password.equals(enteredPassword);
+    public void logOut() {
+        System.out.println(username + " logged out.");
     }
 
-    public void selectInstrument(Instrument instrument) {
+    public void chooseInstrument(Instrument instrument) {
         this.selectedInstrument = instrument;
-        System.out.println("Selected instrument: " + instrument.getName());
+        System.out.println(username + " selected instrument: " + instrument.getName());
     }
 
-    public void practice() {
-        practiceStreak++;
-        System.out.println("Practicing! Streak: " + practiceStreak);
+    public void chooseSong(Song song) {
+        composedSongs.add(song);
+        System.out.println(username + " selected song: " + song.getTitle());
     }
 }
