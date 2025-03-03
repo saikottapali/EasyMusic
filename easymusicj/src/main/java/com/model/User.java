@@ -31,7 +31,7 @@ public class User {
 
     public void chooseInstrument(Instrument instrument) {
         this.selectedInstrument = instrument;
-        System.out.println(username + " selected instrument: " + instrument.getName());
+        System.out.println(username + " select instrument: " + instrument.getName());
     }
 
     public void chooseSong(Song song) {
