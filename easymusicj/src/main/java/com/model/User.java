@@ -20,7 +20,9 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-
+/**
+ * Added getUsername
+ */
     public String getUsername() {
         return username;
     }

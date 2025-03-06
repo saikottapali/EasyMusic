@@ -17,7 +17,7 @@ public class Student extends User {
             System.out.println("Completed lesson: " + lesson.getTitle());
             lesson.completeLesson();
         } else {
-            System.out.println("Lesson not found in assigned instructions.");
+            System.out.println("Lesson not found in the assigned instructions.");
         }
     }
 }

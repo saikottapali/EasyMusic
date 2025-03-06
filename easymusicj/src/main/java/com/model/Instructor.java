@@ -9,7 +9,9 @@ public class Instructor extends User {
         super(username, password, email, firstName, lastName);
         this.students = students;
     }
-
+/*
+*Issues with getUsername resolved within User class
+*/
     public void assignInstruction(Lesson lesson, Student student) {
         System.out.println("Assigned lesson: " + lesson.getTitle() + " to student: " + student.getUsername());
     }
