@@ -1,0 +1,21 @@
+[
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "username": "music_lover123",
+      "password": "hashed_password_123",
+      "email": "user@example.com",
+      "firstName": "John",
+      "lastName": "Doe",
+      "practiceStreak": 5,
+      "selectedInstrument": {
+        "id": "be94d345-0904-454d-add1-d97894ba1f1e",
+        "name": "Piano",
+        "description": "A classical keyboard instrument",
+        "minNote": "A0",
+        "maxNote": "C8",
+        "type": "Keyboard"
+      },
+      "composedSongs": ["6c43782c-d12e-48e4-8c60-4a6e6df9969d"]
+    }
+  ]
+  

@@ -1,0 +1,21 @@
+[
+    {
+      "id": "6c43782c-d12e-48e4-8c60-4a6e6df9969d",
+      "title": "Fur Elise",
+      "composer": "Beethoven",
+      "difficultyLevel": "INTERMEDIATE",
+      "date": "1810-01-01",
+      "sheetMusic": {
+        "musicID": 1,
+        "title": "Fur Elise",
+        "composer": "Beethoven",
+        "difficultyLevel": "INTERMEDIATE",
+        "notationType": "Standard",
+        "tempoNumerator": 3,
+        "tempoDenominator": 4,
+        "clef": "Treble",
+        "measures": []
+      }
+    }
+  ]
+  

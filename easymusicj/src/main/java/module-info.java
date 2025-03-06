@@ -1,4 +1,5 @@
-module com.easymusic {
+module com.easymusicj {
+    
     requires javafx.controls;
     requires javafx.fxml;
     requires json.simple;

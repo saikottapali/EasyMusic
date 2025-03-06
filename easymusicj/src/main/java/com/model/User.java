@@ -12,6 +12,7 @@ public class User {
     private Instrument selectedInstrument;
     private List<Song> composedSongs;
 
+    
     public User(String username, String password, String email, String firstName, String lastName) {
         this.username = username;
         this.password = password;
