@@ -12,7 +12,6 @@ public class User {
     private Instrument selectedInstrument;
     private List<Song> composedSongs;
 
-    
     public User(String username, String password, String email, String firstName, String lastName) {
         this.username = username;
         this.password = password;
@@ -20,10 +19,23 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-/**
- * Added getUsername
- */
+
     public String getUsername() {
         return username;
+    }
+
+    public void createAccount() {
+        System.out.println("Account created for: " + username);
+    }
+
+    public void updateProfile(String newEmail, String newPassword) {
+        this.email = newEmail;
+        this.password = newPassword;
+        System.out.println("Profile updated for: " + username);
+    }
+
+    public void practice() {
+        practiceStreak++;
+        System.out.println(username + " practiced! Current streak: " + practiceStreak);
     }
 }
