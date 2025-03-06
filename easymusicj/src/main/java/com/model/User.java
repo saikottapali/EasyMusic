@@ -3,7 +3,6 @@ package com.model;
 import java.util.List;
 
 public class User {
-
     private String username;
     private String password;
     private String email;
@@ -21,21 +20,7 @@ public class User {
         this.lastName = lastName;
     }
 
-    public void logIn() {
-        System.out.println(username + " logged in.");
-    }
-
-    public void logOut() {
-        System.out.println(username + " logged out.");
-    }
-
-    public void chooseInstrument(Instrument instrument) {
-        this.selectedInstrument = instrument;
-        System.out.println(username + " select instrument: " + instrument.getName());
-    }
-
-    public void chooseSong(Song song) {
-        composedSongs.add(song);
-        System.out.println(username + " selected song: " + song.getTitle());
+    public String getUsername() {
+        return username;
     }
 }

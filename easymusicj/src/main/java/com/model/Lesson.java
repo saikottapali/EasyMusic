@@ -9,6 +9,10 @@ public class Lesson {
         this.title = title;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public void startLesson() {
         System.out.println("Lesson started: " + title);
     }
