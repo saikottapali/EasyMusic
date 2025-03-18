@@ -46,7 +46,9 @@ public class User {
             throw new RuntimeException("Error hashing password", e);
         }
     }
-
+    /*
+    * Same hashing happens again
+    */
     public void updatePassword(String oldPassword, String newPassword) {
         if (hashedPassword.equals(hashPassword(oldPassword))) {
             this.hashedPassword = hashPassword(newPassword);
