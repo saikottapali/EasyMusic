@@ -15,12 +15,15 @@ public class User {
     private Instrument selectedInstrument;
     private List<Song> composedSongs = new ArrayList<>();
 
-    public User(String username, String password, String email, String firstName, String lastName) {
+    public User(String username, String password, String email, String firstName, String lastName, int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs) {
         this.username = username;
         this.hashedPassword = hashPassword(password); 
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.practiceStreak = 0;
+        this.selectedInstrument = selectedInstrument;
+        this.composedSongs = composedSongs;
     }
 
     public String getUsername() {
