@@ -25,11 +25,6 @@ public class User {
         this.selectedInstrument = selectedInstrument;
         this.composedSongs = composedSongs;
     }
-
-    public String getUsername() {
-        return username;
-    }
-
     /*
     * Password is hashed before stored for better security
     */
@@ -99,4 +94,63 @@ public class User {
     public List<Song> getComposedSongs() {
         return composedSongs;
     }
+
+    //Getters and Setters
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getPracticeStreak() {
+        return practiceStreak;
+    }
+
+    public void setPracticeStreak(int practiceStreak) {
+        this.practiceStreak = practiceStreak;
+    }
+
+    public void setSelectedInstrument(Instrument selectedInstrument) {
+        this.selectedInstrument = selectedInstrument;
+    }
+
+    public void setComposedSongs(List<Song> composedSongs) {
+        this.composedSongs = composedSongs;
+    }
+    
 }
