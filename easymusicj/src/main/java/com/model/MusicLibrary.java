@@ -4,35 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MusicLibrary {
-    
-    private List<Song> songs;  // List to store all the songs in the library
+    private List<Song> allSongs;
 
     public MusicLibrary() {
-        this.songs = new ArrayList<>();
+        this.allSongs = new ArrayList<>();
     }
 
-    // Method to add a song to the library
     public void addSong(Song song) {
-        songs.add(song);
-        System.out.println("Song added: " + song.getTitle());
+        allSongs.add(song);
+        System.out.println("Song added to library: " + song.getTitle());
     }
 
-    // Method to remove a song from the library
-    public boolean removeSong(Song song) {
-        if (songs.contains(song)) {
-            songs.remove(song);
-            System.out.println("Song removed: " + song.getTitle());
-            return true;
-        }
-        System.out.println("Song not found in library.");
-        return false;
-    }
-
-    // Method to search for a song by its title
-    public Song searchSongByTitle(String title) {
-        for (Song song : songs) {
-            if (song.getTitle().equals(title)) {
-                System.out.println("Song found: " + title);
+    // Search for a song by title
+    public Song searchSong(String title) {
+        for (Song song : allSongs) {
+            if (song.getTitle().equalsIgnoreCase(title)) {
                 return song;
             }
         }
@@ -40,8 +26,8 @@ public class MusicLibrary {
         return null;
     }
 
-    // Method to get all songs in the library
-    public List<Song> getSongs() {
-        return songs;
+    // Get a list of all songs
+    public List<Song> getAllSongs() {
+        return new ArrayList<>(allSongs);
     }
 }
