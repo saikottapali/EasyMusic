@@ -1,33 +1,43 @@
 package com.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Song {
     private String title;
     private String composer;
     private String difficultyLevel;
     private Date date;
-    private String sheetMusic; 
+    private SheetMusic sheetMusic; 
+    private boolean isPrivate;
+    private List<String> comments;
 
     // Constructor
-    public Song(String title, String composer, String difficultyLevel, Date date, String sheetMusic) {
+    public Song(String title, String composer, String difficultyLevel, Date date, 
+    SheetMusic sheetMusic, boolean isPrivate, List<String> comments) {
         this.title = title;
         this.composer = composer;
         this.difficultyLevel = difficultyLevel;
         this.date = date;
         this.sheetMusic = sheetMusic;
+        this.isPrivate = isPrivate;
+        this.comments = comments;
+
     }
 
     // Method to play the song
     public void play() {
-        System.out.println("Playing song: " + title);
-        //Implement Logic
+        System.out.println("Playing: " + title + " by " + composer);
     }
 
     // Method to upload the song
     public void upload() {
-        System.out.println("Uploading song: " + title);
-        //Implement Logic
+        if(!isPrivate) {
+            System.out.println("Uploading song " + title);
+        }
+        else {
+            System.out.println("Cannot upload private song: " + title);
+        }
     }
 
     // Method to download the song
@@ -41,7 +51,11 @@ public class Song {
         System.out.println("Song: " + title);
         System.out.println("Composer: " + composer + ", Difficulty: " + difficultyLevel);
         System.out.println("Date: " + date);
-        System.out.println("Sheet Music: " + sheetMusic); // 
+        System.out.println("Sheet Music: " + sheetMusic); 
+    }
+
+    public void addComment(String body, String author) {
+        comments.add(author + ":" + body);
     }
 
     // Getters and Setters
@@ -66,7 +80,11 @@ public class Song {
     }
 
     public void setDifficultyLevel(String difficultyLevel) {
-        this.difficultyLevel = difficultyLevel;
+        if (difficultyLevel != null) {
+            this.difficultyLevel = difficultyLevel.toUpperCase();
+        } else {
+            System.out.println("Invalid difficulty level.");
+        }  
     }
 
     public Date getDate() {
@@ -77,11 +95,16 @@ public class Song {
         this.date = date;
     }
 
-    public String getSheetMusic() {
+    public SheetMusic getSheetMusic() {
         return sheetMusic;
     }
 
-    public void setSheetMusic(String sheetMusic) {
+    public void setSheetMusic(SheetMusic sheetMusic) {
         this.sheetMusic = sheetMusic;
     }
+
+    public void setPrivate(boolean isPrivate) {
+        this.isPrivate = isPrivate;
+    }
+
 }
