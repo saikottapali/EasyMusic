@@ -8,10 +8,7 @@ import java.util.List;
 public class User {
     private String username;
     private String hashedPassword;
-<<<<<<< HEAD
     private String password;
-=======
->>>>>>> 0c8923714d835424e64ced509b22f17fc1babaf0
     private String email;
     private String firstName;
     private String lastName;
@@ -21,12 +18,8 @@ public class User {
 
     public User(String username, String password, String email, String firstName, String lastName, int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs) {
         this.username = username;
-<<<<<<< HEAD
         this.hashedPassword = hashPassword(password);
         this.password = password;
-=======
-        this.hashedPassword = hashPassword(password); 
->>>>>>> 0c8923714d835424e64ced509b22f17fc1babaf0
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,14 +27,9 @@ public class User {
         this.selectedInstrument = selectedInstrument;
         this.composedSongs = composedSongs;
     }
-<<<<<<< HEAD
 
     /*
     *implemented password hashing for better security
-=======
-    /*
-    * Password is hashed before stored for better security
->>>>>>> 0c8923714d835424e64ced509b22f17fc1babaf0
     */
     private String hashPassword(String password) {
         try {
@@ -56,7 +44,6 @@ public class User {
             throw new RuntimeException("Error hashing password", e);
         }
     }
-<<<<<<< HEAD
 
     /*
     *Login gets verified
@@ -78,19 +65,11 @@ public class User {
 
     public void updatePassword(String oldPassword, String newPassword) {
         if (password.equals(hashPassword(oldPassword))) {
-=======
-    /*
-    * Same hashing happens again
-    */
-    public void updatePassword(String oldPassword, String newPassword) {
-        if (hashedPassword.equals(hashPassword(oldPassword))) {
->>>>>>> 0c8923714d835424e64ced509b22f17fc1babaf0
             this.hashedPassword = hashPassword(newPassword);
             System.out.println("Password updated successfully.");
         } else {
             System.out.println("Incorrect old password. Update failed.");
         }
-<<<<<<< HEAD
     }
 
     public void practice() {
@@ -110,15 +89,12 @@ public class User {
 
     public String getUsername() {
         return username;
-=======
->>>>>>> 0c8923714d835424e64ced509b22f17fc1babaf0
     }
 
     public void createAccount() {
         System.out.println("Account created for: " + username);
     }
 
-<<<<<<< HEAD
     public void logIn() {
         System.out.println(username + " logged in.");
     }
@@ -149,26 +125,6 @@ public class User {
 
     public List<Song> getComposedSongs() {
         return composedSongs;
-=======
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-
-    public void updateProfile(String newEmail, String newPassword) {
-        this.email = newEmail;
-        this.hashedPassword = hashPassword(newPassword); 
-        System.out.println("Profile updated for: " + username);
-    }
-
-    public void updateEmail(String newEmail) {
-        this.email = newEmail;
-        System.out.println("Email updated for: " + username);
-    }
-
-    public void practice() {
-        practiceStreak++;
-        System.out.println(username + " practiced! Current streak: " + practiceStreak);
->>>>>>> 0c8923714d835424e64ced509b22f17fc1babaf0
     }
 
     public void selectInstrument(Instrument instrument) {
