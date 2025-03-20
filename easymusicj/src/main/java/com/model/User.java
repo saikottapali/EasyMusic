@@ -8,7 +8,10 @@ import java.util.List;
 public class User {
     private String username;
     private String hashedPassword;
+<<<<<<< HEAD
     private String password;
+=======
+>>>>>>> 0c8923714d835424e64ced509b22f17fc1babaf0
     private String email;
     private String firstName;
     private String lastName;
@@ -16,17 +19,29 @@ public class User {
     private Instrument selectedInstrument;
     private List<Song> composedSongs = new ArrayList<>();
 
-    public User(String username, String password, String email, String firstName, String lastName) {
+    public User(String username, String password, String email, String firstName, String lastName, int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs) {
         this.username = username;
+<<<<<<< HEAD
         this.hashedPassword = hashPassword(password);
         this.password = password;
+=======
+        this.hashedPassword = hashPassword(password); 
+>>>>>>> 0c8923714d835424e64ced509b22f17fc1babaf0
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.practiceStreak = 0;
+        this.selectedInstrument = selectedInstrument;
+        this.composedSongs = composedSongs;
     }
+<<<<<<< HEAD
 
     /*
     *implemented password hashing for better security
+=======
+    /*
+    * Password is hashed before stored for better security
+>>>>>>> 0c8923714d835424e64ced509b22f17fc1babaf0
     */
     private String hashPassword(String password) {
         try {
@@ -41,6 +56,7 @@ public class User {
             throw new RuntimeException("Error hashing password", e);
         }
     }
+<<<<<<< HEAD
 
     /*
     *Login gets verified
@@ -62,11 +78,19 @@ public class User {
 
     public void updatePassword(String oldPassword, String newPassword) {
         if (password.equals(hashPassword(oldPassword))) {
+=======
+    /*
+    * Same hashing happens again
+    */
+    public void updatePassword(String oldPassword, String newPassword) {
+        if (hashedPassword.equals(hashPassword(oldPassword))) {
+>>>>>>> 0c8923714d835424e64ced509b22f17fc1babaf0
             this.hashedPassword = hashPassword(newPassword);
             System.out.println("Password updated successfully.");
         } else {
             System.out.println("Incorrect old password. Update failed.");
         }
+<<<<<<< HEAD
     }
 
     public void practice() {
@@ -86,12 +110,15 @@ public class User {
 
     public String getUsername() {
         return username;
+=======
+>>>>>>> 0c8923714d835424e64ced509b22f17fc1babaf0
     }
 
     public void createAccount() {
         System.out.println("Account created for: " + username);
     }
 
+<<<<<<< HEAD
     public void logIn() {
         System.out.println(username + " logged in.");
     }
@@ -122,5 +149,102 @@ public class User {
 
     public List<Song> getComposedSongs() {
         return composedSongs;
+=======
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
+
+    public void updateProfile(String newEmail, String newPassword) {
+        this.email = newEmail;
+        this.hashedPassword = hashPassword(newPassword); 
+        System.out.println("Profile updated for: " + username);
+    }
+
+    public void updateEmail(String newEmail) {
+        this.email = newEmail;
+        System.out.println("Email updated for: " + username);
+    }
+
+    public void practice() {
+        practiceStreak++;
+        System.out.println(username + " practiced! Current streak: " + practiceStreak);
+>>>>>>> 0c8923714d835424e64ced509b22f17fc1babaf0
+    }
+
+    public void selectInstrument(Instrument instrument) {
+        this.selectedInstrument = instrument;
+        System.out.println(username + " selected " + instrument.getName() + " as their instrument.");
+    }
+
+    public Instrument getSelectedInstrument() {
+        return selectedInstrument;
+    }
+
+    public void addComposedSong(Song song) {
+        composedSongs.add(song);
+        System.out.println("Song '" + song.getTitle() + "' added to " + username + "'s compositions.");
+    }
+
+    public List<Song> getComposedSongs() {
+        return composedSongs;
+    }
+
+    //Getters and Setters
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getPracticeStreak() {
+        return practiceStreak;
+    }
+
+    public void setPracticeStreak(int practiceStreak) {
+        this.practiceStreak = practiceStreak;
+    }
+
+    public void setSelectedInstrument(Instrument selectedInstrument) {
+        this.selectedInstrument = selectedInstrument;
+    }
+
+    public void setComposedSongs(List<Song> composedSongs) {
+        this.composedSongs = composedSongs;
+    }
+    
 }
