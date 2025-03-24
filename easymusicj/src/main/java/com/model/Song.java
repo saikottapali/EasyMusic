@@ -3,6 +3,9 @@ package com.model;
 import java.util.Date;
 import java.util.List;
 
+import org.jfugue.pattern.Pattern;
+import org.jfugue.player.Player;
+
 public class Song {
     private String title;
     private String composer;
@@ -27,7 +30,15 @@ public class Song {
 
     // Method to play the song
     public void play() {
+        Player player = new Player();
+        Pattern songPattern = new Pattern();
+
+        for (Measure measure : sheetMusic.getMeasures()) {
+            songPattern.add(measure.toPattern());
+        }
+
         System.out.println("Playing: " + title + " by " + composer);
+        player.play(songPattern);
     }
 
     // Method to upload the song
