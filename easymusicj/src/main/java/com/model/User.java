@@ -103,53 +103,7 @@ public class User {
         System.out.println(username + " logged out.");
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public int getPracticeStreak() {
-        return practiceStreak;
-    }
-
-    public Instrument getSelectedInstrument() {
-        return selectedInstrument;
-    }
-
-    public List<Song> getComposedSongs() {
-        return composedSongs;
-    }
-
-    public void selectInstrument(Instrument instrument) {
-        this.selectedInstrument = instrument;
-        System.out.println(username + " selected " + instrument.getName() + " as their instrument.");
-    }
-
-    public Instrument getSelectedInstrument() {
-        return selectedInstrument;
-    }
-
-    public void addComposedSong(Song song) {
-        composedSongs.add(song);
-        System.out.println("Song '" + song.getTitle() + "' added to " + username + "'s compositions.");
-    }
-
-    public List<Song> getComposedSongs() {
-        return composedSongs;
-    }
-
     //Getters and Setters
-
-    public String getUsername() {
-        return username;
-    }
 
     public void setUsername(String username) {
         this.username = username;
