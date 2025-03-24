@@ -1,12 +1,16 @@
 package com.model;
 
+import java.util.UUID;
+
 public class Lesson {
 
     private String title;
     private boolean completed = false;
+    private UUID id;
 
-    public Lesson(String title) {
+    public Lesson(String title, UUID id) {
         this.title = title;
+        this.id = UUID.randomUUID(); //Generate a unique UUID
     }
 
     public String getTitle() {
@@ -24,6 +28,14 @@ public class Lesson {
 
     public boolean isCompleted() {
         return completed;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
     
 }

@@ -4,8 +4,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class User {
+    
+    private UUID id;
     private String username;
     private String hashedPassword;
     private String password;
@@ -16,7 +19,9 @@ public class User {
     private Instrument selectedInstrument;
     private List<Song> composedSongs = new ArrayList<>();
 
-    public User(String username, String password, String email, String firstName, String lastName, int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs) {
+    public User(UUID id, String username, String password, String email, String firstName, String lastName, 
+    int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs) {
+        this.id = (id == null) ? UUID.randomUUID() : id; // Generate new UUID if null (i.e., new user)
         this.username = username;
         this.hashedPassword = hashPassword(password);
         this.password = password;
@@ -44,7 +49,6 @@ public class User {
             throw new RuntimeException("Error hashing password", e);
         }
     }
-
     /*
     *Login gets verified
     */
@@ -156,5 +160,14 @@ public class User {
     public void setComposedSongs(List<Song> composedSongs) {
         this.composedSongs = composedSongs;
     }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+    
     
 }
