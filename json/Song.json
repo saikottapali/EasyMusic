@@ -1,26 +1,41 @@
 [
-    {
-      "id": "6c43782c-d12e-48e4-8c60-4a6e6df9969d",
+  {
+    "id": "6c43782c-d12e-48e4-8c60-4a6e6df9969d",
+    "title": "Fur Elise",
+    "composer": "Beethoven",
+    "difficultyLevel": "INTERMEDIATE",
+    "date": "1810-01-01",
+    "sheetMusic": {
+      "musicID": 1,
       "title": "Fur Elise",
       "composer": "Beethoven",
       "difficultyLevel": "INTERMEDIATE",
-      "date": "1810-01-01",
-      "sheetMusic": {
-        "musicID": 1,
-        "title": "Fur Elise",
-        "composer": "Beethoven",
-        "difficultyLevel": "INTERMEDIATE",
-        "notationType": "Standard",
-        "tempoNumerator": 3,
-        "tempoDenominator": 4,
-        "clef": "Treble",
-        "measures": []
-      },
-      "isPrivate": false,
-      "comments": [
-        "Mozart: woah this is cool",
-        "Brahms: I loooovvee this!!!"
+      "notationType": "Standard",
+      "tempoNumerator": 3,
+      "tempoDenominator": 4,
+      "clef": "Treble",
+      "measures": [
+        {
+          "tempo": 120,
+          "timeSignature": "3/4",
+          "notes": [
+            { "pitch": "E5", "duration": 0.5 },
+            { "pitch": "D#5", "duration": 0.5 },
+            { "pitch": "E5", "duration": 0.5 },
+            { "pitch": "D#5", "duration": 0.5 },
+            { "pitch": "E5", "duration": 0.5 },
+            { "pitch": "B4", "duration": 0.5 },
+            { "pitch": "D5", "duration": 0.5 },
+            { "pitch": "C5", "duration": 0.5 },
+            { "pitch": "A4", "duration": 1.0 }
+          ]
+        }
       ]
-    }
-  ]
-  
+    },
+    "isPrivate": false,
+    "comments": [
+      "Mozart: woah this is cool",
+      "Brahms: I loooovvee this!!!"
+    ]
+  }
+]
