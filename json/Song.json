@@ -19,15 +19,9 @@
           "tempo": 120,
           "timeSignature": "3/4",
           "notes": [
-            { "pitch": "E5", "duration": 0.5 },
-            { "pitch": "D#5", "duration": 0.5 },
-            { "pitch": "E5", "duration": 0.5 },
-            { "pitch": "D#5", "duration": 0.5 },
-            { "pitch": "E5", "duration": 0.5 },
-            { "pitch": "B4", "duration": 0.5 },
-            { "pitch": "D5", "duration": 0.5 },
-            { "pitch": "C5", "duration": 0.5 },
-            { "pitch": "A4", "duration": 1.0 }
+            { "pitch": "C5", "duration": 1.0, "volume": 100},
+            { "pitch": "E5", "duration": 0.5, "volume": 100},
+            { "pitch": "G5", "duration": 0.5, "volume": 100}
           ]
         }
       ]
