@@ -1,5 +1,6 @@
 package com.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -7,7 +8,7 @@ public class Instructor extends User {
     private List<Student> students;
 
     public Instructor(String username, String password, String email, String firstName, String lastName, 
-    List<Student> students, UUID id, int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs) {
+    ArrayList<Student> students, UUID id, int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs) {
         super(id, username, password, email, firstName, lastName, practiceStreak, selectedInstrument, composedSongs);
         this.students = students;
     }

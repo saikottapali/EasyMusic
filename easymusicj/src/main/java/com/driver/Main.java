@@ -9,13 +9,13 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Create an Instructor
-        Instructor instructor = new Instructor("musicMaster", "securePass", "instructor@example.com", "Alice", "Smith", new ArrayList<>());
+        
+        Instructor instructor = new Instructor("musicMaster", "securePass", "instructor@example.com", "Alice", "Smith", new ArrayList<>(), null, 0, null, null);
 
-        // Create a Student
-        Student student = new Student("johnDoe", "pass123", "john@example.com", "John", "Doe", new ArrayList<>(), instructor);
+        
+        Student student = new Student("johnDoe", "pass123", "john@example.com", "John", "Doe", new ArrayList<>(), instructor, 0, null, null, null);
 
-        // User tries to log in
+        
         System.out.println("Enter password for " + student.getUsername() + ": ");
         String enteredPassword = scanner.nextLine();
         
@@ -24,7 +24,7 @@ public class Main {
         } else {
             System.out.println("Login failed. Incorrect password.");
             scanner.close();
-            return;  // Exit program if login fails
+            return;  
         }
 
         // User logged in successfully

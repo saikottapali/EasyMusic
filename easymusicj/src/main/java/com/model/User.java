@@ -32,46 +32,23 @@ public class User {
         this.composedSongs = composedSongs;
     }
 
-<<<<<<< HEAD
-=======
-    /*
-    *implemented password hashing for better security
-    */
-    private String hashPassword(String password) {
+    public String getHashedPassword() {
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hash = md.digest(password.getBytes());
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedBytes = digest.digest(password.getBytes());
             StringBuilder hexString = new StringBuilder();
-            for (byte b : hash) {
-                hexString.append(String.format("%02x", b));
+            for (byte b : hashedBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
             }
             return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error hashing password", e);
-        }
-    }
-    /*
-    *Login gets verified
-    */
-    public boolean login(String username, String password) {
-        return this.username.equals(username) && this.hashedPassword.equals(hashPassword(password));
-    }
-
->>>>>>> d69e1584fedb30ba659e2b091c88ead401f8bd9c
-    public void updateEmail(String newEmail) {
-        this.email = newEmail;
-    }
-
-    public void updateProfile(String newEmail, String newPassword) {
-        this.email = newEmail;
-        this.password = newPassword;
-    }
-
-    public void updatePassword(String oldPassword, String newPassword) {
-        if (password.equals(hashPassword(oldPassword))) {
-            this.hashedPassword = hashPassword(newPassword);
-        } else {
-        }
+            e.printStackTrace();
+            return null;
+         }
     }
 
     public void practice() {
@@ -101,7 +78,6 @@ public class User {
         return false;
     }
 
-<<<<<<< HEAD
     public void logOut(){
         isLoggedIn = false;
     }
@@ -120,32 +96,17 @@ public class User {
 
     public List<Song> getComposedSongs() {
         return composedSongs;
-=======
-    public void createAccount() {
-        System.out.println("Account created for: " + username);
     }
 
-    public void logIn() {
-        System.out.println(username + " logged in.");
+    public void updateProfile(String newEmail, String newPassword) {
+        this.email = newEmail;
+        this.password = newPassword;
     }
-
-    public void logOut() {
-        System.out.println(username + " logged out.");
->>>>>>> d69e1584fedb30ba659e2b091c88ead401f8bd9c
-    }
-
+    
     //Getters and Setters
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getHashedPassword() {
-        return hashedPassword;
-    }
-
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
     }
 
     public String getEmail() {
@@ -194,6 +155,10 @@ public class User {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getUsername(){
+        return this.username;
     }
     
     
