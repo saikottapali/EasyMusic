@@ -23,12 +23,11 @@ public class DataLoader extends DataConstants {
 
                 UUID id = UUID.fromString((String) personJSON.get(USER_ID));
                 String userName = (String) personJSON.get(USER_USER_NAME);
-                String firstName = (String) personJSON.get(USER_FIRST_NAME);
-                String lastName = (String) personJSON.get(USER_LAST_NAME);
+                String fullName = (String) personJSON.get(USER_Full_NAME);
                 int age = ((Long) personJSON.get(USER_AGE)).intValue();
                 String phoneNumber = (String) personJSON.get(USER_PHONE_NUMBER);
 
-                users.add(new User(id, userName, firstName, lastName, age, phoneNumber));
+                users.add(new User(id, userName, fullName, age, phoneNumber));
             }
 
         } catch (Exception e) {
