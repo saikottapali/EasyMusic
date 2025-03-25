@@ -61,15 +61,6 @@ public class User {
         return isLoggedIn;
     }
 
-    public void selectInstrument(Instrument instrument) {
-        this.selectedInstrument = instrument;
-    }
-
-    public void addComposedSong(Song song) {
-        composedSongs.add(song);
-    }
-
-
     public boolean logIn(String enteredPassword) {
         if (this.password.equals(enteredPassword)){
             isLoggedIn = true;

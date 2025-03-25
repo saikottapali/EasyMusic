@@ -4,47 +4,69 @@ import com.model.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Main {
+
+/*
+* Account set up and login begins
+*/
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        
-        Instructor instructor = new Instructor("musicMaster", "securePass", "instructor@example.com", "Alice", "Smith", new ArrayList<>(), null, 0, null, null);
+        System.out.println("Welcome to EasyMusic! Let's create your account.");
 
-        
-        Student student = new Student("johnDoe", "pass123", "john@example.com", "John", "Doe", new ArrayList<>(), instructor, 0, null, null, null);
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
 
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        System.out.print("Enter email: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Enter first name: ");
+        String firstName = scanner.nextLine();
+
+        System.out.print("Enter last name: ");
+        String lastName = scanner.nextLine();
+
+        UUID id = UUID.randomUUID();
+
+        Instrument selectedInstrument = null; 
         
-        System.out.println("Enter password for " + student.getUsername() + ": ");
-        String enteredPassword = scanner.nextLine();
-        
-        if (student.logIn(enteredPassword)) {
-            System.out.println("Login successful!");
+        User newUser = new User(id, username, password, email, firstName, lastName, 0, selectedInstrument, new ArrayList<Song>());
+
+        System.out.println("Account created successfully!");
+
+        System.out.println("Now, let's log you in.");
+
+        System.out.print("Enter your username: ");
+        String enteredUsername = scanner.nextLine();
+
+        if (enteredUsername.equals(newUser.getUsername())) {
+            System.out.print("Enter password: ");
+            String enteredPassword = scanner.nextLine();
+
+            if (newUser.logIn(enteredPassword)) {
+                System.out.println("Login successful!");
+
+                newUser.practice(); 
+
+                System.out.println("Practice streak: " + newUser.getPracticeStreak());
+                
+                System.out.println("You are now logged in and can continue to use the system.");
+                
+            } else {
+                System.out.println("Invalid password. Please try again.");
+            }
         } else {
-            System.out.println("Login failed. Incorrect password.");
-            scanner.close();
-            return;  
+            System.out.println("Username not found.");
         }
-
-        // User logged in successfully
-        System.out.println("\n=== Account Actions ===");
-        System.out.println(student.getUsername() + " is now logged in.");
+/*
+* Account set up and login end
+*/
         
-        // Profile Update
-        System.out.println("\nUpdating profile...");
-        student.updateProfile("newEmail@example.com", "newSecurePass");
-        System.out.println("Profile updated!");
-
-        // Practice Session
-        System.out.println("\nPracticing...");
-        student.practice();
-        System.out.println("Practice streak: " + 1);  // Manually tracking in driver
-
-        // Log Out
-        student.logOut();
-        System.out.println("\nLogged out!");
-
         scanner.close();
     }
 }
