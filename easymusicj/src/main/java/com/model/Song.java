@@ -35,16 +35,18 @@ public class Song {
 
     // Method to play the song
     public void play() {
-        Player player = new Player();
-        Pattern songPattern = new Pattern();
-
-        for (Measure measure : sheetMusic.getMeasures()) {
-            songPattern.add(measure.toPattern());
+        if (sheetMusic == null || sheetMusic.getJFugueNotation().isEmpty()) {
+            System.out.println("No sheet music available for this song.");
+            return;
         }
-
+    
+        Player player = new Player();
+        Pattern songPattern = new Pattern(sheetMusic.getJFugueNotation());
+    
         System.out.println("Playing: " + title + " by " + composer);
         player.play(songPattern);
     }
+    
 
     // Method to upload the song
     public void upload() {
@@ -66,8 +68,14 @@ public class Song {
         System.out.println("Song: " + title);
         System.out.println("Composer: " + composer + ", Difficulty: " + difficultyLevel);
         System.out.println("Date: " + date);
-        System.out.println("Sheet Music: " + sheetMusic); 
+        
+        if (sheetMusic != null) {
+            System.out.println("Sheet Music Notation:\n" + sheetMusic.getJFugueNotation());
+        } else {
+            System.out.println("No sheet music available.");
+        }
     }
+    
 
     public void addComment(String body, String author) {
         comments.add(author + ":" + body);
@@ -138,6 +146,12 @@ public class Song {
         this.name = name;
     }
 
-    
+    public List<String> getComments() {
+        return comments;
+    }
 
+    public void setComments(List<String> comments) {
+        this.comments = comments;
+    }
+    
 }
