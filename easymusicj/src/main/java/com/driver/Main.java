@@ -56,17 +56,66 @@ public class Main {
                 System.out.println("Practice streak: " + newUser.getPracticeStreak());
                 
                 System.out.println("You are now logged in and can continue to use the system.");
+
+/*
+* Account set up and login ends
+*/
                 
-            } else {
-                System.out.println("Invalid password. Please try again.");
+            // Show user options
+            boolean loggedIn = true;
+            while (loggedIn) {
+                System.out.println("\nWhat would you like to do?");
+                System.out.println("1. Select an instrument");
+                System.out.println("2. Select a song");
+                System.out.println("3. Create a song");
+                System.out.println("4. Logout");
+
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        // Select instrument
+                        System.out.print("Enter the instrument you want to select: ");
+                        String instrumentName = scanner.nextLine();
+                        Instrument selected = new Instrument(instrumentName); // Assuming you have an Instrument class
+                        newUser.selectInstrument(selected);
+                        System.out.println("You selected the instrument: " + selected.getName());
+                        break;
+                    case 2:
+                        // Select song
+                        System.out.print("Enter the name of the song you want to select: ");
+                        String songName = scanner.nextLine();
+                        Song selectedSong = new Song(songName); // Assuming you have a Song class
+                        newUser.addComposedSong(selectedSong);
+                        System.out.println("You selected the song: " + selectedSong.getName());
+                        break;
+                    case 3:
+                        // Create song
+                        System.out.print("Enter the name of the song you want to create: ");
+                        String createSongName = scanner.nextLine();
+                        Song createdSong = new Song(createSongName); // Assuming you have a Song class
+                        newUser.addComposedSong(createdSong);
+                        System.out.println("You created the song: " + createdSong.getName());
+                        break;
+                    case 4:
+                        // Logout
+                        newUser.logOut();
+                        System.out.println("You have logged out.");
+                        loggedIn = false;
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please select a valid option.");
+                        break;
+                }
             }
         } else {
-            System.out.println("Username not found.");
+            System.out.println("Invalid password. Please try again.");
         }
-/*
-* Account set up and login end
-*/
-        
-        scanner.close();
+    } else {
+        System.out.println("Username not found.");
     }
+
+    scanner.close();
+}
 }
