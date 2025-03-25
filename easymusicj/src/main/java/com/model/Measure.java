@@ -42,6 +42,16 @@ public class Measure {
         }
     }
 
+    // Converts to JFugue Notation
+    public String toJFugueNotation() {
+        StringBuilder notation = new StringBuilder();
+        for (Note note : notes) {
+            notation.append(note.getPitch()).append("/").append(note.getDuration()).append(" ");
+        }
+        return notation.toString().trim();
+    }
+    
+
     public void clearMeasure() {
         notes.clear();
     }

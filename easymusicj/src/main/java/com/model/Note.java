@@ -18,11 +18,14 @@ public class Note {
     }
 
     //Playing using jfugue
+<<<<<<< HEAD
     
     public Note(String pitch2, double d) {
         //TODO Auto-generated constructor stub
     }
 
+=======
+>>>>>>> e217e15f0de49a2dd15fc21d3e362e1c9636efc5
     public void play() {
         String noteString = pitch + "[" + duration + "]" + " !" + volume;  
         Pattern pattern = new Pattern(noteString);
