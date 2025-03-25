@@ -2,20 +2,30 @@
     {
       "id": "550e8400-e29b-41d4-a716-446655440000",
       "username": "music_lover123",
-      "password": "hashed_password_123",
+      "hashedPassword": "e3afed0047b08059d0fada10f400c1e5",
       "email": "user@example.com",
       "firstName": "John",
       "lastName": "Doe",
       "practiceStreak": 5,
       "selectedInstrument": {
-        "id": "be94d345-0904-454d-add1-d97894ba1f1e",
         "name": "Piano",
-        "description": "A classical keyboard instrument",
-        "minNote": "A0",
-        "maxNote": "C8",
+        "description": "A versatile keyboard instrument.",
+        "minNote": {
+          "pitch": "A0",
+          "duration": 1.0
+        },
+        "maxNote": {
+          "pitch": "C8",
+          "duration": 1.0
+        },
         "type": "Keyboard"
       },
-      "composedSongs": ["6c43782c-d12e-48e4-8c60-4a6e6df9969d"]
-    }
-  ]
+      "composedSongs": [
+      {
+      "id": "6c43782c-d12e-48e4-8c60-4a6e6df9969d"
+      }
+    ]
+  }
+]
+     
   

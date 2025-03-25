@@ -18,11 +18,12 @@ public class Note {
     }
 
     //Playing using jfugue
+    
     public void play() {
-        String noteString = pitch + "[" + duration + "]";
+        String noteString = pitch + "[" + duration + "]" + " !" + volume;  
         Pattern pattern = new Pattern(noteString);
         Player player = new Player();
-        player.play(pattern);
+        player.play(pattern);  // JFugue plays the note
         this.isPlaying = true;
     }
 

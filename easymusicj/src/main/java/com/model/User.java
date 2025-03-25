@@ -4,8 +4,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class User {
+    
+    private UUID id;
     private String username;
     private String password;
     private String email;
@@ -16,7 +19,9 @@ public class User {
     private List<Song> composedSongs = new ArrayList<>();
     private boolean isLoggedIn = false;
 
-    public User(String username, String password, String email, String firstName, String lastName, int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs) {
+    public User(UUID id, String username, String password, String email, String firstName, String lastName, 
+    int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs) {
+        this.id = (id == null) ? UUID.randomUUID() : id; // Generate new UUID if null (i.e., new user)
         this.username = username;
         this.password = password;
         this.email = email;
@@ -27,6 +32,32 @@ public class User {
         this.composedSongs = composedSongs;
     }
 
+<<<<<<< HEAD
+=======
+    /*
+    *implemented password hashing for better security
+    */
+    private String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                hexString.append(String.format("%02x", b));
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error hashing password", e);
+        }
+    }
+    /*
+    *Login gets verified
+    */
+    public boolean login(String username, String password) {
+        return this.username.equals(username) && this.hashedPassword.equals(hashPassword(password));
+    }
+
+>>>>>>> d69e1584fedb30ba659e2b091c88ead401f8bd9c
     public void updateEmail(String newEmail) {
         this.email = newEmail;
     }
@@ -70,6 +101,7 @@ public class User {
         return false;
     }
 
+<<<<<<< HEAD
     public void logOut(){
         isLoggedIn = false;
     }
@@ -88,13 +120,21 @@ public class User {
 
     public List<Song> getComposedSongs() {
         return composedSongs;
+=======
+    public void createAccount() {
+        System.out.println("Account created for: " + username);
+    }
+
+    public void logIn() {
+        System.out.println(username + " logged in.");
+    }
+
+    public void logOut() {
+        System.out.println(username + " logged out.");
+>>>>>>> d69e1584fedb30ba659e2b091c88ead401f8bd9c
     }
 
     //Getters and Setters
-
-    public String getUsername() {
-        return username;
-    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -147,5 +187,14 @@ public class User {
     public void setComposedSongs(List<Song> composedSongs) {
         this.composedSongs = composedSongs;
     }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+    
     
 }

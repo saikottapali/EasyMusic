@@ -2,8 +2,14 @@ package com.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
+import org.jfugue.pattern.Pattern;
+import org.jfugue.player.Player;
 
 public class Song {
+
+    private UUID id;
     private String title;
     private String composer;
     private String difficultyLevel;
@@ -15,6 +21,7 @@ public class Song {
     // Constructor
     public Song(String title, String composer, String difficultyLevel, Date date, 
     SheetMusic sheetMusic, boolean isPrivate, List<String> comments) {
+        this.id = UUID.randomUUID(); //Generate new UUID
         this.title = title;
         this.composer = composer;
         this.difficultyLevel = difficultyLevel;
@@ -27,7 +34,15 @@ public class Song {
 
     // Method to play the song
     public void play() {
+        Player player = new Player();
+        Pattern songPattern = new Pattern();
+
+        for (Measure measure : sheetMusic.getMeasures()) {
+            songPattern.add(measure.toPattern());
+        }
+
         System.out.println("Playing: " + title + " by " + composer);
+        player.play(songPattern);
     }
 
     // Method to upload the song
@@ -105,5 +120,15 @@ public class Song {
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
     }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    
 
 }
