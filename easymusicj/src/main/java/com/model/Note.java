@@ -5,12 +5,12 @@ import org.jfugue.player.Player;
 
 public class Note {
     private String pitch;   //Range of the note "C5" or "D#4"
-    private float duration; //Duration in beats  quarter note = 1.0 beats  half note = 2.0 beats
+    private double duration; //Duration in beats  quarter note = 1.0 beats  half note = 2.0 beats
     private int volume;  
     private boolean isPlaying;
 
     //Constructor
-    public Note(String pitch, float duration, int volume) {
+    public Note(String pitch, double duration, int volume) {
         this.pitch = pitch;
         this.duration = duration;
         this.volume = volume;
@@ -18,7 +18,6 @@ public class Note {
     }
 
     //Playing using jfugue
-    
     public void play() {
         String noteString = pitch + "[" + duration + "]" + " !" + volume;  
         Pattern pattern = new Pattern(noteString);
@@ -48,11 +47,11 @@ public class Note {
         this.pitch = pitch;
     }
 
-    public float getDuration() {
+    public double getDuration() {
         return duration;
     }
 
-    public void setDuration(float duration) {
+    public void setDuration(double duration) {
         this.duration = duration;
     }
 
