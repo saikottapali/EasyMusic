@@ -23,7 +23,6 @@ public class Song {
     public Song(String title, String composer, String difficultyLevel, Date date, 
     SheetMusic sheetMusic, boolean isPrivate, List<String> comments) {
         this.id = UUID.randomUUID();
-        this.name = name;
         this.title = title;
         this.composer = composer;
         this.difficultyLevel = difficultyLevel;

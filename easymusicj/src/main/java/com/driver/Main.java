@@ -3,6 +3,7 @@ package com.driver;
 import com.model.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -75,21 +76,39 @@ while (loggedIn) {
     switch (choice) {
         case 1:
             // Select instrument from the list
+            List<Instrument> availableInstruments = createAvailableInstruments();
+
             System.out.println("Available Instruments:");
-             {
-                System.out.println("Invalid choice.");
+            for (int i = 0; i < availableInstruments.size(); i++) {
+                System.out.println((i + 1) + ". " + availableInstruments.get(i).getName());
+            }
+    
+            System.out.print("Select an instrument by entering the corresponding number: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+    
+            if (choice >= 1 && choice <= availableInstruments.size()) {
+                selectedInstrument = availableInstruments.get(choice - 1);
+                System.out.println("You selected: " + selectedInstrument.getName());
+            } else {
+                System.out.println("Invalid selection.");
             }
             break;
         case 2:
             // Select song
-            System.out.print("Enter the name of the song you want to select: ");
-            String songName = scanner.nextLine();
+            System.out.print("Enter a song title to play: ");
+        String songTitle = scanner.nextLine();
+        Song selectedSong = new Song(songTitle, songTitle, songTitle, null, null, loggedIn, null);  // This now works with new constructor
+        System.out.println("You selected: " + selectedSong.getTitle());
             break;
-        case 3:
+            case 3:
             // Create song
             System.out.print("Enter the name of the song you want to create: ");
             String createSongName = scanner.nextLine();
-            break;
+            Song createdSong = new Song(createSongName, createSongName, createSongName, null, null, loggedIn, null); 
+            newUser.addComposedSong(createdSong);
+            System.out.println("You created the song: " + createdSong.getName());
+            break;        
         case 4:
             // Logout
             newUser.logOut();
@@ -109,5 +128,13 @@ while (loggedIn) {
     }
 
     scanner.close();
+}
+private static List<Instrument> createAvailableInstruments() {
+    List<Instrument> instruments = new ArrayList<>();
+    instruments.add(new Instrument("Piano", "A classic keyboard instrument", null, null, "Keyboard"));
+    instruments.add(new Instrument("Guitar", "A string instrument", null, null, "String"));
+    instruments.add(new Instrument("Drums", "A percussion instrument", null, null, "Percussion"));
+    instruments.add(new Instrument("Violin", "A bowed string instrument", null, null, "String"));
+    return instruments;
 }
 }
