@@ -161,17 +161,9 @@ public class Song {
         this.name = name;
     }
 
-<<<<<<< HEAD
-    public List<String> getSongNotes() {
-        return songNotes;
-    }
-
-    
-=======
     public List<String> getComments() {
         return comments;
     }
->>>>>>> e217e15f0de49a2dd15fc21d3e362e1c9636efc5
 
     public void setComments(List<String> comments) {
         this.comments = comments;
