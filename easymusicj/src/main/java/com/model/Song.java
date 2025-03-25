@@ -10,6 +10,7 @@ import org.jfugue.player.Player;
 public class Song {
 
     private UUID id;
+    private String name;
     private String title;
     private String composer;
     private String difficultyLevel;
@@ -21,7 +22,8 @@ public class Song {
     // Constructor
     public Song(String title, String composer, String difficultyLevel, Date date, 
     SheetMusic sheetMusic, boolean isPrivate, List<String> comments) {
-        this.id = UUID.randomUUID(); //Generate new UUID
+        this.id = UUID.randomUUID();
+        this.name = name;
         this.title = title;
         this.composer = composer;
         this.difficultyLevel = difficultyLevel;
@@ -127,6 +129,14 @@ public class Song {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
     
