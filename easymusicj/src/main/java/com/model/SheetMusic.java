@@ -1,5 +1,7 @@
 package com.model;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class SheetMusic {
@@ -35,100 +37,39 @@ public class SheetMusic {
         measures.remove(measure);
     }
 
-    // Method to upload the sheet music
-    public void upload() {
-        System.out.println("Uploading sheet music: " + title);
-        // Logic for uploading
-    }
+    // Method to save sheet music to a text file
+    public void saveToFile(String filename) {
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write("Sheet Music: " + title + "\n");
+            writer.write("Composer: " + composer + ", Difficulty: " + difficultyLevel + "\n");
+            writer.write("Tempo: " + tempoNumerator + "/" + tempoDenominator + ", Clef: " + clef + "\n");
+            writer.write("Notation Type: " + notationType + "\n\n");
 
-    // Method to download the sheet music
-    public void download() {
-        System.out.println("Downloading sheet music: " + title);
-        // Logic for downloading
-    }
+            for (Measure measure : measures) {
+                writer.write("Time Signature: " + measure.getTimeSignature() + ", Tempo: " + measure.getTempo() + "\n");
+                for (Note note : measure.getNotes()) {
+                    writer.write("Note: " + note.getPitch() + " - " + note.getDuration() + " beats\n");
+                }
+                writer.write("\n"); // Separate measures with a blank line
+            }
 
-    // Method to display the sheet music's information and notation
-    public void display() {
-        System.out.println("Sheet Music: " + title);
-        System.out.println("Composer: " + composer + ", Difficulty: " + difficultyLevel);
-        System.out.println("Tempo: " + tempoNumerator + "/" + tempoDenominator + ", Clef: " + clef);
-        System.out.println("Notation Type: " + notationType);
-        for (Measure measure : measures) {
-            measure.displayNotation();
+            writer.write("JFugue Notation: " + getJFugueNotation() + "\n");
+            System.out.println("Sheet music saved to " + filename);
+
+        } catch (IOException e) {
+            System.out.println("Error saving sheet music: " + e.getMessage());
         }
     }
 
-    // Getters and Setters
-    public int getMusicID() {
-        return musicID;
+    // Helper method to generate JFugue notation
+    public String getJFugueNotation() {
+        StringBuilder notation = new StringBuilder();
+        for (Measure measure : measures) {
+            notation.append(measure.toJFugueNotation()).append(" | ");  // Adding measure separators
+        }
+        return notation.toString().trim();
     }
-
-    public void setMusicID(int musicID) {
-        this.musicID = musicID;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getComposer() {
-        return composer;
-    }
-
-    public void setComposer(String composer) {
-        this.composer = composer;
-    }
-
-    public String getDifficultyLevel() {
-        return difficultyLevel;
-    }
-
-    public void setDifficultyLevel(String difficultyLevel) {
-        this.difficultyLevel = difficultyLevel;
-    }
-
-    public String getNotationType() {
-        return notationType;
-    }
-
-    public void setNotationType(String notationType) {
-        this.notationType = notationType;
-    }
-
-    public int getTempoNumerator() {
-        return tempoNumerator;
-    }
-
-    public void setTempoNumerator(int tempoNumerator) {
-        this.tempoNumerator = tempoNumerator;
-    }
-
-    public int getTempoDenominator() {
-        return tempoDenominator;
-    }
-
-    public void setTempoDenominator(int tempoDenominator) {
-        this.tempoDenominator = tempoDenominator;
-    }
-
-    public String getClef() {
-        return clef;
-    }
-
-    public void setClef(String clef) {
-        this.clef = clef;
-    }
-
-    public ArrayList<Measure> getMeasures() {
-        return measures;
-    }
-
-    public void setMeasures(ArrayList<Measure> measures) {
-        this.measures = measures;
-    }
+    
 }
+
 

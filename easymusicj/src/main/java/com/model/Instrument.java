@@ -7,7 +7,7 @@ public class Instrument {
     private String description;
     private Note minNote;
     private Note maxNote;
-    private String type; // Ex. piano, trumpet, etc.
+    private String type; 
 
     public Instrument(String name, String description, Note minNote, Note maxNote, String type) {
         this.name = name;

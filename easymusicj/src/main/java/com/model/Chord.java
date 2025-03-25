@@ -18,6 +18,10 @@ public class Chord {
         this.duration = duration;
     }
 
+    public Chord(String string, List<Note> chordNotes) {
+        //TODO Auto-generated constructor stub
+    }
+
     public void addNote(Note note) {
         notes.add(note);
     }

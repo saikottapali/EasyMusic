@@ -2,6 +2,8 @@ package com.model;
 
 import java.util.ArrayList;
 
+import org.jfugue.pattern.Pattern;
+
 public class Measure {
 
     private ArrayList<Note> notes;
@@ -23,6 +25,15 @@ public class Measure {
         notes.remove(note);
     }
 
+    // Convert measure to a JFugue pattern
+    public Pattern toPattern() {
+        StringBuilder patternString = new StringBuilder("T" + tempo + " ");
+        for (Note note : notes) {
+            patternString.append(note.getPitch()).append("/").append(note.getDuration()).append(" ");
+        }
+        return new Pattern(patternString.toString());
+    }
+
     // Method to display the notation for the measure
     public void displayNotation() {
         System.out.println("Time Signature: " + timeSignature + ", Tempo: " + tempo);
@@ -31,7 +42,16 @@ public class Measure {
         }
     }
 
-    // Method to clear all notes in the measure
+    // Converts to JFugue Notation
+    public String toJFugueNotation() {
+        StringBuilder notation = new StringBuilder();
+        for (Note note : notes) {
+            notation.append(note.getPitch()).append("/").append(note.getDuration()).append(" ");
+        }
+        return notation.toString().trim();
+    }
+    
+
     public void clearMeasure() {
         notes.clear();
     }
