@@ -99,4 +99,5 @@ public class User {
     public List<Song> getComposedSongs() {
         return composedSongs;
     }
+
 }

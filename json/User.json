@@ -8,7 +8,6 @@
       "lastName": "Doe",
       "practiceStreak": 5,
       "selectedInstrument": {
-        "id": "be94d345-0904-454d-add1-d97894ba1f1e",
         "name": "Piano",
         "description": "A classical keyboard instrument",
         "minNote": "A0",
