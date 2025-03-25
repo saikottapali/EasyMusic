@@ -36,7 +36,7 @@ public class Main {
 
         Instrument selectedInstrument = null; 
         
-        User newUser = new User(id, username, password, email, firstName, lastName, 0, selectedInstrument, new ArrayList<Song>());
+        User newUser = new User(id, username, password, email, firstName, lastName, 0, null, new ArrayList<Song>());
 
         System.out.println("Account created successfully!");
 
@@ -68,6 +68,8 @@ while (loggedIn) {
     System.out.println("1. Select an instrument");
     System.out.println("2. Select a song");
     System.out.println("3. Create a song");
+    System.out.println("4. Play a note");
+    System.out.println("5. Play a chord");
     System.out.println("4. Logout");
 
     int choice = scanner.nextInt();
@@ -75,46 +77,75 @@ while (loggedIn) {
 
     switch (choice) {
         case 1:
-            // Select instrument from the list
-            List<Instrument> availableInstruments = createAvailableInstruments();
+        List<Instrument> availableInstruments = createAvailableInstruments();
 
-            System.out.println("Available Instruments:");
-            for (int i = 0; i < availableInstruments.size(); i++) {
-                System.out.println((i + 1) + ". " + availableInstruments.get(i).getName());
-            }
-    
-            System.out.print("Select an instrument by entering the corresponding number: ");
-            choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-    
-            if (choice >= 1 && choice <= availableInstruments.size()) {
-                selectedInstrument = availableInstruments.get(choice - 1);
-                System.out.println("You selected: " + selectedInstrument.getName());
-            } else {
-                System.out.println("Invalid selection.");
-            }
-            break;
+        System.out.println("Available Instruments:");
+        for (int i = 0; i < availableInstruments.size(); i++) {
+            System.out.println((i + 1) + ". " + availableInstruments.get(i).getName());
+        }
+
+        System.out.print("Select an instrument by entering the corresponding number: ");
+        int instrumentChoice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        if (instrumentChoice >= 1 && instrumentChoice <= availableInstruments.size()) {
+             selectedInstrument = availableInstruments.get(instrumentChoice - 1);
+            newUser.setInstrument(selectedInstrument);
+            System.out.println("You selected: " + selectedInstrument.getName());
+        } else {
+            System.out.println("Invalid selection.");
+        }
+        break;
+
         case 2:
             // Select song
             System.out.print("Enter a song title to play: ");
         String songTitle = scanner.nextLine();
-        Song selectedSong = new Song(songTitle, songTitle, songTitle, null, null, loggedIn, null);  // This now works with new constructor
+        Song selectedSong = new Song(songTitle, songTitle, songTitle, null, null, loggedIn, null);  
         System.out.println("You selected: " + selectedSong.getTitle());
             break;
             case 3:
             // Create song
             System.out.print("Enter the name of the song you want to create: ");
             String createSongName = scanner.nextLine();
-            Song createdSong = new Song(createSongName, createSongName, createSongName, null, null, loggedIn, null); 
+            Song createdSong = new Song(createSongName, newUser.getInstrument(), null, loggedIn, new ArrayList<>());
             newUser.addComposedSong(createdSong);
             System.out.println("You created the song: " + createdSong.getName());
-            break;        
+            break;  
         case 4:
+            // Play a note
+            if (newUser.getInstrument() != null) {
+                System.out.print("Enter a note (e.g., C5): ");
+                String pitch = scanner.nextLine();
+                Note note = new Note(pitch, 1.0);
+                newUser.getInstrument().play(note);
+            } else {
+                System.out.println("You must select an instrument first!");
+            }
+            break;
+            case 5:
+            // Play a chord
+            if (newUser.getInstrument() != null) {
+                System.out.print("Enter chord notes separated by spaces (e.g., C5 E5 G5): ");
+                String[] pitches = scanner.nextLine().split(" ");
+                List<Note> chordNotes = new ArrayList<>();
+                for (String pitch : pitches) {
+                    chordNotes.add(new Note(pitch, 1.0));
+                }
+                Chord chord = new Chord("Custom Chord", chordNotes);
+                newUser.getInstrument().play(chord);
+            } else {
+                System.out.println("You must select an instrument first!");
+            }
+            break;
+
+        case 6:
             // Logout
             newUser.logOut();
             System.out.println("You have logged out.");
             loggedIn = false;
             break;
+
         default:
             System.out.println("Invalid choice. Please select a valid option.");
             break;
