@@ -159,6 +159,10 @@ public class Song {
         this.songNotes = songNotes;
     }
 
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
     public Instrument getInstrument() {
         return instrument;
     }
