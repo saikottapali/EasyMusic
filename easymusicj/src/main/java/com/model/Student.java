@@ -10,8 +10,8 @@ public class Student extends User {
 
     public Student(String username, String password, String email, String firstName,
      String lastName, ArrayList<Lesson> instructions, Instructor instructor, int practiceStreak, 
-     Instrument selectedInstrument, List<Song> composedSongs, UUID id) {
-        super(id, username, password, email, firstName, lastName, practiceStreak, selectedInstrument, composedSongs);
+     Instrument selectedInstrument, List<Song> composedSongs, UUID id, boolean isLoggedIn) {
+        super(id, username, password, email, firstName, lastName, practiceStreak, selectedInstrument, composedSongs, isLoggedIn);
         this.instructions = instructions;
         this.instructor = instructor;
     }

@@ -2,6 +2,7 @@ package com.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class EasyMusicFacade {
     private User user;
@@ -17,7 +18,7 @@ public class EasyMusicFacade {
 
     //Log In uses Username and Password credentials
     public void logIn(String username, String password) {
-        if (user.getUsername().equals(username) && user.getHashedPassword().equals(password)) {
+        if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
             System.out.println("Login successful for: " + username);
         } else {
             System.out.println("Invalid credentials.");
@@ -101,11 +102,11 @@ public class EasyMusicFacade {
         return user;
     }
 
-    public Song createMusic(String title, String composer, String difficultyLevel, 
+    public Song createMusic(UUID id, String title, String composer, String difficultyLevel, 
         Date date, SheetMusic sheetMusic, boolean isPrivate, List<String> comments) {
 
-        return musicPost.createMusic(title, composer, difficultyLevel, date, 
-        sheetMusic, isPrivate, comments);
+        return musicPost.createMusic(id, title, composer, difficultyLevel, date, 
+                sheetMusic, isPrivate, comments, selectedInstrument, comments, isPrivate, comments);
         
     }
 

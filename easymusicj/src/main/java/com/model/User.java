@@ -17,25 +17,38 @@ public class User {
     private List<Song> composedSongs = new ArrayList<>();
     private boolean isLoggedIn = false;
     
-        public User(UUID id, String username, String password, String email, String firstName, String lastName, 
-        int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs) {
-            this.id = (id == null) ? UUID.randomUUID() : id; // Generate new UUID if null (i.e., new user)
-            this.username = username;
-            this.password = password;
-            this.email = email;
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.practiceStreak = 0;
-            this.selectedInstrument = selectedInstrument;
-            this.composedSongs = composedSongs;
-        }
+    public User(UUID id, String username, String password, String email, String firstName, String lastName, 
+    int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs, boolean isLoggedIn) {
+        this.id = (id == null) ? UUID.randomUUID() : id; // Generate new UUID if null (i.e., new user)
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.practiceStreak = 0;
+        this.selectedInstrument = selectedInstrument;
+        this.composedSongs = composedSongs;
+        this.isLoggedIn = false;
+    }
     
-        public void practice() {
-            if (isLoggedIn) {
+    public void practice() {
+        if (isLoggedIn) {
             practiceStreak++;
         }
     }
     
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setLoggedIn(boolean isLoggedIn) {
+        this.isLoggedIn = isLoggedIn;
+    }
+
     public boolean isLoggedIn() {
         return isLoggedIn;
     }

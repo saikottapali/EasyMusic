@@ -17,28 +17,23 @@ public class Song {
     private Date date;
     private SheetMusic sheetMusic; 
     private boolean isPrivate;
-    private boolean isPublic;
-    private boolean loggedIn;
     private List<String> comments;
     private List<String> songNotes;
     private List<String> tags;
     
     // Constructor
     public Song(UUID id, String title, String composer, String difficultyLevel, Instrument instrument, Date date, 
-        SheetMusic sheetMusic, boolean isPrivate, boolean isPublic, boolean loggedIn, List<String> comments, List<String> songNotes, List<String> tags) {
+        SheetMusic sheetMusic, boolean isPrivate, List<String> comments, List<String> songNotes, List<String> tags) {
             this.id = UUID.randomUUID();
             this.title = title;
             this.composer = composer;
             this.difficultyLevel = difficultyLevel;
             this.instrument = instrument;
-            this.loggedIn = loggedIn;
             this.date = date;
             this.sheetMusic = sheetMusic;
             this.isPrivate = isPrivate;
-            this.loggedIn = loggedIn;
             this.comments = comments;
             this.songNotes = songNotes;
-            this.isPublic = isPublic;
             this.tags = tags;
 
     }
@@ -164,28 +159,12 @@ public class Song {
         this.songNotes = songNotes;
     }
 
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
-
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
-    }
-
     public Instrument getInstrument() {
         return instrument;
     }
 
     public void setInstrument(Instrument instrument) {
         this.instrument = instrument;
-    }
-
-    public boolean isIsPublic() {
-        return isPublic;
-    }
-
-    public void setIsPublic(boolean isPublic) {
-        this.isPublic = isPublic;
     }
 
     public List<String> getTags() {

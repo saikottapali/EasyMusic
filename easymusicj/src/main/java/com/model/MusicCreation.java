@@ -17,9 +17,9 @@ public class MusicCreation {
     }
 
     public Song createMusic(UUID id,String title, String composer, String difficultyLevel, Date date, 
-    SheetMusic sheetMusic, boolean isPrivate, List<String> comments, Instrument instrument, List<String> songNotes) {
-        Song newSong = new Song(id, title, composer, difficultyLevel, instrument, date, sheetMusic, 
-                isPrivate, isPrivate, isPrivate, comments, songNotes, songNotes);
+    SheetMusic sheetMusic, boolean isPrivate, List<String> comments, Instrument instrument, List<String> songNotes, boolean loggedIn, List<String> tags) {
+        Song newSong = new Song(id, title, composer, difficultyLevel, instrument, date, sheetMusic, isPrivate,
+        comments, songNotes, tags);
         songs.add(newSong);
         System.out.println("New song created: " + title);
         return newSong; 

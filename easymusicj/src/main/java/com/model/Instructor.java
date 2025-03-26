@@ -8,8 +8,8 @@ public class Instructor extends User {
     private List<Student> students;
 
     public Instructor(String username, String password, String email, String firstName, String lastName, 
-    ArrayList<Student> students, UUID id, int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs) {
-        super(id, username, password, email, firstName, lastName, practiceStreak, selectedInstrument, composedSongs);
+    ArrayList<Student> students, UUID id, int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs, boolean isLoggedIn) {
+        super(id, username, password, email, firstName, lastName, practiceStreak, selectedInstrument, composedSongs, isLoggedIn);
         this.students = students;
     }
 /*
