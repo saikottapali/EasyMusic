@@ -3,6 +3,7 @@ package com.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class MusicCreation {
     private List<Instrument> instruments;
@@ -15,10 +16,10 @@ public class MusicCreation {
         this.sheetMusic = new ArrayList<>();
     }
 
-    public Song createMusic(String title, String composer, String difficultyLevel, Date date, 
+    public Song createMusic(UUID id,String title, String composer, String difficultyLevel, Date date, 
     SheetMusic sheetMusic, boolean isPrivate, List<String> comments, Instrument instrument, List<String> songNotes) {
-        Song newSong = new Song(title, composer, difficultyLevel, instrument, date, sheetMusic, 
-        isPrivate, isPrivate, comments, songNotes);
+        Song newSong = new Song(id, title, composer, difficultyLevel, instrument, date, sheetMusic, 
+                isPrivate, isPrivate, isPrivate, comments, songNotes, songNotes);
         songs.add(newSong);
         System.out.println("New song created: " + title);
         return newSong; 
