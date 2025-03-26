@@ -14,7 +14,6 @@ public class Song {
     private String title;
     private String composer;
     private String difficultyLevel;
-    private String notes;
     private Instrument instrument;
     private Date date;
     private SheetMusic sheetMusic; 
@@ -24,10 +23,9 @@ public class Song {
     private List<String> comments;
     private List<String> songNotes;
     private List<String> tags;
-    private UUID name;
     
     // Constructor
-    public Song(UUID name, String Notes, String title, String composer, String difficultyLevel, Instrument instrument, Date date, 
+    public Song(UUID name, String title, String composer, String difficultyLevel, Instrument instrument, Date date, 
         SheetMusic sheetMusic, boolean isPrivate, boolean isPublic, boolean loggedIn, List<String> comments, List<String> songNotes, List<String> tags) {
             this.id = UUID.randomUUID();
             this.title = title;
@@ -41,17 +39,11 @@ public class Song {
             this.loggedIn = loggedIn;
             this.comments = comments;
             this.songNotes = songNotes;
-            this.name = name;
-            this.notes = notes;
             this.isPublic = isPublic;
             this.tags = tags;
 
     }
 
-    public Song(String name, Instrument instrument, String title, boolean isPrivate, List<String> songNotes) {
-    this(UUID.randomUUID(), name, title, "", "", instrument, new Date(), null, isPrivate, false, false, 
-         new ArrayList<>(), songNotes, new ArrayList<>());
-}
 
     // Method to play the song
     public void play() {
@@ -158,14 +150,6 @@ public class Song {
         this.id = id;
     }
 
-    public UUID getName(){
-        return name;
-    }
-
-    public void setName(UUID name){
-        this.name = name;
-    }
-
     public List<String> getComments() {
         return comments;
     }
@@ -196,6 +180,22 @@ public class Song {
 
     public void setInstrument(Instrument instrument) {
         this.instrument = instrument;
+    }
+
+    public boolean isIsPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
     
 }
