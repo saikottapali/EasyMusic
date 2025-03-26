@@ -1,5 +1,6 @@
 package com.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -10,35 +11,47 @@ import org.jfugue.player.Player;
 public class Song {
 
     private UUID id;
-    private String name;
     private String title;
     private String composer;
     private String difficultyLevel;
+    private String notes;
     private Instrument instrument;
     private Date date;
     private SheetMusic sheetMusic; 
     private boolean isPrivate;
+    private boolean isPublic;
     private boolean loggedIn;
     private List<String> comments;
     private List<String> songNotes;
-
+    private List<String> tags;
+    private UUID name;
+    
     // Constructor
-    public Song(String title, String composer, String difficultyLevel, Instrument instrument, Date date, 
-    SheetMusic sheetMusic, boolean isPrivate, boolean loggedIn, List<String> comments, List<String> songNotes) {
-        this.id = UUID.randomUUID();
-        this.title = title;
-        this.composer = composer;
-        this.difficultyLevel = difficultyLevel;
-        this.instrument = instrument;
-        this.loggedIn = loggedIn;
-        this.date = date;
-        this.sheetMusic = sheetMusic;
-        this.isPrivate = isPrivate;
-        this.loggedIn = loggedIn;
-        this.comments = comments;
-        this.songNotes = songNotes;
+    public Song(UUID name, String Notes, String title, String composer, String difficultyLevel, Instrument instrument, Date date, 
+        SheetMusic sheetMusic, boolean isPrivate, boolean isPublic, boolean loggedIn, List<String> comments, List<String> songNotes, List<String> tags) {
+            this.id = UUID.randomUUID();
+            this.title = title;
+            this.composer = composer;
+            this.difficultyLevel = difficultyLevel;
+            this.instrument = instrument;
+            this.loggedIn = loggedIn;
+            this.date = date;
+            this.sheetMusic = sheetMusic;
+            this.isPrivate = isPrivate;
+            this.loggedIn = loggedIn;
+            this.comments = comments;
+            this.songNotes = songNotes;
+            this.name = name;
+            this.notes = notes;
+            this.isPublic = isPublic;
+            this.tags = tags;
 
     }
+
+    public Song(String name, Instrument instrument, String title, boolean isPrivate, List<String> songNotes) {
+    this(UUID.randomUUID(), name, title, "", "", instrument, new Date(), null, isPrivate, false, false, 
+         new ArrayList<>(), songNotes, new ArrayList<>());
+}
 
     // Method to play the song
     public void play() {
@@ -145,11 +158,11 @@ public class Song {
         this.id = id;
     }
 
-    public String getName(){
+    public UUID getName(){
         return name;
     }
 
-    public void setName(String name){
+    public void setName(UUID name){
         this.name = name;
     }
 

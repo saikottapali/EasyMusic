@@ -24,6 +24,31 @@ public class DataWriter extends DataConstants {
         }
     }
 
+    private static final String SONGS_FILE = "songs.json";
+
+    public static void saveSong(Song song) {
+        JSONArray songsList = DataLoader.loadSongs(); // Load existing songs
+
+        JSONObject songObject = new JSONObject();
+        songObject.put("id", song.getId().toString());
+        songObject.put("name", song.getName());
+        songObject.put("title", song.getTitle());
+        songObject.put("composer", song.getComposer());
+        songObject.put("difficultyLevel", song.getDifficultyLevel());
+        songObject.put("instrument", song.getInstrument().toString());
+        songObject.put("notes", song.getSongNotes());
+        songObject.put("isPrivate", song.isLoggedIn());
+
+        songsList.add(songObject); // Add new song to the list
+
+        try (FileWriter file = new FileWriter(SONGS_FILE)) {
+            file.write(songsList.toJSONString()); // Write updated list to file
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static JSONObject getUserJSON(User user) {
         JSONObject userDetails = new JSONObject();
         userDetails.put(USER_ID, user.getId().toString()); 

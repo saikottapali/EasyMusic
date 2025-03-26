@@ -37,7 +37,7 @@ public class Main {
 
         Instrument selectedInstrument = null; 
         
-        User newUser = new User(id, username, password, email, firstName, lastName, 0, null, new ArrayList<Song>());
+        User newUser = new User(id, username, password, email, firstName, lastName, 0, null, new ArrayList<Song>(), selectedInstrument);
 
         System.out.println("Account created successfully!");
 
@@ -97,11 +97,10 @@ while (loggedIn) {
         break;
 
         case 2:
-            // Select song
-            System.out.print("Enter a song title to play: ");
+        System.out.print("Enter a song title to play: ");
         String songTitle = scanner.nextLine();
-        Song selectedSong = new Song(songTitle, songTitle, songTitle, null, null, loggedIn, null);  
-        System.out.println("You selected: " + selectedSong.getTitle());
+        Song selectedSong = new Song(songTitle, selectedInstrument, "C E G", true, new ArrayList<String>());
+        System.out.println("You selected: " + selectedSong.getName());
             break;
         case 3:
             if (selectedInstrument == null) {
@@ -140,7 +139,7 @@ while (loggedIn) {
             String saveChoice = scanner.nextLine().toLowerCase();
         
             if (saveChoice.equals("yes")) {
-                Song createdSong = new Song(createSongName, selectedInstrument, notes, loggedIn, new ArrayList<>());
+                Song createdSong = new Song(createSongName, selectedInstrument, notes, loggedIn, new ArrayList<String>());
                 newUser.addComposedSong(createdSong);
                 System.out.println("Song saved: " + createdSong.getName());
             } else {

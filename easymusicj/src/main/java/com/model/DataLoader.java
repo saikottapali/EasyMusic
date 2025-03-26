@@ -1,6 +1,7 @@
 package com.model;
 
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 import org.json.simple.JSONArray;
@@ -9,6 +10,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class DataLoader extends DataConstants {
+
+    private static final String SONGS_FILE = "songs.json";
 
     public static ArrayList<User> getUsers() {
         ArrayList<User> users = new ArrayList<User>();
@@ -35,5 +38,16 @@ public class DataLoader extends DataConstants {
         }
 
         return users;
+    }
+
+     public static JSONArray loadSongs() {
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader(SONGS_FILE)) {
+            Object obj = parser.parse(reader);
+            return (JSONArray) obj;
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+            return new JSONArray(); 
+        }
     }
 }
