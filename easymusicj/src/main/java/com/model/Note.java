@@ -10,7 +10,7 @@ public class Note {
     private boolean isPlaying;
 
     //Constructor
-    public Note(String pitch, double duration) {
+    public Note(String pitch, double duration, int volume) {
         this.pitch = pitch;
         this.duration = duration;
         this.volume = volume;

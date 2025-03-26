@@ -18,7 +18,6 @@ public class User {
     private Instrument selectedInstrument;
     private List<Song> composedSongs = new ArrayList<>();
     private boolean isLoggedIn = false;
-    private Instrument instrument;
 
     public User(UUID id, String username, String password, String email, String firstName, String lastName, 
     int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs) {
@@ -90,8 +89,6 @@ public class User {
         return composedSongs;
     }
 
-<<<<<<< HEAD
-=======
     public void updateProfile(String newEmail, String newPassword) {
         this.email = newEmail;
         this.password = newPassword;
@@ -151,17 +148,7 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername(){
-        return this.username;
+    public String getUsername() {
+        return username;
     }
-    
-    public Instrument getInstrument() {
-        return instrument;
-    }
-
-    public void setInstrument(Instrument instrument) {
-        this.instrument = instrument;
-    }
-    
->>>>>>> cde61c3bf352a884ff9a9be87857b6ca3a808a5f
 }

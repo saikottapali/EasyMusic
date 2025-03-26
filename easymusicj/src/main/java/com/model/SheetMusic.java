@@ -69,6 +69,80 @@ public class SheetMusic {
         }
         return notation.toString().trim();
     }
+
+    public int getMusicID() {
+        return musicID;
+    }
+
+    public void setMusicID(int musicID) {
+        this.musicID = musicID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getComposer() {
+        return composer;
+    }
+
+    public void setComposer(String composer) {
+        this.composer = composer;
+    }
+
+    public String getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    public void setDifficultyLevel(String difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
+    }
+
+    public String getNotationType() {
+        return notationType;
+    }
+
+    public void setNotationType(String notationType) {
+        this.notationType = notationType;
+    }
+
+    public int getTempoNumerator() {
+        return tempoNumerator;
+    }
+
+    public void setTempoNumerator(int tempoNumerator) {
+        this.tempoNumerator = tempoNumerator;
+    }
+
+    public int getTempoDenominator() {
+        return tempoDenominator;
+    }
+
+    public void setTempoDenominator(int tempoDenominator) {
+        this.tempoDenominator = tempoDenominator;
+    }
+
+    public String getClef() {
+        return clef;
+    }
+
+    public void setClef(String clef) {
+        this.clef = clef;
+    }
+
+    public ArrayList<Measure> getMeasures() {
+        return measures;
+    }
+
+    public void setMeasures(ArrayList<Measure> measures) {
+        this.measures = measures;
+    }
+
+    
     
 }
 
