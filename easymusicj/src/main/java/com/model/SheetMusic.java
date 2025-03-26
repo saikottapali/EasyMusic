@@ -3,9 +3,10 @@ package com.model;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class SheetMusic {
-    private int musicID;
+    private UUID musicID;
     private String title;
     private String composer;
     private String difficultyLevel;
@@ -16,8 +17,8 @@ public class SheetMusic {
     private ArrayList<Measure> measures;
 
     // Constructor
-    public SheetMusic(int musicID, String title, String composer, String difficultyLevel, String notationType, 
-                      int tempoNumerator, int tempoDenominator, String clef) {
+    public SheetMusic(UUID musicID, String title, String composer, String difficultyLevel, String notationType, 
+        int tempoNumerator, int tempoDenominator, String clef, ArrayList<Measure> measures) {
         this.musicID = musicID;
         this.title = title;
         this.composer = composer;
@@ -70,11 +71,11 @@ public class SheetMusic {
         return notation.toString().trim();
     }
 
-    public int getMusicID() {
+    public UUID getMusicID() {
         return musicID;
     }
 
-    public void setMusicID(int musicID) {
+    public void setMusicID(UUID musicID) {
         this.musicID = musicID;
     }
 
