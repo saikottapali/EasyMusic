@@ -1,6 +1,5 @@
 package com.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -25,7 +24,7 @@ public class Song {
     private List<String> tags;
     
     // Constructor
-    public Song(UUID name, String title, String composer, String difficultyLevel, Instrument instrument, Date date, 
+    public Song(UUID id, String title, String composer, String difficultyLevel, Instrument instrument, Date date, 
         SheetMusic sheetMusic, boolean isPrivate, boolean isPublic, boolean loggedIn, List<String> comments, List<String> songNotes, List<String> tags) {
             this.id = UUID.randomUUID();
             this.title = title;
@@ -43,7 +42,6 @@ public class Song {
             this.tags = tags;
 
     }
-
 
     // Method to play the song
     public void play() {
