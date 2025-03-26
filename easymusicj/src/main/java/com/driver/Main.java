@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
+import org.jfugue.player.Player;
 
 public class Main {
 
@@ -64,12 +65,10 @@ public class Main {
                 
 boolean loggedIn = true;
 while (loggedIn) {
-    System.out.println("\nWhat would you like to do?");
+    System.out.println("\nSelect an instrument then choose what you want to do!");
     System.out.println("1. Select an instrument");
     System.out.println("2. Select a song");
     System.out.println("3. Create a song");
-    System.out.println("4. Play a note");
-    System.out.println("5. Play a chord");
     System.out.println("4. Logout");
 
     int choice = scanner.nextInt();
@@ -104,42 +103,51 @@ while (loggedIn) {
         Song selectedSong = new Song(songTitle, songTitle, songTitle, null, null, loggedIn, null);  
         System.out.println("You selected: " + selectedSong.getTitle());
             break;
-            case 3:
-            // Create song
+        case 3:
+            if (selectedInstrument == null) {
+                System.out.println("Please select an instrument first (Option 1).");
+                break;
+            }
+        
             System.out.print("Enter the name of the song you want to create: ");
             String createSongName = scanner.nextLine();
-            Song createdSong = new Song(createSongName, newUser.getInstrument(), null, loggedIn, new ArrayList<>());
-            newUser.addComposedSong(createdSong);
-            System.out.println("You created the song: " + createdSong.getName());
-            break;  
-        case 4:
-            // Play a note
-            if (newUser.getInstrument() != null) {
-                System.out.print("Enter a note (e.g., C5): ");
-                String pitch = scanner.nextLine();
-                Note note = new Note(pitch, 1.0);
-                newUser.getInstrument().play(note);
-            } else {
-                System.out.println("You must select an instrument first!");
+        
+            String exampleNotes;
+            switch (selectedInstrument.getType()) {
+                case "Keyboard":
+                    exampleNotes = "C, E, G (C Major Chord)";
+                    break;
+                case "String":
+                    exampleNotes = "G, B, D (G Major Chord)";
+                    break;
+                case "Percussion":
+                    exampleNotes = "Kick, Snare, Hi-Hat (Basic Beat)";
+                    break;
+                default:
+                    exampleNotes = "C#, D#, F# (Example Notes)";
+                    break;
             }
-            break;
-            case 5:
-            // Play a chord
-            if (newUser.getInstrument() != null) {
-                System.out.print("Enter chord notes separated by spaces (e.g., C5 E5 G5): ");
-                String[] pitches = scanner.nextLine().split(" ");
-                List<Note> chordNotes = new ArrayList<>();
-                for (String pitch : pitches) {
-                    chordNotes.add(new Note(pitch, 1.0));
-                }
-                Chord chord = new Chord("Custom Chord", chordNotes);
-                newUser.getInstrument().play(chord);
-            } else {
-                System.out.println("You must select an instrument first!");
-            }
-            break;
+        
+            System.out.println("Write your song! Example for " + selectedInstrument.getName() + ": " + exampleNotes);
+            System.out.print("Enter your notes: ");
+            String notes = scanner.nextLine();
 
-        case 6:
+            System.out.println("Playing your song...");
+            Player player = new Player();
+            player.play(notes);
+        
+            System.out.println("Do you want to save the song? (yes/no)");
+            String saveChoice = scanner.nextLine().toLowerCase();
+        
+            if (saveChoice.equals("yes")) {
+                Song createdSong = new Song(createSongName, selectedInstrument, notes, loggedIn, new ArrayList<>());
+                newUser.addComposedSong(createdSong);
+                System.out.println("Song saved: " + createdSong.getName());
+            } else {
+                System.out.println("Song discarded.");
+            }
+        break;
+        case 4:
             // Logout
             newUser.logOut();
             System.out.println("You have logged out.");
