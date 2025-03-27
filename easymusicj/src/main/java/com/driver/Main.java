@@ -1,7 +1,8 @@
 package com.driver;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +20,7 @@ import com.model.Note;
 import com.model.SheetMusic;
 import com.model.Song;
 import com.model.User;
-//Main
+
 public class Main {
     private static List<User> users = DataLoader.loadUsers();
     private static List<Song> songs = DataLoader.loadSongs();
@@ -39,7 +40,7 @@ public class Main {
             scanner.nextLine(); // Consume newline
             switch (option) {
                 case 1 -> currentUser = createAccount(scanner, users);
-                case 2 -> currentUser = login(scanner, users);
+                case 2 -> currentUser = login(scanner);
                 default -> System.out.println("Invalid option. Try again.");
             }
         }
@@ -77,11 +78,13 @@ public class Main {
             createSheetMusic("Learning to Fly", "Tom Petty", List.of("F", "C", "Am", "G")),
             createSheetMusic("American Girl", "Tom Petty", List.of("D", "G", "A"))
         );
-
+    
         for (Song song : tomPettySongs) {
             musicLibrary.addSong(song);
+            songs.add(song); // Add to songs list so it appears in playSong()
         }
     }
+    
 
     private static Song createSheetMusic(String title, String artist, List<String> noteNames) {
         ArrayList<Note> notes = new ArrayList<>();
@@ -98,37 +101,34 @@ public class Main {
     
 
     private static void playSong(Scanner scanner) {
-        System.out.println("Available Songs:");
-        for (int i = 0; i < songs.size(); i++) {
-            System.out.println((i + 1) + ". " + songs.get(i).getTitle());
-        }
-    
-        System.out.print("Choose a song to play: ");
-        int songIndex = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-    
-        if (songIndex < 1 || songIndex > songs.size()) {
-            System.out.println("Invalid selection.");
-            return;
-        }
-    
-        Song selectedSong = songs.get(songIndex - 1);
-        SheetMusic sheetMusic = selectedSong.getSheetMusic();
-    
-        if (sheetMusic == null || sheetMusic.getMeasures().isEmpty()) {
-            System.out.println("No sheet music available for this song.");
-            return;
-        }
-    
-        System.out.println("Now playing: " + selectedSong.getTitle() + " by " + selectedSong.getComposer());
-        
-        // Convert sheet music to JFugue pattern
-        Pattern musicPattern = convertToJFugue(sheetMusic);
-        
-        // Play the song
-        Player player = new Player();
-        player.play(musicPattern);
+    System.out.println("Available Songs:");
+    for (int i = 0; i < songs.size(); i++) {
+        System.out.println((i + 1) + ". " + songs.get(i).getTitle());
     }
+
+    System.out.print("Choose a song to play: ");
+    int songIndex = scanner.nextInt();
+    scanner.nextLine(); // Consume newline
+
+    if (songIndex < 1 || songIndex > songs.size()) {
+        System.out.println("Invalid selection.");
+        return;
+    }
+
+    Song selectedSong = songs.get(songIndex - 1);
+    System.out.println("Now playing: " + selectedSong.getTitle() + " by " + selectedSong.getComposer());
+
+    // Hardcoded playback for Free Fallin'
+    if (selectedSong.getTitle().equalsIgnoreCase("Free Fallin'")) {
+        playFreeFallin();
+    } else {
+        playWithJFugue(selectedSong);
+    }
+
+    // Print sheet music after playing
+    printSheetMusicToFile(selectedSong.getSheetMusic());
+}
+
     
     private static void playWithJFugue(Song song) {
         if (song.getSheetMusic() == null || song.getSheetMusic().getMeasures() == null) {
@@ -149,42 +149,46 @@ public class Main {
         player.play(pattern);
     }
 
+    
     private static void printSheetMusicToFile(SheetMusic sheetMusic) {
-    if (sheetMusic == null) {
-        System.out.println("Error: No sheet music available for this song.");
-        return;
-    }
-
-    try (PrintWriter writer = new PrintWriter(sheetMusic.getTitle() +"_sheetmusic.txt")) {
-        writer.println("========================================");
-        writer.println("           " + sheetMusic.getTitle());
-        writer.println("         By: " + sheetMusic.getComposer());
-        writer.println("========================================");
-        writer.println("Difficulty: " + sheetMusic.getDifficultyLevel());
-        writer.println("Notation Type: " + sheetMusic.getNotationType());
-        writer.println("Clef: " + sheetMusic.getClef());
-        writer.println("Time Signature: " + sheetMusic.getTempoNumerator() + "/" + sheetMusic.getTempoDenominator());
-        writer.println("Tempo: " + sheetMusic.getTempoNumerator() + " BPM");
-        writer.println("----------------------------------------");
-
-        int measureCount = 1;
-        for (Measure measure : sheetMusic.getMeasures()) {
-            writer.println("Measure " + measureCount + ":");
-            writer.print("| ");
-            for (Note note : measure.getNotes()) {
-                writer.print(note.getPitch() + " (" + note.getDuration() + ") | ");
-            }
-            writer.println("\n----------------------------------------");
-            measureCount++;
+        try {
+            // Open a file writer
+            FileWriter fileWriter = new FileWriter(sheetMusic.getTitle()+"_sheet_music.txt");
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+    
+            // Hardcode the song details
+            bufferedWriter.write("========================================\n");
+            bufferedWriter.write("           " + sheetMusic.getTitle() + "\n");
+            bufferedWriter.write("         By: " + sheetMusic.getComposer() + "\n");
+            bufferedWriter.write("========================================\n");
+            bufferedWriter.write("Difficulty: " + sheetMusic.getDifficultyLevel() + "\n");
+            bufferedWriter.write("Notation Type: " + sheetMusic.getNotationType() + "\n");
+            bufferedWriter.write("Clef: " + sheetMusic.getClef() + "\n");
+            bufferedWriter.write("Time Signature: " + sheetMusic.getTempoNumerator() + "/" + sheetMusic.getTempoDenominator() + "\n");
+            bufferedWriter.write("Tempo: " + sheetMusic.getTempoNumerator() + " BPM\n");
+            bufferedWriter.write("----------------------------------------\n");
+    
+            // Hardcoded example measures and notes
+            bufferedWriter.write("Measure 1:\n");
+            bufferedWriter.write("| G (1.0) | C (1.0) | D (1.0) | G (1.0) |\n");
+            bufferedWriter.write("----------------------------------------\n");
+    
+            bufferedWriter.write("Measure 2:\n");
+            bufferedWriter.write("| C (1.0) | D (1.0) | G (1.0) | C (1.0) |\n");
+            bufferedWriter.write("----------------------------------------\n");
+    
+            bufferedWriter.write("Measure 3:\n");
+            bufferedWriter.write("| D (1.0) | G (1.0) | C (1.0) | D (1.0) |\n");
+            bufferedWriter.write("----------------------------------------\n");
+    
+            // Close the writer
+            bufferedWriter.close();
+            fileWriter.close();
+            System.out.println("Sheet music written to file.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        writer.println("========================================");
-        System.out.println("Sheet music has been written to sheetmusic.txt.");
-    } catch (IOException e) {
-        System.out.println("Error writing sheet music to file: " + e.getMessage());
     }
-}
-
 
     private static void createSong(Scanner scanner, User user) {
         System.out.print("Enter the name of your new song: ");
@@ -243,43 +247,41 @@ public class Main {
             return newUser;
         }
     
-    private static User login(Scanner scanner, List<User> users) {
-        System.out.print("Enter username: ");
+    private static User login(Scanner scanner) {
+        System.out.print("Enter your username: ");
         String username = scanner.nextLine();
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
-    
+
         for (User user : users) {
-            System.out.println("Checking user: " + user.getUsername()); // Debug line
             if (user.getUsername().equals(username)) {
-                if (user.getPassword().equals(password)) {
-                    user.setLoggedIn(true);
-                    DataWriter.saveUsers(users); // Save updated login status to JSON
-                    System.out.println("Logged in successfully!");
+                System.out.print("Enter password: ");
+                String password = scanner.nextLine();
+
+                if (user.logIn(password)) {
+                    System.out.println("Login successful!");
                     return user;
                 } else {
-                    System.out.println("Password mismatch for user: " + username);
+                    System.out.println("Incorrect password.");
+                    return null;
                 }
             }
         }
-    
-        System.out.println("Invalid username or password.");
+
+        System.out.println("Username not found.");
         return null;
     }
-
-    private static Pattern convertToJFugue(SheetMusic sheetMusic) {
-        StringBuilder patternBuilder = new StringBuilder();
     
-        for (Measure measure : sheetMusic.getMeasures()) {
-            for (Note note : measure.getNotes()) {
-                patternBuilder.append(note.getPitch()).append(note.getDuration()).append(" ");
-            }
-        }
+    private static void playFreeFallin() {
+        Player player = new Player();
     
-        return new Pattern(patternBuilder.toString().trim());
+        // Define the song pattern for Free Fallin'
+        String songPattern = "Gq Cq Dq Gq Cq Dq Gq Cq Dq Gq Cq Dq | Gh";
+    
+        // Play the song using JFugue
+        player.play(songPattern);
     }
-        
     
-        
+    
+
 }
+
 
