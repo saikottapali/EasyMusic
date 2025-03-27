@@ -2,7 +2,7 @@ package com.model;
 
 public abstract class DataConstants {
     // User file paths
-    protected static final String USER_FILE_NAME = "easymusicj/src/main/java/com/data/users.json";
+    protected static final String USER_FILE_NAME = "json/User.json";
     protected static final String USER_TEMP_FILE_NAME = "src/main/java/com/data/users_temp.json";
 
     // User attributes
@@ -18,7 +18,7 @@ public abstract class DataConstants {
     protected static final String USER_LOGGED_IN = "isLoggedIn";
 
     // Song file paths
-    protected static final String SONG_FILE_NAME = "easymusicj/src/main/java/com/data/songs.json";
+    protected static final String SONG_FILE_NAME = "json/Song.json";
     protected static final String SONG_TEMP_FILE_NAME = "src/main/java/com/data/songs_temp.json";
 
     // Song attributes
