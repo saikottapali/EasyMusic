@@ -1,32 +1,11 @@
 [
     {
-      "id": "550e8400-e29b-41d4-a716-446655440000",
-      "username": "ffredrickson",
-      "hashedPassword": "e3afed0047b08059d0fada10f400c1e5",
-      "email": "FeliciaF@gmail.com",
-      "firstName": "Felicia",
-      "lastName": "Fredrickson",
-      "practiceStreak": 5,
-      "selectedInstrument": {
-        "name": "Piano",
-        "description": "A versatile keyboard instrument.",
-        "minNote": {
-          "pitch": "A0",
-          "duration": 1.0
-        },
-        "maxNote": {
-          "pitch": "C8",
-          "duration": 1.0
-        },
-        "type": "Keyboard"
-      },
-      "composedSongs": [
-      {
-      "id": "6c43782c-d12e-48e4-8c60-4a6e6df9969d"
-      }
-    ],
-    "isLoggedIn": false
-  }
+        "id": "b50b6936-4e62-4c13-b180-9d92930a2449",
+        "username": "ffredrickson",
+        "password": "password123",
+        "email": "fellicia@example.com",
+        "firstName": "Fellicia",
+        "lastName": "Fredrickson",
+        "practiceStreak": 5
+    }
 ]
-     
-  

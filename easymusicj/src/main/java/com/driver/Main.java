@@ -19,6 +19,8 @@ public class Main {
     private static List<User> users = DataLoader.loadUsers();
     private static List<Song> songs = DataLoader.loadSongs();
 
+    
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         User currentUser = null;
@@ -69,13 +71,15 @@ public class Main {
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
         
+        // Check if username already exists in the list of users
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 System.out.println("Username already exists. Try again.");
-                return null;
+                return null;  // Do not allow account creation
             }
         }
-        //password functionality
+    
+        // If no existing user, proceed with account creation
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
         System.out.print("Enter email: ");
@@ -84,12 +88,12 @@ public class Main {
         String firstName = scanner.nextLine();
         System.out.print("Enter last name: ");
         String lastName = scanner.nextLine();
-
+    
         UUID id = UUID.randomUUID();
         User newUser = new User(id, username, password, email, firstName, lastName, 0, null, new ArrayList<>(), false);
         users.add(newUser);
         DataWriter.saveUsers(users);
-
+    
         System.out.println("Account created successfully!");
         return newUser;
     }
