@@ -1,16 +1,16 @@
 package com.model;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 
@@ -48,9 +48,6 @@ public class DataLoader extends DataConstants {
                 String firstName = (String) userObj.get("firstName");
                 String lastName = (String) userObj.get("lastName");
                 int practiceStreak = ((Long) userObj.get("practiceStreak")).intValue();
-
-                JSONObject instrumentObj = (JSONObject) userObj.get("selectedInstrument");
-                Instrument selectedInstrument = parseInstrument(instrumentObj);
                 List<Song> composedSongs = new ArrayList<>();
                 JSONArray composedSongsArray = (JSONArray) userObj.get("composedSongs");
                 if (composedSongsArray != null) {
@@ -73,25 +70,11 @@ public class DataLoader extends DataConstants {
                 Boolean isLoggedIn = (Boolean) userObj.get("isLoggedIn");
 
                 // Add new User object to the list
-                users.add(new User(id, username, password, email, firstName, lastName, 
-                    practiceStreak, selectedInstrument, composedSongs, isLoggedIn));
+                users.add(new User(id, lastName, lastName, lastName, lastName, lastName, practiceStreak, composedSongsArray, isLoggedIn));
             }
         }
         return users;
     }
-
-    // Helper method to parse Instrument
-    private static Instrument parseInstrument(JSONObject instrumentObj) {
-        if (instrumentObj == null) return null;  // Handle case where the instrument is missing
-    
-        // Adjust the keys according to your actual JSON structure
-        String name = (String) instrumentObj.get("name");
-        String type = (String) instrumentObj.get("type");
-    
-        // Construct the Instrument object (make sure to pass the right constructor)
-        return new Instrument(name, type, null, null, type);  // Adjust constructor as needed
-    }
-
     // Load songs from JSON data
     public static List<Song> loadSongs() {
         List<Song> songs = new ArrayList<>();
@@ -107,7 +90,6 @@ public class DataLoader extends DataConstants {
                 String title = (String) songObj.get(SONG_TITLE);
                 String composer = (String) songObj.get(SONG_COMPOSER);
                 String difficultyLevel = (String) songObj.get(SONG_DIFFICULTY);
-                Instrument instrument = (Instrument) songObj.get(SONG_INSTRUMENT);
                 Date date = (Date) songObj.get(SONG_DATE);
                 boolean isPrivate = (Boolean) songObj.get(SONG_IS_PRIVATE);
                 List<String> comments = (List<String>) songObj.get(SONG_COMMENTS);
@@ -132,8 +114,7 @@ public class DataLoader extends DataConstants {
                     tempoDen, clef, measures);
                 }
 
-                songs.add(new Song(id, title, composer, difficultyLevel, instrument, date, sheetMusic, isPrivate, 
-                comments, songNotes, tags));
+                songs.add(new Song(difficultyLevel, difficultyLevel, isPrivate, songArray));
             }
         }
         return songs;
