@@ -18,7 +18,7 @@ public class User {
     private boolean isLoggedIn = false;
     
     public User(UUID id, String username, String password, String email, String firstName, String lastName, 
-    int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs) {
+    int practiceStreak, Instrument selectedInstrument, List<Song> composedSongs, boolean b) {
         this.id = (id == null) ? UUID.randomUUID() : id; // Generate new UUID if null (i.e., new user)
         this.username = username;
         this.password = password;

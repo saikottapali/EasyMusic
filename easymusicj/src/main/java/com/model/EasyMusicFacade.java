@@ -9,7 +9,6 @@ public class EasyMusicFacade {
     private MusicCreation musicPost;
     private Song selectedSong;
     private Instrument selectedInstrument;
-    private Lesson activeLesson;
 
     public EasyMusicFacade(User user, MusicCreation musicPost) {
         this.user = user;
@@ -64,23 +63,6 @@ public class EasyMusicFacade {
 
     public void playNote(Note note) {
         note.play();
-    }
-
-    public Lesson startLesson(Lesson lesson) {
-        activeLesson = lesson;
-        activeLesson.startLesson();
-        return activeLesson;
-    }
-
-    public Lesson stopLesson(Lesson lesson) {
-        if (activeLesson != null) {
-            activeLesson.completeLesson();
-            activeLesson = null;
-            System.out.println("Lesson stopped.");
-        } else {
-            System.out.println("No active lesson to stop.");
-        }
-        return null;
     }
 
     public boolean recordMusic() {

@@ -43,7 +43,7 @@ public class DataLoader extends DataConstants {
                 }
 
                 users.add(new User(id, username, password, email, firstName, lastName, 
-                practiceStreak, selectedInstrument, userComposedSongs));
+                practiceStreak, selectedInstrument, userComposedSongs, isLoggedIn));
         }
         return users;
     }
