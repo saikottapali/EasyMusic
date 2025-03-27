@@ -20,7 +20,6 @@ public class DataWriter extends DataConstants {
             userObj.put(USER_FIRST_NAME, user.getFirstName());
             userObj.put(USER_LAST_NAME, user.getLastName());
             userObj.put(USER_PRACTICE_STREAK, user.getPracticeStreak());
-            userObj.put(USER_SELECTED_INSTRUMENT, user.getSelectedInstrument());
             userObj.put(USER_COMPOSED_SONGS, user.getComposedSongs());
             userObj.put(USER_LOGGED_IN, user.isLoggedIn());
 
