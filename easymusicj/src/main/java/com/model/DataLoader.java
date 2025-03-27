@@ -3,7 +3,6 @@ package com.model;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,120 +12,79 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 
+public class DataLoader extends DataConstants{
+    private static final String USER_FILE = USER_FILE_NAME;
+    private static final String SONG_FILE = SONG_FILE_NAME;
 
-public class DataLoader extends DataConstants {
-
-
-    // Generalized loadJsonData method that handles both JSONArray and JSONObject
-    public static Object loadJsonData(String filePath) {
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader(filePath)) {
-            // Parse the JSON file and return either JSONObject or JSONArray
-            Object obj = parser.parse(reader);
-            return obj;  // Return as a general Object type
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    // Load users from JSON data
     public static List<User> loadUsers() {
         List<User> users = new ArrayList<>();
-        Object jsonData = loadJsonData(USER_FILE_NAME);  // Load JSON data
-    
-        if (jsonData instanceof JSONObject) {
-            JSONObject jsonObject = (JSONObject) jsonData;
-            JSONArray userArray = (JSONArray) jsonObject.get("users");
-    
-            for (Object obj : userArray) {
-                JSONObject userObj = (JSONObject) obj;
-                UUID id = UUID.fromString((String) userObj.get("id"));
-                String username = (String) userObj.get("username");
-                String password = (String) userObj.get("password");
-                String email = (String) userObj.get("email");
-                String firstName = (String) userObj.get("firstName");
-                String lastName = (String) userObj.get("lastName");
-                int practiceStreak = ((Long) userObj.get("practiceStreak")).intValue();
-    
-                List<Song> composedSongs = new ArrayList<>();
-                JSONArray composedSongsArray = (JSONArray) userObj.get("composedSongs");
-                if (composedSongsArray != null) {
-                    for (Object songIdObj : composedSongsArray) {
-                        UUID songId = UUID.fromString((String) songIdObj);
-                        composedSongs.add(findSongById(songId));
-                    }
-                }
-    
-                Boolean isLoggedIn = (Boolean) userObj.get("isLoggedIn");
-    
-                // Create a User object with correct parameters
-                users.add(new User(id, username, password, email, firstName, lastName, practiceStreak, composedSongs, isLoggedIn));
-            }
+        JSONArray userArray = readFromFile(USER_FILE);
+        if (userArray == null) return users;
+
+        for (Object obj : userArray) {
+            JSONObject userJSON = (JSONObject) obj;
+            UUID id = UUID.fromString((String) userJSON.get(USER_ID));
+            String username = (String) userJSON.get(USER_USER_NAME);
+            String password = (String) userJSON.get(USER_PASSWORD);
+            String email = (String) userJSON.get(USER_EMAIL);
+            String firstName = (String) userJSON.get(USER_FIRST_NAME);
+            String lastName = (String) userJSON.get(USER_LAST_NAME);
+            long practiceStreak = (long) userJSON.get(USER_PRACTICE_STREAK);
+            List<Song> composedSongs = loadComposedSongs((JSONArray) userJSON.get(USER_COMPOSED_SONGS));
+
+            users.add(new User(id, username, password, email, firstName, lastName, (int) practiceStreak, composedSongs, false));
         }
         return users;
     }
-    
-    // Load songs from JSON data
+
     public static List<Song> loadSongs() {
         List<Song> songs = new ArrayList<>();
-        Object jsonData = loadJsonData(SONG_FILE_NAME);  // Load JSON data
+        JSONArray songArray = readFromFile(SONG_FILE);
+        
 
-        if (jsonData instanceof JSONObject) {
-            JSONObject jsonObject = (JSONObject) jsonData;
-            JSONArray songArray = (JSONArray) jsonObject.get("songs");
+        for (Object obj : songArray) {
+            JSONObject songJSON = (JSONObject) obj;
+            UUID id = UUID.fromString((String) songJSON.get(SONG_ID));
+            String title = (String) songJSON.get(SONG_TITLE);
+            String composer = (String) songJSON.get(SONG_COMPOSER);
+            String difficultyLevel = (String) songJSON.get(SONG_DIFFICULTY);
+            boolean isPrivate = (boolean) songJSON.get(SONG_IS_PRIVATE);
 
-            for (Object obj : songArray) {
-                JSONObject songObj = (JSONObject) obj;
-                UUID id = UUID.fromString((String) songObj.get(SONG_ID));
-                String title = (String) songObj.get(SONG_TITLE);
-                String composer = (String) songObj.get(SONG_COMPOSER);
-                String difficultyLevel = (String) songObj.get(SONG_DIFFICULTY);
-                Date date = (Date) songObj.get(SONG_DATE);
-                boolean isPrivate = (Boolean) songObj.get(SONG_IS_PRIVATE);
-                List<String> comments = (List<String>) songObj.get(SONG_COMMENTS);
-                List<String> songNotes = (List<String>) songObj.get(SONG_NOTES);
-                List<String> tags = (List<String>) songObj.get(SONG_TAGS);
+            JSONObject sheetMusicJSON = (JSONObject) songJSON.get(SONG_SHEET_MUSIC);
+            UUID musicID = UUID.fromString((String) sheetMusicJSON.get(SHEET_MUSIC_ID));
+            String sheetTitle = (String) sheetMusicJSON.get(SHEET_MUSIC_TITLE);
+            String sheetComposer = (String) sheetMusicJSON.get(USER_USER_NAME);
+            String sheetDifficultyLevel = (String) sheetMusicJSON.get(SHEET_MUSIC_DIFFICULTY);
 
-                // Load SheetMusic
-                JSONObject sheetMusicObj = (JSONObject) songObj.get(SONG_SHEET_MUSIC);
-                SheetMusic sheetMusic = null;
-                if (sheetMusicObj != null) {
-                    UUID sheetId = UUID.fromString((String) sheetMusicObj.get(SHEET_MUSIC_ID));
-                    String sheetTitle = (String) sheetMusicObj.get(SHEET_MUSIC_TITLE);
-                    String sheetComposer = (String) sheetMusicObj.get(SHEET_MUSIC_COMPOSER);
-                    String notationType = (String) sheetMusicObj.get(SHEET_MUSIC_NOTATION);
-                    String sheetDifficulty = (String) sheetMusicObj.get(SHEET_MUSIC_DIFFICULTY);
-                    int tempoNum = ((Long) sheetMusicObj.get(SHEET_MUSIC_TEMPO_NUMERATOR)).intValue();
-                    int tempoDen = ((Long) sheetMusicObj.get(SHEET_MUSIC_TEMPO_DENOMINATOR)).intValue();
-                    String clef = (String) sheetMusicObj.get(SHEET_MUSIC_CLEF);
-                    ArrayList<Measure> measures = (ArrayList<Measure>) sheetMusicObj.get(SHEET_MUSIC_MEASURES);
+            SheetMusic sheetMusic = new SheetMusic(musicID, sheetTitle, sheetComposer, sheetDifficultyLevel, "STANDARD", 4, 4, "Treble", new ArrayList<>());
 
-                    sheetMusic = new SheetMusic(sheetId, sheetTitle, sheetComposer, sheetDifficulty, notationType, tempoNum, 
-                    tempoDen, clef, measures);
-                }
-
-                songs.add(new Song(difficultyLevel, difficultyLevel, isPrivate, songArray));
-            }
+            songs.add(new Song(id ,title, composer, sheetMusic ,isPrivate, new ArrayList<>()));
         }
         return songs;
     }
 
-    // Helper method to read from file and return as JSONArray
-    private static JSONArray readFromFile(String filename) {
-        try (FileReader reader = new FileReader(filename)) {
+    private static JSONArray readFromFile(String filePath) {
+        try (FileReader reader = new FileReader(filePath)) {
             return (JSONArray) new JSONParser().parse(reader);
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
             return null;
         }
     }
 
-    // Helper method to find a song by its ID
-    private static Song findSongById(UUID id) {
-        for (Song song : loadSongs()) {
-            if (song.getId().equals(id)) return song;
+    private static List<Song> loadComposedSongs(JSONArray songIDs) {
+        List<Song> composedSongs = new ArrayList<>();
+        if (songIDs == null) return composedSongs;
+
+        List<Song> allSongs = loadSongs();
+        for (Object songID : songIDs) {
+            UUID songUUID = UUID.fromString((String) songID);
+            for (Song song : allSongs) {
+                if (song.getId().equals(songUUID)) {
+                    composedSongs.add(song);
+                    break;
+                }
+            }
         }
-        return null;
+        return composedSongs;
     }
 }
