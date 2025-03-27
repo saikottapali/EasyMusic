@@ -21,12 +21,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         User currentUser = null;
 
-        List<User> users = DataLoader.loadUsers();
-System.out.println("Loaded users:");
-for (User user : users) {
-    System.out.println(user.getUsername()); // Should print "ffredrickson" for Fellicia
-}
-
         System.out.println("Welcome to EasyMusic!");
         while (currentUser == null) {
             System.out.println("1. Create an account");
@@ -36,7 +30,7 @@ for (User user : users) {
             scanner.nextLine(); // Consume newline
             switch (option) {
                 case 1 -> currentUser = createAccount(scanner, users);
-                case 2 -> currentUser = login(scanner);
+                case 2 -> currentUser = login(scanner, users);
                 default -> System.out.println("Invalid option. Try again.");
             }
         }
@@ -73,7 +67,6 @@ for (User user : users) {
     
         // Check if username already exists in the list of users
         for (User user : users) {
-            System.out.println("Checking username: " + user.getUsername()); // Debugging line
             if (user.getUsername().equals(username)) {
                 System.out.println("Username already exists. Try again.");
                 return null; // Return null to indicate failure in account creation
@@ -99,26 +92,27 @@ for (User user : users) {
         return newUser;
     }
     
-    private static User login(Scanner scanner) {
-        System.out.print("Enter your username: ");
+    private static User login(Scanner scanner, List<User> users) {
+        System.out.print("Enter username: ");
         String username = scanner.nextLine();
-
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+    
         for (User user : users) {
+            System.out.println("Checking user: " + user.getUsername()); // Debug line
             if (user.getUsername().equals(username)) {
-                System.out.print("Enter password: ");
-                String password = scanner.nextLine();
-
-                if (user.logIn(password)) {
-                    System.out.println("Login successful!");
+                if (user.getPassword().equals(password)) {
+                    user.setLoggedIn(true);
+                    DataWriter.saveUsers(users); // Save updated login status to JSON
+                    System.out.println("Logged in successfully!");
                     return user;
                 } else {
-                    System.out.println("Incorrect password.");
-                    return null;
+                    System.out.println("Password mismatch for user: " + username);
                 }
             }
         }
-
-        System.out.println("Username not found.");
+    
+        System.out.println("Invalid username or password.");
         return null;
     }
 

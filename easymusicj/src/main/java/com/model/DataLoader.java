@@ -33,38 +33,41 @@ public class DataLoader extends DataConstants {
     // Load users from JSON data
     public static List<User> loadUsers() {
         List<User> users = new ArrayList<>();
-        Object jsonData = loadJsonData(USER_FILE_NAME);  // Load JSON data
+        Object jsonData = loadJsonData(USER_FILE_NAME);
     
-        if (jsonData instanceof JSONObject) {
+        if (jsonData instanceof JSONArray) {
+            JSONArray userArray = (JSONArray) jsonData;
+            users = parseUserArray(userArray);
+        } else if (jsonData instanceof JSONObject) {
             JSONObject jsonObject = (JSONObject) jsonData;
             JSONArray userArray = (JSONArray) jsonObject.get("users");
-    
-            for (Object obj : userArray) {
-                JSONObject userObj = (JSONObject) obj;
-                UUID id = UUID.fromString((String) userObj.get("id"));
-                String username = (String) userObj.get("username");
-                String password = (String) userObj.get("password");
-                String email = (String) userObj.get("email");
-                String firstName = (String) userObj.get("firstName");
-                String lastName = (String) userObj.get("lastName");
-                int practiceStreak = ((Long) userObj.get("practiceStreak")).intValue();
-    
-                List<Song> composedSongs = new ArrayList<>();
-                JSONArray composedSongsArray = (JSONArray) userObj.get("composedSongs");
-                if (composedSongsArray != null) {
-                    for (Object songIdObj : composedSongsArray) {
-                        UUID songId = UUID.fromString((String) songIdObj);
-                        composedSongs.add(findSongById(songId));
-                    }
-                }
-    
-                Boolean isLoggedIn = (Boolean) userObj.get("isLoggedIn");
-    
-                // Create a User object with correct parameters
-                users.add(new User(id, username, password, email, firstName, lastName, practiceStreak, composedSongs, isLoggedIn));
+            if (userArray != null) {
+                users = parseUserArray(userArray);
             }
         }
+    
         return users;
+    }
+    
+    private static List<User> parseUserArray(JSONArray userArray) {
+        List<User> users = new ArrayList<>();
+        for (Object obj : userArray) {
+            JSONObject userObj = (JSONObject) obj;
+            UUID id = UUID.fromString((String) userObj.get("id"));
+            String username = (String) userObj.get("username");
+            String password = (String) userObj.getOrDefault("password", userObj.get("hashedPassword"));
+            String email = (String) userObj.get("email");
+            String firstName = (String) userObj.get("firstName");
+            String lastName = (String) userObj.get("lastName");
+            int practiceStreak = ((Long) userObj.get("practiceStreak")).intValue();
+            boolean isLoggedIn = (Boolean) userObj.get("isLoggedIn");
+    
+            List<Song> composedSongs = new ArrayList<>();
+            // ... (code to parse composedSongs if needed)
+    
+            users.add(User.fromJson(userObj));
+        return users;}
+                return users;
     }
     
     // Load songs from JSON data

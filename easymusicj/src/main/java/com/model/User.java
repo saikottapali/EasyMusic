@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 public class User {
     
     private UUID id;
@@ -16,22 +19,36 @@ public class User {
     private List<Song> composedSongs = new ArrayList<>();
     private boolean isLoggedIn = false;
     
-    public User(UUID id, String username, String password, String email, String firstName, String lastName, 
-    int practiceStreak, List<Song> composedSongs, boolean isLoggedIn) {
-        this.id = (id == null) ? UUID.randomUUID() : id; // Generate new UUID if null (i.e., new user)
+    public User(UUID id, String username, String password, String email, 
+                String firstName, String lastName, int practiceStreak, 
+                List<Song> composedSongs, boolean isLoggedIn) {
+        this.id = (id == null) ? UUID.randomUUID() : id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.practiceStreak = 0;
-        this.composedSongs = composedSongs;
-        this.isLoggedIn = false;
+        this.practiceStreak = practiceStreak;  // Use parameter instead of hardcoding 0
+        this.composedSongs = (composedSongs != null) ? composedSongs : new ArrayList<>();
+        this.isLoggedIn = isLoggedIn;  // Use parameter instead of hardcoding false
     }
-    
-    public User(UUID id2, String username2, String password2, String email2, String firstName2, String lastName2, int i,
-            Object object, Object object2, boolean b) {
-        //TODO Auto-generated constructor stub
+
+    public String getHashedPassword() {
+        return password;
+    }
+
+    public static User fromJson(JSONObject json) {
+        return new User(
+            UUID.fromString((String) json.get("id")),
+            (String) json.get("username"),
+            (String) json.get("hashedPassword"),  // Match JSON field name
+            (String) json.get("email"),
+            (String) json.get("firstName"),
+            (String) json.get("lastName"),
+            ((Long) json.get("practiceStreak")).intValue(),
+            parseSongs((JSONArray) json.get("composedSongs")),
+            (Boolean) json.get("isLoggedIn")
+        );
     }
 
     public void practice() {
@@ -133,5 +150,10 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    private static List<Song> parseSongs(JSONArray songsArray) {
+        // Implement your song parsing logic here
+        return new ArrayList<>();
     }
 }

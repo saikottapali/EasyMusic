@@ -10,31 +10,22 @@ import org.json.simple.JSONObject;
 public class DataWriter extends DataConstants {
 
     public static void saveUsers(List<User> users) {
-        JSONArray userArray = new JSONArray();
+        JSONArray jsonArray = new JSONArray();
         for (User user : users) {
-            JSONObject userObj = new JSONObject();
-            userObj.put(USER_ID, user.getId().toString());
-            userObj.put(USER_USER_NAME, user.getUsername());
-            userObj.put(USER_PASSWORD, user.getPassword());
-            userObj.put(USER_EMAIL, user.getEmail());
-            userObj.put(USER_FIRST_NAME, user.getFirstName());
-            userObj.put(USER_LAST_NAME, user.getLastName());
-            userObj.put(USER_PRACTICE_STREAK, user.getPracticeStreak());
-            userObj.put(USER_COMPOSED_SONGS, user.getComposedSongs());
-            userObj.put(USER_LOGGED_IN, user.isLoggedIn());
-
-            // Save composed songs as a list of song IDs
-            JSONArray composedSongsArray = new JSONArray();
-            for (Song song : user.getComposedSongs()) {
-                composedSongsArray.add(song.getId().toString());
-            }
-            userObj.put(USER_COMPOSED_SONGS, composedSongsArray);
-
-            userArray.add(userObj);
-        }
-        writeToFile(USER_FILE_NAME, userArray);
-    }
-
+            JSONObject userObject = new JSONObject();
+            userObject.put("id", user.getId().toString());
+            userObject.put("username", user.getUsername());
+            userObject.put("hashedPassword", user.getPassword());  // Use "hashedPassword" instead of "password"
+            userObject.put("email", user.getEmail());
+            userObject.put("firstName", user.getFirstName());
+            userObject.put("lastName", user.getLastName());
+            userObject.put("practiceStreak", user.getPracticeStreak());
+            userObject.put("isLoggedIn", user.isLoggedIn());
+            userObject.put("hashedPassword", user.getHashedPassword());
+            userObject.put("composedSongs", new JSONArray());  // Assuming empty composedSongs for simplicity
+            jsonArray.add(userObject);
+            userObject.put(USER_LOGGED_IN, user.isLoggedIn());}
+        } 
     public static void saveSongs(List<Song> songs) {
         JSONArray songArray = new JSONArray();
         for (Song song : songs) {

@@ -1,15 +1,1 @@
-{
-    "users": [
-      {
-        "id": "123e4567-e89b-12d3-a456-426614174000",
-        "username": "ffredrickson",
-        "password": "password1",
-        "email": "fellicia@example.com",
-        "firstName": "Fellicia",
-        "lastName": "Fredrickson",
-        "practiceStreak": 10,
-        "composedSongs": [],
-        "isLoggedIn": false
-      }
-    ]
-  }
+[{"firstName":"Fellicia","lastName":"Fredrickson","hashedPassword":"password1","practiceStreak":0,"isLoggedIn":false,"composedSongs":[],"id":"123e4567-e89b-12d3-a456-426614174000","email":"fellicia@example.com","username":"ffredrickson"}]
