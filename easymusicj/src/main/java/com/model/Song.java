@@ -1,5 +1,6 @@
 package com.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -22,20 +23,19 @@ public class Song {
     private List<String> tags;
     
     // Constructor
-    public Song(UUID id, String title, String composer, String difficultyLevel, Instrument instrument, Date date, 
-        SheetMusic sheetMusic, boolean isPrivate, List<String> comments, List<String> songNotes, List<String> tags) {
-            this.id = UUID.randomUUID();
-            this.title = title;
-            this.composer = composer;
-            this.difficultyLevel = difficultyLevel;
-            this.instrument = instrument;
-            this.date = date;
-            this.sheetMusic = sheetMusic;
-            this.isPrivate = isPrivate;
-            this.comments = comments;
-            this.songNotes = songNotes;
-            this.tags = tags;
+    public Song(String title, Instrument instrument, String composer, boolean isPrivate, ArrayList<String> songNotes) {
+        this.id = UUID.randomUUID();
+        this.title = title;
+        this.instrument = instrument;
+        this.composer = composer;
+        this.isPrivate = isPrivate;
+        this.songNotes = songNotes;
+    }
 
+    public Song(UUID id2, String title2, String composer2, String difficultyLevel2, Instrument instrument2, Date date2,
+            SheetMusic sheetMusic2, boolean isPrivate2, List<String> comments2, List<String> songNotes2,
+            List<String> tags2) {
+        //TODO Auto-generated constructor stub
     }
 
     // Method to play the song
