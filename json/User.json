@@ -1,11 +1,16 @@
-[
-    {
-        "id": "b50b6936-4e62-4c13-b180-9d92930a2449",
-        "username": "ffredrickson",
-        "password": "password123",
-        "email": "fellicia@example.com",
-        "firstName": "Fellicia",
-        "lastName": "Fredrickson",
-        "practiceStreak": 5
-    }
-]
+{
+    "users": [
+        {
+            "id": "2e1d56bc-fbe2-47d4-8e89-0c58c057b451",
+            "username": "ffredrickson",
+            "password": "password123",
+            "email": "fellicia@example.com",
+            "firstName": "Fellicia",
+            "lastName": "Fredrickson",
+            "practiceStreak": 10,
+            "selectedInstrument": { "name": "Piano", "type": "Keyboard" },
+            "composedSongs": [],
+            "isLoggedIn": false
+        }
+    ]
+}
