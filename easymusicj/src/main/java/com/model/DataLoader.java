@@ -17,6 +17,7 @@ public class DataLoader extends DataConstants {
     private static final String SONG_FILE = SONG_FILE_NAME;
     private static final Pattern UUID_PATTERN = Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
 
+    // Load users from JSON data
     public static List<User> loadUsers() {
         List<User> users = new ArrayList<>();
         Object jsonData = loadJsonData(USER_FILE);
@@ -54,11 +55,15 @@ public class DataLoader extends DataConstants {
             int practiceStreak = ((Long) userObj.get("practiceStreak")).intValue();
             boolean isLoggedIn = (Boolean) userObj.get("isLoggedIn");
 
+            List<Song> composedSongs = new ArrayList<>();
+            // ... (code to parse composedSongs if needed)
+
             users.add(User.fromJson(userObj));
         }
         return users;
     }
 
+    // Load songs from JSON data
     public static List<Song> loadSongs() {
         List<Song> songs = new ArrayList<>();
         JSONArray songArray = readFromFile(SONG_FILE);
@@ -80,6 +85,7 @@ public class DataLoader extends DataConstants {
                 String sheetDifficultyLevel = (String) sheetMusicJSON.get(SHEET_MUSIC_DIFFICULTY);
 
                 SheetMusic sheetMusic = new SheetMusic(musicID, sheetTitle, sheetComposer, sheetDifficultyLevel, "STANDARD", 4, 4, "Treble", new ArrayList<>());
+
                 songs.add(new Song(id, title, composer, sheetMusic, isPrivate, new ArrayList<>()));
             }
         }
