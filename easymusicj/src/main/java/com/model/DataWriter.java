@@ -3,6 +3,7 @@ package com.model;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,9 +24,13 @@ public class DataWriter extends DataConstants {
             userObject.put("isLoggedIn", user.isLoggedIn());
             userObject.put("hashedPassword", user.getHashedPassword());
             userObject.put("composedSongs", new JSONArray());  // Assuming empty composedSongs for simplicity
+            userObject.put(USER_LOGGED_IN, user.isLoggedIn());
+
             jsonArray.add(userObject);
-            userObject.put(USER_LOGGED_IN, user.isLoggedIn());}
-        } 
+        }
+        writeToFile(USER_FILE_NAME, jsonArray);
+    }
+
     public static void saveSongs(List<Song> songs) {
         JSONArray songArray = new JSONArray();
         for (Song song : songs) {
@@ -33,7 +38,11 @@ public class DataWriter extends DataConstants {
             songObj.put(SONG_ID, song.getId().toString());
             songObj.put(SONG_TITLE, song.getTitle());
             songObj.put(SONG_COMPOSER, song.getComposer());
-            songObj.put(SONG_DIFFICULTY, song.getDifficultyLevel().toString());
+
+            // Ensure difficulty level is never null
+            String difficultyLevel = Objects.requireNonNullElse(song.getDifficultyLevel(), "Unknown");
+            songObj.put(SONG_DIFFICULTY, difficultyLevel);
+
             songObj.put(SONG_DATE, song.getDate());
             songObj.put(SONG_IS_PRIVATE, song.isPrivate());
             songObj.put(SONG_NOTES, song.getSongNotes());
@@ -46,12 +55,15 @@ public class DataWriter extends DataConstants {
                 sheetMusicObj.put(SHEET_MUSIC_ID, sheet.getMusicID());
                 sheetMusicObj.put(SHEET_MUSIC_TITLE, sheet.getTitle());
                 sheetMusicObj.put(SHEET_MUSIC_COMPOSER, sheet.getComposer());
-                sheetMusicObj.put(SHEET_MUSIC_DIFFICULTY, sheet.getDifficultyLevel().toString());
+
+                // Ensure sheet music difficulty level is never null
+                String sheetDifficulty = Objects.requireNonNullElse(sheet.getDifficultyLevel(), "Unknown");
+                sheetMusicObj.put(SHEET_MUSIC_DIFFICULTY, sheetDifficulty);
+
                 sheetMusicObj.put(SHEET_MUSIC_NOTATION, sheet.getNotationType());
                 sheetMusicObj.put(SHEET_MUSIC_TEMPO_NUMERATOR, sheet.getTempoNumerator());
                 sheetMusicObj.put(SHEET_MUSIC_TEMPO_DENOMINATOR, sheet.getTempoDenominator());
                 sheetMusicObj.put(SHEET_MUSIC_CLEF, sheet.getClef());
-                sheetMusicObj.put(SHEET_MUSIC_MEASURES, sheet.getMeasures());
 
                 // Save measures
                 JSONArray measuresArray = new JSONArray();

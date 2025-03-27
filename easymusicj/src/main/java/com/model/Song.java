@@ -23,12 +23,16 @@ public class Song {
     
     // Constructor
     public Song(UUID id, String title, String composer, SheetMusic sheetMusic, boolean isPrivate, ArrayList<String> songNotes) {
-        this.id = UUID.randomUUID();
+        this.id = id;  // Fix: Preserve the given UUID instead of overriding with random UUID
         this.title = title;
         this.composer = composer;
         this.sheetMusic = sheetMusic;
-        this.isPrivate = isPrivate; 
-        this.songNotes = songNotes;
+        this.isPrivate = isPrivate;
+        this.songNotes = (songNotes != null) ? songNotes : new ArrayList<>();
+        this.comments = new ArrayList<>();  // Initialize comments to prevent NullPointerException
+        this.tags = new ArrayList<>();
+        this.difficultyLevel = "UNKNOWN";  // Default difficulty level
+        this.date = new Date();  // Default to current date
     }
 
     // Method to play the song
@@ -45,13 +49,11 @@ public class Song {
         player.play(songPattern);
     }
     
-
     // Method to upload the song
     public void upload() {
-        if(!isPrivate) {
+        if (!isPrivate) {
             System.out.println("Uploading song " + title);
-        }
-        else {
+        } else {
             System.out.println("Cannot upload private song: " + title);
         }
     }
@@ -73,13 +75,20 @@ public class Song {
             System.out.println("No sheet music available.");
         }
     }
-    
 
+    // Method to add a comment to the song
     public void addComment(String body, String author) {
-        comments.add(author + ":" + body);
+        if (comments == null) {
+            comments = new ArrayList<>();
+        }
+        comments.add(author + ": " + body);
     }
 
     // Getters and Setters
+    public UUID getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -105,7 +114,7 @@ public class Song {
             this.difficultyLevel = difficultyLevel.toUpperCase();
         } else {
             System.out.println("Invalid difficulty level.");
-        }  
+        }
     }
 
     public Date getDate() {
@@ -124,16 +133,12 @@ public class Song {
         this.sheetMusic = sheetMusic;
     }
 
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public List<String> getComments() {
@@ -141,7 +146,7 @@ public class Song {
     }
 
     public void setComments(List<String> comments) {
-        this.comments = comments;
+        this.comments = (comments != null) ? comments : new ArrayList<>();
     }
 
     public List<String> getSongNotes() {
@@ -149,11 +154,7 @@ public class Song {
     }
 
     public void setSongNotes(List<String> songNotes) {
-        this.songNotes = songNotes;
-    }
-
-    public boolean isPrivate() {
-        return isPrivate;
+        this.songNotes = (songNotes != null) ? songNotes : new ArrayList<>();
     }
 
     public List<String> getTags() {
@@ -161,7 +162,6 @@ public class Song {
     }
 
     public void setTags(List<String> tags) {
-        this.tags = tags;
+        this.tags = (tags != null) ? tags : new ArrayList<>();
     }
-    
 }
