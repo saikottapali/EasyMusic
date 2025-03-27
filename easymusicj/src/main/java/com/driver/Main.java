@@ -26,6 +26,10 @@ public class Main {
     private static List<Song> songs = DataLoader.loadSongs();
     private static MusicLibrary musicLibrary = new MusicLibrary();
 
+    /**
+     * Main method to run the EasyMusic app.
+     * Handles user login and main menu.
+     */
     public static void main(String[] args) {
         preloadSongs();
         Scanner scanner = new Scanner(System.in);
@@ -71,6 +75,9 @@ public class Main {
         scanner.close();
     }
 
+    /**
+     * Preload a few songs into the music library for demonstration.
+     */
     private static void preloadSongs() {
         List<Song> tomPettySongs = List.of(
             createSheetMusic("I Won’t Back Down", "Tom Petty", List.of("C", "D", "E", "F")),
@@ -84,8 +91,15 @@ public class Main {
             songs.add(song); // Add to songs list so it appears in playSong()
         }
     }
-    
 
+    /**
+     * Creates sheet music for a song based on the provided title, artist, and note names.
+     *
+     * @param title The title of the song.
+     * @param artist The artist of the song.
+     * @param noteNames List of note names for the song.
+     * @return The created Song object.
+     */
     private static Song createSheetMusic(String title, String artist, List<String> noteNames) {
         ArrayList<Note> notes = new ArrayList<>();
         for (String noteName : noteNames) {
@@ -98,38 +112,47 @@ public class Main {
         SheetMusic sheetMusic = new SheetMusic(UUID.randomUUID(), title, artist, "EASY", "STANDARD", 4, 4, "Treble", measures);
         return new Song(UUID.randomUUID(), title, artist, sheetMusic ,false, new ArrayList<>());
     }
-    
 
+    /**
+     * Allows the user to play a selected song from the available list of songs.
+     * The song is played using JFugue if it is not Free Fallin'.
+     *
+     * @param scanner The scanner to take user input.
+     */
     private static void playSong(Scanner scanner) {
-    System.out.println("Available Songs:");
-    for (int i = 0; i < songs.size(); i++) {
-        System.out.println((i + 1) + ". " + songs.get(i).getTitle());
+        System.out.println("Available Songs:");
+        for (int i = 0; i < songs.size(); i++) {
+            System.out.println((i + 1) + ". " + songs.get(i).getTitle());
+        }
+
+        System.out.print("Choose a song to play: ");
+        int songIndex = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        if (songIndex < 1 || songIndex > songs.size()) {
+            System.out.println("Invalid selection.");
+            return;
+        }
+
+        Song selectedSong = songs.get(songIndex - 1);
+        System.out.println("Now playing: " + selectedSong.getTitle() + " by " + selectedSong.getComposer());
+
+        // Hardcoded playback for Free Fallin'
+        if (selectedSong.getTitle().equalsIgnoreCase("Free Fallin'")) {
+            playFreeFallin();
+        } else {
+            playWithJFugue(selectedSong);
+        }
+
+        // Print sheet music after playing
+        printSheetMusicToFile(selectedSong.getSheetMusic());
     }
 
-    System.out.print("Choose a song to play: ");
-    int songIndex = scanner.nextInt();
-    scanner.nextLine(); // Consume newline
-
-    if (songIndex < 1 || songIndex > songs.size()) {
-        System.out.println("Invalid selection.");
-        return;
-    }
-
-    Song selectedSong = songs.get(songIndex - 1);
-    System.out.println("Now playing: " + selectedSong.getTitle() + " by " + selectedSong.getComposer());
-
-    // Hardcoded playback for Free Fallin'
-    if (selectedSong.getTitle().equalsIgnoreCase("Free Fallin'")) {
-        playFreeFallin();
-    } else {
-        playWithJFugue(selectedSong);
-    }
-
-    // Print sheet music after playing
-    printSheetMusicToFile(selectedSong.getSheetMusic());
-}
-
-    
+    /**
+     * Plays a song using the JFugue library, converting its notes into a musical pattern.
+     *
+     * @param song The song to be played.
+     */
     private static void playWithJFugue(Song song) {
         if (song.getSheetMusic() == null || song.getSheetMusic().getMeasures() == null) {
             System.out.println("Error: Sheet music not available for this song.");
@@ -149,7 +172,12 @@ public class Main {
         player.play(pattern);
     }
 
-    
+    /**
+     * Prints the sheet music of a song to a file.
+     * The file is saved as a .txt file with the song title.
+     *
+     * @param sheetMusic The sheet music to be saved.
+     */
     private static void printSheetMusicToFile(SheetMusic sheetMusic) {
         try {
             // Open a file writer
@@ -190,6 +218,13 @@ public class Main {
         }
     }
 
+    /**
+     * Creates a new song by taking user input for song title and notes.
+     * The new song is saved and added to the user's song list.
+     *
+     * @param scanner The scanner to take user input.
+     * @param user The user who is creating the song.
+     */
     private static void createSong(Scanner scanner, User user) {
         System.out.print("Enter the name of your new song: ");
         String songName = scanner.nextLine();
@@ -216,6 +251,13 @@ public class Main {
         System.out.println("Song saved: " + newSong.getTitle());
     }
 
+    /**
+     * Creates a new user account after checking for existing users.
+     *
+     * @param scanner The scanner to take user input.
+     * @param users List of existing users.
+     * @return The newly created user.
+     */
     private static User createAccount(Scanner scanner, List<User> users) {
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
@@ -228,25 +270,31 @@ public class Main {
             }
         }
         
-            // If no existing user, proceed with account creation
-            System.out.print("Enter password: ");
-            String password = scanner.nextLine();
-            System.out.print("Enter email: ");
-            String email = scanner.nextLine();
-            System.out.print("Enter first name: ");
-            String firstName = scanner.nextLine();
-            System.out.print("Enter last name: ");
-            String lastName = scanner.nextLine();
-        
-            UUID id = UUID.randomUUID();
-            User newUser = new User(id, username, password, email, firstName, lastName, 0, new ArrayList<>(), false);
-            users.add(newUser);
-            DataWriter.saveUsers(users);
-        
-            System.out.println("Account created successfully!");
-            return newUser;
-        }
+        // If no existing user, proceed with account creation
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+        System.out.print("Enter email: ");
+        String email = scanner.nextLine();
+        System.out.print("Enter first name: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Enter last name: ");
+        String lastName = scanner.nextLine();
     
+        UUID id = UUID.randomUUID();
+        User newUser = new User(id, username, password, email, firstName, lastName, 0, new ArrayList<>(), false);
+        users.add(newUser);
+        DataWriter.saveUsers(users);
+    
+        System.out.println("Account created successfully!");
+        return newUser;
+    }
+
+    /**
+     * Allows the user to log in to the app by providing their username and password.
+     *
+     * @param scanner The scanner to take user input.
+     * @return The logged-in user.
+     */
     private static User login(Scanner scanner) {
         System.out.print("Enter your username: ");
         String username = scanner.nextLine();
@@ -269,7 +317,10 @@ public class Main {
         System.out.println("Username not found.");
         return null;
     }
-    
+
+    /**
+     * Plays the song "Free Fallin'" using a hardcoded pattern.
+     */
     private static void playFreeFallin() {
         Player player = new Player();
     
@@ -279,9 +330,4 @@ public class Main {
         // Play the song using JFugue
         player.play(songPattern);
     }
-    
-    
-
 }
-
-

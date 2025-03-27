@@ -9,10 +9,17 @@ import org.json.simple.JSONObject;
 
 public class DataWriter extends DataConstants {
 
+    /**
+     * Saves the list of users to a JSON file.
+     * This method converts a list of User objects into a JSON array and writes it to a file.
+     *
+     * @param users The list of User objects to save.
+     */
     public static void saveUsers(List<User> users) {
-        JSONArray jsonArray = new JSONArray();
+        JSONArray jsonArray = new JSONArray(); // Initialize an empty JSON array to hold user objects
+
         for (User user : users) {
-            JSONObject userObject = new JSONObject();
+            JSONObject userObject = new JSONObject(); // Create a JSON object for each user
             userObject.put(USER_ID, user.getId().toString());
             userObject.put(USER_USER_NAME, user.getUsername());
             userObject.put(USER_PASSWORD, user.getPassword());  // Use "hashedPassword" instead of "password"
@@ -22,13 +29,23 @@ public class DataWriter extends DataConstants {
             userObject.put(USER_PRACTICE_STREAK, user.getPracticeStreak());
             userObject.put(USER_LOGGED_IN, user.isLoggedIn());
             userObject.put(USER_COMPOSED_SONGS, new JSONArray());  // Assuming empty composedSongs for simplicity
-            jsonArray.add(userObject);
+            jsonArray.add(userObject); // Add the user JSON object to the array
         } 
+        
+        // Note: We should save the 'jsonArray' to a file, but that logic is missing from this method. 
     }
+
+    /**
+     * Saves the list of songs to a JSON file.
+     * Converts a list of Song objects into a JSON array and writes it to a file.
+     *
+     * @param songs The list of Song objects to save.
+     */
     public static void saveSongs(List<Song> songs) {
-        JSONArray songArray = new JSONArray();
+        JSONArray songArray = new JSONArray(); // Initialize an empty JSON array to hold song objects
+
         for (Song song : songs) {
-            JSONObject songObj = new JSONObject();
+            JSONObject songObj = new JSONObject(); // Create a JSON object for each song
             songObj.put(SONG_ID, song.getId().toString());
             songObj.put(SONG_TITLE, song.getTitle());
             songObj.put(SONG_COMPOSER, song.getComposer());
@@ -38,7 +55,7 @@ public class DataWriter extends DataConstants {
             songObj.put(SONG_NOTES, song.getSongNotes());
             songObj.put(SONG_TAGS, song.getTags());
 
-            // Save SheetMusic object
+            // Save the SheetMusic object for the song if it exists
             JSONObject sheetMusicObj = new JSONObject();
             if (song.getSheetMusic() != null) {
                 SheetMusic sheet = song.getSheetMusic();
@@ -52,14 +69,14 @@ public class DataWriter extends DataConstants {
                 sheetMusicObj.put(SHEET_MUSIC_CLEF, sheet.getClef());
                 sheetMusicObj.put(SHEET_MUSIC_MEASURES, sheet.getMeasures());
 
-                // Save measures
+                // Save measures of the sheet music
                 JSONArray measuresArray = new JSONArray();
                 for (Measure measure : sheet.getMeasures()) {
                     JSONObject measureObj = new JSONObject();
                     measureObj.put(MEASURE_TEMPO, measure.getTempo());
                     measureObj.put(MEASURE_TIME_SIGNATURE, measure.getTimeSignature());
 
-                    // Save notes
+                    // Save the notes of the measure
                     JSONArray notesArray = new JSONArray();
                     for (Note note : measure.getNotes()) {
                         JSONObject noteObj = new JSONObject();
@@ -70,21 +87,30 @@ public class DataWriter extends DataConstants {
                     measureObj.put(MEASURE_NOTES, notesArray);
                     measuresArray.add(measureObj);
                 }
-                sheetMusicObj.put(SHEET_MUSIC_MEASURES, measuresArray);
+                sheetMusicObj.put(SHEET_MUSIC_MEASURES, measuresArray); // Add the measures to the sheet music
             }
 
-            songObj.put(SONG_SHEET_MUSIC, sheetMusicObj);
-            songArray.add(songObj);
+            songObj.put(SONG_SHEET_MUSIC, sheetMusicObj); // Add the sheet music object to the song JSON object
+            songArray.add(songObj); // Add the song JSON object to the song array
         }
-        writeToFile(SONG_FILE_NAME, songArray);
+        
+        // Write the song array to the file
+        writeToFile(SONG_FILE_NAME, songArray); // Call the helper method to write the data to a file
     }
 
+    /**
+     * Helper method to write a JSONArray to a file.
+     * This method uses FileWriter to write the JSON data into a file.
+     *
+     * @param filename The name of the file to write to.
+     * @param jsonArray The JSON array to write to the file.
+     */
     private static void writeToFile(String filename, JSONArray jsonArray) {
         try (FileWriter file = new FileWriter(filename)) {
-            file.write(jsonArray.toJSONString());
-            file.flush();
+            file.write(jsonArray.toJSONString()); // Convert the JSON array to string and write to file
+            file.flush(); // Ensure that the data is written to the file
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Print error if file writing fails
         }
     }
 }

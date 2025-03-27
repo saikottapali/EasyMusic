@@ -11,15 +11,22 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class DataLoader extends DataConstants{
+public class DataLoader extends DataConstants {
     private static final String USER_FILE = USER_FILE_NAME; //DON'T CHANGE
-    private static final String SONG_FILE = SONG_FILE_NAME; //DON"T CHANGE
+    private static final String SONG_FILE = SONG_FILE_NAME; //DON'T CHANGE
 
+    /**
+     * Loads the list of users from the JSON file.
+     * Reads the user data, parses it into User objects, and returns them as a list.
+     *
+     * @return A list of users loaded from the file.
+     */
     public static List<User> loadUsers() {
         List<User> users = new ArrayList<>();
-        JSONArray userArray = readFromFile(USER_FILE);
-        if (userArray == null) return users;
+        JSONArray userArray = readFromFile(USER_FILE); // Read the users data from the file
+        if (userArray == null) return users; // Return an empty list if file reading fails
 
+        // Parse each user in the array and convert it into a User object
         for (Object obj : userArray) {
             JSONObject userJSON = (JSONObject) obj;
             UUID id = UUID.fromString((String) userJSON.get(USER_ID));
@@ -31,16 +38,24 @@ public class DataLoader extends DataConstants{
             long practiceStreak = (long) userJSON.get(USER_PRACTICE_STREAK);
             List<Song> composedSongs = loadComposedSongs((JSONArray) userJSON.get(USER_COMPOSED_SONGS));
 
+            // Add the user object to the users list
             users.add(new User(id, username, password, email, firstName, lastName, (int) practiceStreak, composedSongs, false));
         }
-        return users;
+        return users; // Return the list of users
     }
 
+    /**
+     * Loads the list of songs from the JSON file.
+     * Reads the song data, parses it into Song objects, and returns them as a list.
+     *
+     * @return A list of songs loaded from the file.
+     */
     public static List<Song> loadSongs() {
         List<Song> songs = new ArrayList<>();
-        JSONArray songArray = readFromFile(SONG_FILE);
-        if (songArray == null) return songs;
+        JSONArray songArray = readFromFile(SONG_FILE); // Read the songs data from the file
+        if (songArray == null) return songs; // Return an empty list if file reading fails
 
+        // Parse each song in the array and convert it into a Song object
         for (Object obj : songArray) {
             JSONObject songJSON = (JSONObject) obj;
             UUID id = UUID.fromString((String) songJSON.get(SONG_ID));
@@ -55,35 +70,54 @@ public class DataLoader extends DataConstants{
             String sheetComposer = (String) sheetMusicJSON.get(SHEET_MUSIC_COMPOSER);
             String sheetDifficultyLevel = (String) sheetMusicJSON.get(SHEET_MUSIC_DIFFICULTY);
 
+            // Create the SheetMusic object for this song
             SheetMusic sheetMusic = new SheetMusic(musicID, sheetTitle, sheetComposer, sheetDifficultyLevel, "STANDARD", 4, 4, "Treble", new ArrayList<>());
 
+            // Add the song object to the songs list
             songs.add(new Song(id, title, composer, sheetMusic, isPrivate, new ArrayList<>()));
         }
-        return songs;
+        return songs; // Return the list of songs
     }
 
+    /**
+     * Helper method to read data from a JSON file.
+     * Uses JSONParser to read and parse the JSON data from the specified file.
+     *
+     * @param filePath The path of the file to read from.
+     * @return A JSONArray representing the content of the file, or null if an error occurs.
+     */
     private static JSONArray readFromFile(String filePath) {
         try (FileReader reader = new FileReader(filePath)) {
+            // Parse and return the JSON array from the file
             return (JSONArray) new JSONParser().parse(reader);
         } catch (IOException | ParseException e) {
+            // Return null in case of an exception (e.g., file not found or JSON parse error)
             return null;
         }
     }
 
+    /**
+     * Loads a list of composed songs for a given user by matching the song IDs.
+     * This method fetches all songs and compares their IDs to those associated with the user.
+     *
+     * @param songIDs A JSONArray of song IDs associated with the user's composed songs.
+     * @return A list of Song objects corresponding to the composed songs of the user.
+     */
     private static List<Song> loadComposedSongs(JSONArray songIDs) {
         List<Song> composedSongs = new ArrayList<>();
-        if (songIDs == null) return composedSongs;
+        if (songIDs == null) return composedSongs; // Return empty list if no songs are composed
 
+        // Load all available songs
         List<Song> allSongs = loadSongs();
         for (Object songID : songIDs) {
             UUID songUUID = UUID.fromString((String) songID);
             for (Song song : allSongs) {
                 if (song.getId().equals(songUUID)) {
-                    composedSongs.add(song);
+                    composedSongs.add(song); // Add the song if it matches the user's composed song ID
                     break;
                 }
             }
         }
-        return composedSongs;
+        return composedSongs; // Return the list of composed songs
     }
 }
