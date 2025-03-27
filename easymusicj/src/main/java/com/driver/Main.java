@@ -33,7 +33,7 @@ public class Main {
             int option = scanner.nextInt();
             scanner.nextLine(); // Consume newline
             switch (option) {
-                case 1 -> currentUser = createAccount(scanner);
+                case 1 -> currentUser = createAccount(scanner, users);
                 case 2 -> currentUser = login(scanner);
                 default -> System.out.println("Invalid option. Try again.");
             }
@@ -67,7 +67,7 @@ public class Main {
         scanner.close();
     }
 
-    private static User createAccount(Scanner scanner) {
+    private static User createAccount(Scanner scanner, List<User> users) {
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
         
@@ -75,28 +75,28 @@ public class Main {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 System.out.println("Username already exists. Try again.");
-                return null;  // Do not allow account creation
+                return null;  // Return null to indicate failure in account creation
             }
         }
-    
-        // If no existing user, proceed with account creation
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
-        System.out.print("Enter email: ");
-        String email = scanner.nextLine();
-        System.out.print("Enter first name: ");
-        String firstName = scanner.nextLine();
-        System.out.print("Enter last name: ");
-        String lastName = scanner.nextLine();
-    
-        UUID id = UUID.randomUUID();
-        User newUser = new User(id, username, password, email, firstName, lastName, 0, null, new ArrayList<>(), false);
-        users.add(newUser);
-        DataWriter.saveUsers(users);
-    
-        System.out.println("Account created successfully!");
-        return newUser;
-    }
+        
+            // If no existing user, proceed with account creation
+            System.out.print("Enter password: ");
+            String password = scanner.nextLine();
+            System.out.print("Enter email: ");
+            String email = scanner.nextLine();
+            System.out.print("Enter first name: ");
+            String firstName = scanner.nextLine();
+            System.out.print("Enter last name: ");
+            String lastName = scanner.nextLine();
+        
+            UUID id = UUID.randomUUID();
+            User newUser = new User(id, username, password, email, firstName, lastName, 0, null, new ArrayList<>(), false);
+            users.add(newUser);
+            DataWriter.saveUsers(users);
+        
+            System.out.println("Account created successfully!");
+            return newUser;
+        }
 
     private static User login(Scanner scanner) {
         System.out.print("Enter your username: ");
