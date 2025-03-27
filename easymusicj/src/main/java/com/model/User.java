@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 public class User {
     
     private UUID id;
@@ -36,21 +33,7 @@ public class User {
     public String getHashedPassword() {
         return password;
     }
-
-    public static User fromJson(JSONObject json) {
-        return new User(
-            UUID.fromString((String) json.get("id")),
-            (String) json.get("username"),
-            (String) json.get("hashedPassword"),  // Match JSON field name
-            (String) json.get("email"),
-            (String) json.get("firstName"),
-            (String) json.get("lastName"),
-            ((Long) json.get("practiceStreak")).intValue(),
-            parseSongs((JSONArray) json.get("composedSongs")),
-            (Boolean) json.get("isLoggedIn")
-        );
-    }
-
+    
     public void practice() {
         if (isLoggedIn) {
             practiceStreak++;
@@ -152,8 +135,4 @@ public class User {
         return username;
     }
 
-    private static List<Song> parseSongs(JSONArray songsArray) {
-        // Implement your song parsing logic here
-        return new ArrayList<>();
-    }
 }
