@@ -75,7 +75,7 @@ public class Main {
                 return null;
             }
         }
-
+        //password functionality
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
         System.out.print("Enter email: ");
