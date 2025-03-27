@@ -30,9 +30,11 @@ public class DataWriter extends DataConstants {
             userObject.put(USER_LOGGED_IN, user.isLoggedIn());
             userObject.put(USER_COMPOSED_SONGS, new JSONArray());  // Assuming empty composedSongs for simplicity
             jsonArray.add(userObject); // Add the user JSON object to the array
-        } 
+        }
         
-        // Note: We should save the 'jsonArray' to a file, but that logic is missing from this method. 
+        // Write jsonArray to File
+        writeToFile(USER_FILE_NAME, jsonArray);
+        
     }
 
     /**
