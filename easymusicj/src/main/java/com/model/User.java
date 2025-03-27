@@ -29,6 +29,11 @@ public class User {
         this.isLoggedIn = false;
     }
     
+    public User(UUID id2, String username2, String password2, String email2, String firstName2, String lastName2, int i,
+            Object object, Object object2, boolean b) {
+        //TODO Auto-generated constructor stub
+    }
+
     public void practice() {
         if (isLoggedIn) {
             practiceStreak++;

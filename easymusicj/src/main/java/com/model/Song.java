@@ -30,6 +30,12 @@ public class Song {
         this.songNotes = songNotes;
     }
 
+    public Song(UUID id2, String title2, String composer2, String difficultyLevel2, Instrument instrument, Date date2,
+            SheetMusic sheetMusic2, boolean isPrivate2, List<String> comments2, List<String> songNotes2,
+            List<String> tags2) {
+        //TODO Auto-generated constructor stub
+    }
+
     // Method to play the song
     public void play() {
         if (sheetMusic == null || sheetMusic.getJFugueNotation().isEmpty()) {
