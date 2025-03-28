@@ -124,18 +124,23 @@ public class Main {
         for (int i = 0; i < songs.size(); i++) {
             System.out.println((i + 1) + ". " + songs.get(i).getTitle());
         }
-
+    
         System.out.print("Choose a song to play: ");
         int songIndex = scanner.nextInt();
         scanner.nextLine(); // Consume newline
-
+    
         if (songIndex < 1 || songIndex > songs.size()) {
             System.out.println("Invalid selection.");
             return;
         }
-
+    
         Song selectedSong = songs.get(songIndex - 1);
         System.out.println("Now playing: " + selectedSong.getTitle());
+        
+        // Call the play method to actually play the song
+        selectedSong.play();  // This will trigger the play method in the Song class
+    
+    
 
         // Hardcoded playback for Free Fallin'
         if (selectedSong.getTitle().equalsIgnoreCase("Free Fallin'")) {

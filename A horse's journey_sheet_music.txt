@@ -1,5 +1,6 @@
 ========================================
            A horse's journey
+         By: ffredrickson
 ========================================
 Difficulty: EASY
 Notation Type: STANDARD

@@ -84,7 +84,14 @@ public class MusicCreation {
      */
     public void playSong(Song song) {
         if (songs.contains(song)) {
-            song.play();  // Assuming Song has a play method to play the song
+            System.out.println("Attempting to play song: " + song.getTitle());
+            
+            // Check if the song has valid sheet music
+            if (song.getSheetMusic() == null || song.getSheetMusic().getJFugueNotation().isEmpty()) {
+                System.out.println("No sheet music available for this song.");
+            } else {
+                song.play();  // Assuming Song has a play method to play the song
+            }
         } else {
             System.out.println("Song not found, cannot play.");
         }
