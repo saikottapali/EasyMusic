@@ -102,15 +102,23 @@ public class Main {
      */
     private static Song createSheetMusic(String title, String artist, List<String> noteNames) {
         ArrayList<Note> notes = new ArrayList<>();
+        
+        // Create notes based on the provided note names
         for (String noteName : noteNames) {
-            notes.add(new Note(noteName, 0, 0)); // Adjust parameters as needed
+            notes.add(new Note(noteName, 1.0, 100)); // Adjust duration and volume as needed
         }
-    
-        Measure measure = new Measure(notes, 120, "4/4");
+        
+        // Create a measure using the notes
+        Measure measure = new Measure(notes, 120, "4/4"); // Tempo set to 120 BPM, 4/4 time signature
         ArrayList<Measure> measures = new ArrayList<>(List.of(measure));
-    
+        
+        // Create the SheetMusic object with the created measures
         SheetMusic sheetMusic = new SheetMusic(UUID.randomUUID(), title, artist, "EASY", "STANDARD", 4, 4, "Treble", measures);
-        return new Song(UUID.randomUUID(), title, artist, sheetMusic ,false, new ArrayList<>());
+        
+        // Create the Song object and associate it with the SheetMusic
+        Song song = new Song(UUID.randomUUID(), title, artist, sheetMusic, false, new ArrayList<>());
+        
+        return song;
     }
 
     /**
@@ -136,19 +144,23 @@ public class Main {
     
         Song selectedSong = songs.get(songIndex - 1);
         System.out.println("Now playing: " + selectedSong.getTitle());
-        
+    
+        // Add this check to ensure sheet music is available before playing
+        if (selectedSong.getSheetMusic() == null || selectedSong.getSheetMusic().getJFugueNotation().isEmpty()) {
+            System.out.println("No sheet music available for this song.");
+            return;
+        }
+    
         // Call the play method to actually play the song
         selectedSong.play();  // This will trigger the play method in the Song class
     
-    
-
         // Hardcoded playback for Free Fallin'
         if (selectedSong.getTitle().equalsIgnoreCase("Free Fallin'")) {
             playFreeFallin();
         } else {
             playWithJFugue(selectedSong);
         }
-
+    
         // Print sheet music after playing
         printSheetMusicToFile(selectedSong.getSheetMusic());
     }
@@ -186,10 +198,10 @@ public class Main {
     private static void printSheetMusicToFile(SheetMusic sheetMusic) {
         try {
             // Open a file writer
-            FileWriter fileWriter = new FileWriter(sheetMusic.getTitle()+"_sheet_music.txt");
+            FileWriter fileWriter = new FileWriter(sheetMusic.getTitle() + "_sheet_music.txt");
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
     
-            // Hardcode the song details
+            // Write song details
             bufferedWriter.write("========================================\n");
             bufferedWriter.write("           " + sheetMusic.getTitle() + "\n");
             bufferedWriter.write("         By: " + sheetMusic.getComposer() + "\n");
@@ -201,18 +213,20 @@ public class Main {
             bufferedWriter.write("Tempo: " + sheetMusic.getTempoNumerator() + " BPM\n");
             bufferedWriter.write("----------------------------------------\n");
     
-            // Hardcoded example measures and notes
-            bufferedWriter.write("Measure 1:\n");
-            bufferedWriter.write("| G (1.0) | C (1.0) | D (1.0) | G (1.0) |\n");
-            bufferedWriter.write("----------------------------------------\n");
-    
-            bufferedWriter.write("Measure 2:\n");
-            bufferedWriter.write("| C (1.0) | D (1.0) | G (1.0) | C (1.0) |\n");
-            bufferedWriter.write("----------------------------------------\n");
-    
-            bufferedWriter.write("Measure 3:\n");
-            bufferedWriter.write("| D (1.0) | G (1.0) | C (1.0) | D (1.0) |\n");
-            bufferedWriter.write("----------------------------------------\n");
+            // Iterate through the measures and notes to print them
+            int measureNumber = 1;
+            for (Measure measure : sheetMusic.getMeasures()) {
+                bufferedWriter.write("Measure " + measureNumber + ":\n");
+                StringBuilder measureNotes = new StringBuilder();
+                for (Note note : measure.getNotes()) {
+                    // Write each note's pitch and duration (you can add volume too)
+                    measureNotes.append("| ").append(note.getPitch())
+                                .append(" (").append(note.getDuration()).append(") ");
+                }
+                bufferedWriter.write(measureNotes.toString() + "|\n");
+                bufferedWriter.write("----------------------------------------\n");
+                measureNumber++;
+            }
     
             // Close the writer
             bufferedWriter.close();
