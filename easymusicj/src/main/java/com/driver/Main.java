@@ -135,7 +135,7 @@ public class Main {
         }
 
         Song selectedSong = songs.get(songIndex - 1);
-        System.out.println("Now playing: " + selectedSong.getTitle() + " by " + selectedSong.getComposer());
+        System.out.println("Now playing: " + selectedSong.getTitle());
 
         // Hardcoded playback for Free Fallin'
         if (selectedSong.getTitle().equalsIgnoreCase("Free Fallin'")) {
