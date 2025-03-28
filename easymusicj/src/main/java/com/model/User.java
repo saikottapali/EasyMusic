@@ -18,7 +18,7 @@ public class User {
     private String firstName;
     private String lastName;
     private int practiceStreak = 0;
-    private List<Song> composedSongs = new ArrayList<>();
+    private List<Song> composedSongs;
     private boolean isLoggedIn = false;
 
     /**

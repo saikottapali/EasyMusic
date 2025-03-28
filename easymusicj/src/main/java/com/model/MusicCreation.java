@@ -55,9 +55,12 @@ public class MusicCreation {
             System.out.println("Music saved: " + song.getTitle());
             return true;
         }
-        System.out.println("Song not found, save failed.");
+        System.out.println("Song not found, save failed. Current songs in the list: ");
+        for (Song s : songs) {
+            System.out.println(s.getTitle());
+        }
         return false;
-    }
+   }
 
     /**
      * Uploads a song if it exists in the list of songs.
@@ -114,7 +117,8 @@ public class MusicCreation {
                 return song;
             }
         }
-        return null;  // Return null if no song is found with the given title
+        System.out.println("Song with title '" + title + "' not found.");
+        return null;
     }
 
     // Getter and Setter methods for instruments, songs, and sheet music

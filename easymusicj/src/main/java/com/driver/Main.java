@@ -230,25 +230,36 @@ public class Main {
         String songName = scanner.nextLine();
         System.out.print("Enter your notes (comma-separated): ");
         String notesInput = scanner.nextLine();
-
+    
         List<String> noteNames = Arrays.asList(notesInput.split(",\\s*"));
         ArrayList<Note> notes = new ArrayList<>();
         for (String noteName : noteNames) {
-            notes.add(new Note(noteName, 1.0, 50)); // Adjust parameters as needed
+            notes.add(new Note(noteName, 1.0, 50)); 
         }
-
+    
         Measure measure = new Measure(notes, 120, "4/4");
         ArrayList<Measure> measures = new ArrayList<>(List.of(measure));
-
+    
         SheetMusic sheetMusic = new SheetMusic(UUID.randomUUID(), songName, user.getUsername(), "EASY", "STANDARD", 4, 4, "Treble", measures);
         Song newSong = new Song(UUID.randomUUID(), songName, songName, sheetMusic, false, new ArrayList<>());
-
+    
         user.addComposedSong(newSong);
         songs.add(newSong);
         DataWriter.saveSongs(songs);
         DataWriter.saveUsers(users);
-
+    
+        System.out.println("Playing song...");
         System.out.println("Song saved: " + newSong.getTitle());
+
+    
+        // Play the song
+        playSong(notesInput);
+    }
+    
+    private static void playSong(String notesInput) {
+        Player player = new Player();
+        player.play(notesInput);  // Using the notes input as a string to play the song
+        
     }
 
     /**
@@ -298,12 +309,12 @@ public class Main {
     private static User login(Scanner scanner) {
         System.out.print("Enter your username: ");
         String username = scanner.nextLine();
-
+    
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 System.out.print("Enter password: ");
                 String password = scanner.nextLine();
-
+    
                 if (user.logIn(password)) {
                     System.out.println("Login successful!");
                     return user;
@@ -313,11 +324,11 @@ public class Main {
                 }
             }
         }
-
+    
         System.out.println("Username not found.");
         return null;
     }
-
+    
     /**
      * Plays the song "Free Fallin'" using a hardcoded pattern.
      */

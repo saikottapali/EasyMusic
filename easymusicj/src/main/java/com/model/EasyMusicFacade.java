@@ -157,11 +157,16 @@ public class EasyMusicFacade {
      * @return The created song.
      */
     public Song createMusic(UUID id, String title, String composer, String difficultyLevel, 
-        Date date, SheetMusic sheetMusic, boolean isPrivate, List<String> comments) {
+    Date date, SheetMusic sheetMusic, boolean isPrivate, List<String> comments) {
+    
+if (user != null && user.isLoggedIn()) {
+    composer = user.getFirstName() + " " + user.getLastName();  // Set composer as the full name
+}
 
-        return musicPost.createMusic(id, title, composer, difficultyLevel, date, 
-                sheetMusic, isPrivate, comments, comments, isPrivate, comments);  // Assuming musicPost handles song creation
-    }
+// Now, call the musicPost.createMusic method with the correctly set composer
+return musicPost.createMusic(id, title, composer, difficultyLevel, date, 
+        sheetMusic, isPrivate, comments, comments, isPrivate, comments);  // This should match the method signature
+}
 
     /**
      * Plays the currently selected song.
