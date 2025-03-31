@@ -4,6 +4,7 @@ module com.easymusicj {
     requires javafx.fxml;
     requires json.simple;
     requires jfugue;
+    requires junit;
 
     opens com.easymusic to javafx.fxml;
     exports com.easymusic;
