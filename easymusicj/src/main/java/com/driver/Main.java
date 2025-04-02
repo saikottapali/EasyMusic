@@ -299,13 +299,15 @@ public class Main {
         System.out.print("Enter your username: ");
         String username = scanner.nextLine();
 
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+
         for (User user : users) {
             if (user.getUsername().equals(username)) {
-                System.out.print("Enter password: ");
-                String password = scanner.nextLine();
-
-                if (user.logIn(password)) {
-                    System.out.println("Login successful!");
+                
+                if (user.getHashedPassword().equals(password)) {
+                    user.setLoggedIn(true);
                     return user;
                 } else {
                     System.out.println("Incorrect password.");
