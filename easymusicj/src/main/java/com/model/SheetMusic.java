@@ -6,28 +6,26 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class SheetMusic {
-    private UUID musicID;
+    private String musicID;
     private String title;
     private String composer;
     private String difficultyLevel;
-    private String notationType;
+    private String clef;
     private int tempoNumerator;
     private int tempoDenominator;
-    private String clef;
     private ArrayList<Measure> measures;
 
     // Constructor
-    public SheetMusic(UUID musicID, String title, String composer, String difficultyLevel, String notationType, 
+    public SheetMusic(String musicID, String title, String composer, String difficultyLevel, 
         int tempoNumerator, int tempoDenominator, String clef, ArrayList<Measure> measures) {
-        this.musicID = musicID;
+        this.musicID = UUID.randomUUID().toString(); // Generate a new UUID for the music ID
         this.title = title;
         this.composer = composer;
         this.difficultyLevel = difficultyLevel;
-        this.notationType = notationType;
+        this.clef = clef;
         this.tempoNumerator = tempoNumerator;
         this.tempoDenominator = tempoDenominator;
-        this.clef = clef;
-        this.measures = new ArrayList<>();
+        this.measures = measures != null ? measures : new ArrayList<>();
     }
 
     public void addMeasure(Measure measure) {
@@ -39,27 +37,29 @@ public class SheetMusic {
     }
 
     // Method to save sheet music to a text file
-    public void saveToFile(String filename) {
-        try (FileWriter writer = new FileWriter(filename)) {
-            writer.write("Sheet Music: " + title + "\n");
-            writer.write("Composer: " + composer + ", Difficulty: " + difficultyLevel + "\n");
-            writer.write("Tempo: " + tempoNumerator + "/" + tempoDenominator + ", Clef: " + clef + "\n");
-            writer.write("Notation Type: " + notationType + "\n\n");
-
-            for (Measure measure : measures) {
-                writer.write("Time Signature: " + measure.getTimeSignature() + ", Tempo: " + measure.getTempo() + "\n");
-                for (Note note : measure.getNotes()) {
-                    writer.write("Note: " + note.getPitch() + " - " + note.getDuration() + " beats\n");
+    public boolean saveToFile(Song song) {
+        if (song != null) {
+            try (FileWriter writer = new FileWriter(song.getTitle() + ".txt")) {
+                writer.write("Sheet Music: " + title + "\n");
+                writer.write("Composer: " + composer + ", Difficulty: " + difficultyLevel + "\n");
+                writer.write("Tempo: " + tempoNumerator + "/" + tempoDenominator + ", Clef: " + clef + "\n");
+                for (Measure measure : measures) {
+                    writer.write("Time Signature: " + measure.getTimeSignature() + ", Tempo: " + measure.getTempo() + "\n");
+                    for (Note note : measure.getNotes()) {
+                        writer.write("Note: " + note.getPitch() + " - " + note.getDuration() + " beats\n");
+                    }
+                    writer.write("\n"); // Separate measures with a blank line
                 }
-                writer.write("\n"); // Separate measures with a blank line
+
+                writer.write("JFugue Notation: " + getJFugueNotation() + "\n");
+                System.out.println("Sheet music saved to " + song.getTitle() + ".txt");
+                return true;
+
+            } catch (IOException e) {
+                System.out.println("Error saving sheet music: " + e.getMessage());
             }
-
-            writer.write("JFugue Notation: " + getJFugueNotation() + "\n");
-            System.out.println("Sheet music saved to " + filename);
-
-        } catch (IOException e) {
-            System.out.println("Error saving sheet music: " + e.getMessage());
         }
+        return false;
     }
 
     // Helper method to generate JFugue notation
@@ -71,11 +71,11 @@ public class SheetMusic {
         return notation.toString().trim();
     }
 
-    public UUID getMusicID() {
+    public String getMusicID() {
         return musicID;
     }
 
-    public void setMusicID(UUID musicID) {
+    public void setMusicID(String musicID) {
         this.musicID = musicID;
     }
 
@@ -101,14 +101,6 @@ public class SheetMusic {
 
     public void setDifficultyLevel(String difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
-    }
-
-    public String getNotationType() {
-        return notationType;
-    }
-
-    public void setNotationType(String notationType) {
-        this.notationType = notationType;
     }
 
     public int getTempoNumerator() {

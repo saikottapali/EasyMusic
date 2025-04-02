@@ -17,9 +17,9 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
-    private int practiceStreak = 0;
+    private int practiceStreak;
     private List<Song> composedSongs;
-    private boolean isLoggedIn = false;
+    private boolean isLoggedIn;
 
     /**
      * Constructor for the {@code User} class.
@@ -130,6 +130,12 @@ public class User {
      */
     public void addComposedSong(Song song) {
         composedSongs.add(song);
+        DataWriter.saveUsers(UserList.getInstance().getAllUsers()); // Save updated user list
+    }
+
+    public void removeComposedSong(String title) {
+        composedSongs.removeIf(Song -> Song.getTitle().equals(title));
+        DataWriter.saveUsers(UserList.getInstance().getAllUsers()); // Save updated user list
     }
     
     /**

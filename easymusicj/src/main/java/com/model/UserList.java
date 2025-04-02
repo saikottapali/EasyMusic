@@ -1,6 +1,5 @@
 package com.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ public class UserList {
      * Initializes the list of users as an empty ArrayList.
      */
     private UserList() {
-        this.users = new ArrayList<>();
+        users = DataLoader.loadUsers(); // Load users from DataLoader
     }
 
     /**
@@ -42,7 +41,7 @@ public class UserList {
      */
     public void addUser(User user) {
         users.add(user);
-        System.out.println("User added: " + user.getUsername());
+        DataWriter.saveUsers(users); // Save the updated list of users to DataWriter
     }
 
     /**
@@ -53,7 +52,7 @@ public class UserList {
      */
     public void removeUser(String username) {
         users.removeIf(user -> user.getUsername().equalsIgnoreCase(username));
-        System.out.println("User removed: " + username);
+        DataWriter.saveUsers(users);
     }
 
     /**
@@ -79,6 +78,6 @@ public class UserList {
      * @return A new list containing all users in the system.
      */
     public List<User> getAllUsers() {
-        return new ArrayList<>(users);
+        return users;
     }
 }

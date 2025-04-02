@@ -33,10 +33,9 @@ public class DataWriter extends DataConstants {
             JSONArray composedSongsArray = new JSONArray();
             for (Song song : user.getComposedSongs()) {
                 JSONObject songObject = new JSONObject();
-                songObject.put("songId", song.getId().toString());
-                songObject.put("title", song.getTitle());
-                songObject.put("songName", song.getSongNotes());
-                songObject.put("sheetMusic", new JSONObject()); 
+                songObject.put(SONG_ID, song.getId().toString());
+                songObject.put(SONG_TITLE, song.getTitle());
+                songObject.put(SONG_SHEET_MUSIC, new JSONObject()); 
             }
     
             userObject.put(USER_COMPOSED_SONGS, composedSongsArray);  // Add the composed songs array to the user object
@@ -64,8 +63,6 @@ public class DataWriter extends DataConstants {
             songObj.put(SONG_DIFFICULTY, song.getDifficultyLevel().toString());
             songObj.put(SONG_DATE, song.getDate().toString()); // Ensure date is in string format
             songObj.put(SONG_IS_PRIVATE, song.isPrivate());
-            songObj.put(SONG_NOTES, song.getSongNotes());
-            songObj.put(SONG_TAGS, song.getTags());
     
             // Save the SheetMusic object for the song if it exists
             JSONObject sheetMusicObj = new JSONObject();
@@ -75,7 +72,6 @@ public class DataWriter extends DataConstants {
                 sheetMusicObj.put(SHEET_MUSIC_TITLE, sheet.getTitle());
                 sheetMusicObj.put(SHEET_MUSIC_COMPOSER, sheet.getComposer());
                 sheetMusicObj.put(SHEET_MUSIC_DIFFICULTY, sheet.getDifficultyLevel().toString());
-                sheetMusicObj.put(SHEET_MUSIC_NOTATION, sheet.getNotationType());
                 sheetMusicObj.put(SHEET_MUSIC_TEMPO_NUMERATOR, sheet.getTempoNumerator());
                 sheetMusicObj.put(SHEET_MUSIC_TEMPO_DENOMINATOR, sheet.getTempoDenominator());
                 sheetMusicObj.put(SHEET_MUSIC_CLEF, sheet.getClef());
