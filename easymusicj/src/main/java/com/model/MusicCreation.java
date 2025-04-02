@@ -35,12 +35,16 @@ public class MusicCreation {
      * @param tags Tags associated with the song.
      * @return The newly created song.
      */
-    public Song createMusic(UUID id, String title, String composer, String difficultyLevel, Date date, 
-    SheetMusic sheetMusic, boolean isPrivate, List<String> comments, List<String> songNotes, boolean loggedIn, List<String> tags) {
-        // Create a new song and add it to the songs list
-        Song newSong = new Song(id, title, composer, sheetMusic, isPrivate, new ArrayList<>(songNotes));
-        songs.add(newSong);
-        System.out.println("New song created: " + title);
+    public Song createMusic(String title, String composer, String difficultyLevel, Date date, 
+    boolean isPrivate, ArrayList<String> songNotes, SheetMusic sheetMusic) {
+        // Generate UUID for the new song
+        String id = UUID.randomUUID().toString();
+
+        // Create a new song object
+        Song newSong = new Song(id, title, composer, sheetMusic, isPrivate, songNotes);
+        // Save the song to a platform (like a database or list)
+        saveMusic(newSong);
+        
         return newSong;
     }
 
