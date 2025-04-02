@@ -1,4 +1,5 @@
 package com.model;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,5 +31,31 @@ class NoteTest {
         Note note = new Note("C5", "q");
         note.changePitch("F#3");
         assertEquals("F#3", note.getPitch());
+    }
+
+    @Test
+    void testInvalidPitch() {
+        Note note = new Note("C5", "q");
+        note.setPitch("");  // Empty string
+        assertNotEquals("", note.getPitch(), "Pitch should not be empty");
+
+        note.setPitch(null);  // Null value
+        assertNotNull(note.getPitch(), "Pitch should not be null");
+    }
+
+    @Test
+    void testInvalidDuration() {
+        Note note = new Note("C5", "q");
+        note.setDuration("");  // Empty string
+        assertNotEquals("", note.getDuration(), "Duration should not be empty");
+
+        note.setDuration(null);  // Null value
+        assertNotNull(note.getDuration(), "Duration should not be null");
+    }
+
+    @Test
+    void testPlayDoesNotThrowException() {
+        Note note = new Note("C5", "q");
+        assertDoesNotThrow(() -> note.play(), "Playing a note should not throw exceptions");
     }
 }
