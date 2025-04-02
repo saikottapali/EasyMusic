@@ -26,7 +26,7 @@ public class UserTest {
     }
 
     @Test
-void testSetPassword() {
+    void testSetPassword() {
     user.setPassword("newPassword");
     // If there's a getPassword() method, use this:
     assertEquals("newPassword", user.getPassword(), "Password should be updated.");
