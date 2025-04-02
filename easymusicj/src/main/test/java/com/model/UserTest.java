@@ -13,6 +13,6 @@ public class UserTest {
       }
     @Test
     public void testValidLogin(){
-        User
+        User;
     }
 }
