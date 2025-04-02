@@ -90,7 +90,6 @@ public class Main {
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
-<<<<<<< HEAD
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
@@ -106,27 +105,6 @@ public class Main {
                     return null;
                 }
             }
-=======
-        boolean success = facade.logIn(username, password);
-        if (success) {
-            System.out.println("Login successful!");
-            return true;
-        } else {
-            System.out.println("Invalid username or password.");
-            return false;
-        }
-    }
-
-    /**
-     * Plays a song selected by the user.
-     * @param scanner
-     */
-    private static void playSong(Scanner scanner) {
-        System.out.println("Available Songs:");
-        String[] songTitles = facade.getAvailableSongs();
-        for (int i = 0; i < songTitles.length; i++) {
-            System.out.println((i + 1) + ". " + songTitles[i]);
->>>>>>> da734aa221eb10796a810c7a006516eb865aba7a
         }
 
         System.out.print("Choose a song to play: ");
