@@ -65,18 +65,37 @@ public class DataLoader extends DataConstants {
             boolean isPrivate = (boolean) songJSON.get(SONG_IS_PRIVATE);
 
             JSONObject sheetMusicJSON = (JSONObject) songJSON.get(SONG_SHEET_MUSIC);
-            UUID musicID = UUID.fromString((String) sheetMusicJSON.get(SHEET_MUSIC_ID));
+            String musicID = ((String) sheetMusicJSON.get(SHEET_MUSIC_ID));
             String sheetTitle = (String) sheetMusicJSON.get(SHEET_MUSIC_TITLE);
             String sheetComposer = (String) sheetMusicJSON.get(SHEET_MUSIC_COMPOSER);
             String sheetDifficultyLevel = (String) sheetMusicJSON.get(SHEET_MUSIC_DIFFICULTY);
+            String sheetClef = (String) sheetMusicJSON.get(SHEET_MUSIC_CLEF);
+            int sheetTempoNumerator = (int) sheetMusicJSON.get(SHEET_MUSIC_TEMPO_NUMERATOR);
+            int sheetTempoDenominator = (int) sheetMusicJSON.get(SHEET_MUSIC_TEMPO_DENOMINATOR);
+            JSONArray measuresJSON = (JSONArray) sheetMusicJSON.get(SHEET_MUSIC_MEASURES);
+            List<Measure> measures = new ArrayList<>();
+            for (Object measuresObj : measures) {
+                JSONObject measureJSON = (JSONObject) measuresObj;
+                int tempo = (int) measureJSON.get(MEASURE_TEMPO);
+                String timeSignature = (String) measureJSON.get(MEASURE_TIME_SIGNATURE);
+                JSONArray notesJSON = (JSONArray) measureJSON.get(MEASURE_NOTES);
+                List<Note> notes = new ArrayList<>();
 
-            // Create the SheetMusic object for this song
-            SheetMusic sheetMusic = new SheetMusic(musicID, sheetTitle, sheetComposer, sheetDifficultyLevel, "STANDARD", 4, 4, "Treble", new ArrayList<>());
+                for (Object noteObj : notesJSON) {
+                    JSONObject noteJSON = (JSONObject) noteObj;
+                    String pitch = (String) noteJSON.get(NOTE_PITCH);
+                    String duration = (String) noteJSON.get(NOTE_DURATION);
+                    notes.add(new Note(pitch, duration)); // Create and add the note to the list
+                }
+                measures.add(new Measure(notes, tempo, timeSignature)); // Create and add the measure to the list
+            }
 
-            // Add the song object to the songs list
-            songs.add(new Song(id, title, composer, sheetMusic, isPrivate, new ArrayList<>()));
+            SheetMusic sheetMusic = new SheetMusic(musicID, sheetTitle, sheetComposer, sheetDifficultyLevel,
+            sheetTempoNumerator, sheetTempoDenominator, sheetClef, measuresJSON);
+
+            songs.add(new Song(title, composer, difficultyLevel, sheetMusic, isPrivate, new ArrayList<>()));
         }
-        return songs; // Return the list of songs
+        return songs;
     }
 
     /**

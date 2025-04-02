@@ -35,28 +35,17 @@ public class MusicCreation {
      * @param tags Tags associated with the song.
      * @return The newly created song.
      */
-    public Song createMusic(UUID id, String title, String composer, String difficultyLevel, Date date, 
-    SheetMusic sheetMusic, boolean isPrivate, List<String> comments, List<String> songNotes, boolean loggedIn, List<String> tags) {
-        // Create a new song and add it to the songs list
-        Song newSong = new Song(id, title, composer, sheetMusic, isPrivate, new ArrayList<>(songNotes));
-        songs.add(newSong);
-        System.out.println("New song created: " + title);
-        return newSong;
-    }
+    public Song createMusic(String title, String composer, String difficultyLevel, Date date, 
+    boolean isPrivate, ArrayList<String> songNotes, SheetMusic sheetMusic) {
+        // Generate UUID for the new song
+        String id = UUID.randomUUID().toString();
 
-    /**
-     * Saves a song if it exists in the list of songs.
-     * 
-     * @param song The song to save.
-     * @return True if the song is found and saved, false if the song is not found.
-     */
-    public boolean saveMusic(Song song) {
-        if (songs.contains(song)) {
-            System.out.println("Music saved: " + song.getTitle());
-            return true;
-        }
-        System.out.println("Song not found, save failed.");
-        return false;
+        // Create a new song object
+        Song newSong = new Song(id, title, composer, sheetMusic, isPrivate, songNotes);
+        // Save the song to a platform (like a database or list)
+        sheetMusic.saveToFile(newSong);
+
+        return newSong;
     }
 
     /**
@@ -65,75 +54,28 @@ public class MusicCreation {
      * @param song The song to upload.
      * @return True if the song is found and uploaded, false if the song is not found.
      */
-    public boolean uploadSong(Song song) {
-        if (songs.contains(song)) {
-            song.upload();  // Assuming Song has an upload method to upload the song
-            return true;
-        }
-        System.out.println("Song not found, upload failed.");
-        return false;
-    }
 
     /**
      * Plays a song if it exists in the list of songs.
      * 
      * @param song The song to play.
      */
-    public void playSong(Song song) {
+    public void playSong(Song song, Note note) {
         if (songs.contains(song)) {
-            song.play();  // Assuming Song has a play method to play the song
+            System.out.println("Attempting to play song: " + song.getTitle());
+            
+            // Check if the song has valid sheet music
+            if (song.getSheetMusic() == null || song.getSheetMusic().getJFugueNotation().isEmpty()) {
+                System.out.println("No sheet music available for this song.");
+            } else {
+                note.play();  // Assuming Song has a play method to play the song
+            }
         } else {
             System.out.println("Song not found, cannot play.");
         }
     }
 
-    /**
-     * Downloads a song if it exists in the list of songs.
-     * 
-     * @param song The song to download.
-     * @return True if the song is found and downloaded, false if the song is not found.
-     */
-    public boolean downloadSong(Song song) {
-        if (songs.contains(song)) {
-            song.download();  // Assuming Song has a download method to download the song
-            return true;
-        }
-        System.out.println("Song not found, download failed.");
-        return false;
-    }
-
-    /**
-     * Searches for a song by its title.
-     * 
-     * @param title The title of the song to search for.
-     * @return The song with the given title, or null if no such song exists.
-     */
-    public Song searchSong(String title) {
-        for (Song song : songs) {
-            if (song.getTitle().equalsIgnoreCase(title)) {
-                return song;
-            }
-        }
-        return null;  // Return null if no song is found with the given title
-    }
-
-    // Getter and Setter methods for instruments, songs, and sheet music
-
-    public List<Instrument> getInstruments() {
-        return instruments;
-    }
-
-    public void setInstruments(List<Instrument> instruments) {
-        this.instruments = instruments;
-    }
-
-    public List<Song> getSongs() {
-        return songs;
-    }
-
-    public void setSongs(List<Song> songs) {
-        this.songs = songs;
-    }
+    // Getter and Setter methods for sheet music
 
     public List<SheetMusic> getSheetMusic() {
         return sheetMusic;

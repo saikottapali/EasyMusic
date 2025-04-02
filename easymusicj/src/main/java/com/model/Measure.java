@@ -12,8 +12,8 @@ public class Measure {
     private String timeSignature; //Ex. "4/4", "3/4", etc.
 
     // Constructor
-    public Measure(ArrayList<Note> notes, int tempo, String timeSignature) {
-        this.notes = new ArrayList<>(notes);
+    public Measure(List<Note> notes, int tempo, String timeSignature) {
+        this.notes = notes;
         this.tempo = tempo;
         this.timeSignature = timeSignature;
     }

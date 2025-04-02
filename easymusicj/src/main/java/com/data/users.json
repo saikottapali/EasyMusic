@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 [{"firstName":"felica","lastName":"fredrickson","hashedPassword":"felica","practiceStreak":0,"isLoggedIn":false,"composedSongs":[],"id":"3c2c625d-b27b-4cea-8d8e-348f5d3d23aa","email":"felica@gmail.com","username":"ffredrickson"},{"firstName":"savanna","lastName":"welch","hashedPassword":"123","practiceStreak":0,"isLoggedIn":false,"composedSongs":[],"id":"d9aad629-40b9-41fb-9557-2d4d5ef865c6","email":"sa@email.com","username":"Swelch"}]
+=======
+[{"firstName":"felica","lastName":"fredrickson","hashedPassword":"felica","practiceStreak":0,"isLoggedIn":false,"composedSongs":[],"id":"3c2c625d-b27b-4cea-8d8e-348f5d3d23aa","email":"felica@gmail.com","username":"ffredrickson"},{"firstName":"fred","lastName":"fredrickson","hashedPassword":"pass","practiceStreak":0,"isLoggedIn":false,"composedSongs":[],"id":"aac2570e-6267-41df-a5e2-2c0443a1e023","email":"fred@email","username":"ffred"}]
+>>>>>>> da734aa221eb10796a810c7a006516eb865aba7a

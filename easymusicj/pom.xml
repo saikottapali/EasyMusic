@@ -29,6 +29,14 @@
 
 
     <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.9.0</version>
+        <scope>test</scope>
+    </dependency>
+
+
+    <dependency>
         <groupId>com.github.JensPiegsa</groupId>
         <artifactId>jfugue</artifactId>
         <version>5.0.9</version>

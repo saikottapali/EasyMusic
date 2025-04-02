@@ -1,15 +1,16 @@
 package com.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 public class EasyMusicFacade {
     private User user;                  // The logged-in user
-    private MusicCreation musicPost;    // The music creation platform (handles song creation, saving, etc.)
+    private MusicCreation musicPost;
+    private MusicLibrary songList;    // The music creation platform (handles song creation, saving, etc.)
     private Song selectedSong;          // The selected song for playback, upload, or download
-    private Instrument selectedInstrument; // The selected instrument for the user
-
     /**
      * Constructor for EasyMusicFacade.
      * Initializes the facade with the logged-in user and the music creation platform.
@@ -17,9 +18,19 @@ public class EasyMusicFacade {
      * @param user The logged-in user.
      * @param musicPost The music creation platform.
      */
-    public EasyMusicFacade(User user, MusicCreation musicPost) {
+    public EasyMusicFacade() {
         this.user = user;
         this.musicPost = musicPost;
+    }
+
+    public boolean createAccount(String firstName, String lastName, String username, String password, String email) {
+        UserList userList = UserList.getInstance();
+        if (userList.getUser(username) != null) {
+            return false; // Username already exists
+        }
+        User newUser = new User(UUID.randomUUID(), username, password, email, firstName, lastName, 0, new ArrayList<>(), false);
+        userList.addUser(newUser);
+        return true;
     }
 
     /**
@@ -28,69 +39,55 @@ public class EasyMusicFacade {
      * @param username The username.
      * @param password The password.
      */
-    public void logIn(String username, String password) {
-        if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-            System.out.println("Login successful for: " + username);
-        } else {
-            System.out.println("Invalid credentials.");
+    public boolean logIn(String username, String password) {
+        UserList userList = UserList.getInstance();
+        User user = userList.getUser(username);
+        if (user != null && user.getPassword().equals(password)) {
+            this.user = user; // Set the logged-in user
+            return true;
         }
+        return false;
     }
 
     /**
      * Logs out the user.
      */
     public void logOut() {
-        System.out.println("Logged out successfully.");
-        user = null;  // Sets the user to null to indicate the user is logged out
+        this.user = null;
     }
 
-    /**
-     * Allows the user to select an instrument by name.
-     * Returns 'null' if the instrument is not found.
-     *
-     * @param instrumentName The name of the instrument to select.
-     * @return The selected instrument, or null if not found.
-     */
-    public Instrument chooseInstrument(String instrumentName) {
-        for (Instrument instrument : musicPost.getInstruments()) {
-            if (instrument.getName().equalsIgnoreCase(instrumentName)) {
-                selectedInstrument = instrument;
-                System.out.println("Selected instrument: " + instrumentName);
-                return selectedInstrument;
-            }
-        }
-        System.out.println("Instrument not found.");
-        return null;
+    public String viewProfile() {
+        return user != null ? user.toString() : null;
     }
 
     /**
      * Allows the user to select a song by its title.
      *
-     * @param songTitle The title of the song to select.
+     * @param selectedSong The title of the song to select.
      * @return The selected song, or null if the song is not found.
      */
-    public Song chooseSong(String songTitle) {
-        selectedSong = musicPost.searchSong(songTitle);
+    public boolean chooseSong(List<Song> selectedSong) {
+        selectedSong = songList.getSongs();
         if (selectedSong != null) {
-            System.out.println("Selected song: " + songTitle);
-        } else {
-            System.out.println("Song not found.");
+            return true;  // Song found and selected
         }
-        return selectedSong;
+        return false;  // Song not found
     }
 
     /**
      * Views the sheet music of a selected song.
      *
-     * @param songTitle The title of the song to view sheet music for.
+     * @param selectedSong The title of the song to view sheet music for.
      * @return The sheet music for the song, or null if the song is not found.
      */
-    public SheetMusic viewSheetMusic(String songTitle) {
-        Song song = musicPost.searchSong(songTitle);
+    public String viewSheetMusic(List<Song> selectedSong) {
+        Song song = songList.getSongs().stream()
+                .filter(s -> s.getTitle().equals(selectedSong))
+                .findFirst()
+                .orElse(null);
         if (song != null) {
-            return song.getSheetMusic();
+            return song.getSheetMusic().toString();
         }
-        System.out.println("Sheet music not found.");
         return null;
     }
 
@@ -104,45 +101,17 @@ public class EasyMusicFacade {
     }
 
     /**
-     * Starts recording music.
-     *
-     * @return True if recording is started successfully.
-     */
-    public boolean recordMusic() {
-        System.out.println("Recording started...");
-        return true;
-    }
-
-    /**
      * Saves the selected song to the music platform.
      *
      * @param song The song to save.
      * @return True if the song was saved successfully.
      */
-    public boolean saveMusic(Song song) {
-        return musicPost.saveMusic(song);  // Assuming musicPost handles saving the song
+    public boolean saveMusic(SheetMusic sheetMusic) {
+        if (selectedSong != null) {
+            return sheetMusic.saveToFile(selectedSong);  // Prints sheet music to a text file
+      }  
+        return false;  // Return false if no song is selected
     }
-
-    /**
-     * Shares the music on the platform.
-     *
-     * @return True if the music was shared successfully.
-     */
-    public boolean shareMusic() {
-        System.out.println("Music shared successfully!");
-        return true;
-    }
-
-    /**
-     * Views the profile of the logged-in user.
-     *
-     * @return The user's profile information.
-     */
-    public User viewProfile() {
-        System.out.println("Profile for: " + user.getUsername());
-        return user;
-    }
-
     /**
      * Creates a new song with the given details and returns the created song.
      *
@@ -153,49 +122,63 @@ public class EasyMusicFacade {
      * @param date The date of creation.
      * @param sheetMusic The sheet music for the song.
      * @param isPrivate Whether the song is private or public.
-     * @param comments A list of comments on the song.
      * @return The created song.
      */
-    public Song createMusic(UUID id, String title, String composer, String difficultyLevel, 
-        Date date, SheetMusic sheetMusic, boolean isPrivate, List<String> comments) {
-
-        return musicPost.createMusic(id, title, composer, difficultyLevel, date, 
-                sheetMusic, isPrivate, comments, comments, isPrivate, comments);  // Assuming musicPost handles song creation
+    public boolean createMusic(String title, String difficultyLevel, boolean isPrivate, 
+    SheetMusic sheetMusic, ArrayList<String> songNotes) {
+        if(user != null && user.isLoggedIn()) {
+            String composer = user.getFirstName() + " " + user.getLastName();
+            Song newSong = musicPost.createMusic(title, composer, difficultyLevel, 
+            new Date(), isPrivate, songNotes, sheetMusic);
+            return newSong != null;
+        }
+        return false;
     }
-
     /**
      * Plays the currently selected song.
-     * Displays a message if no song is selected.
      */
-    public void playSelectedSong() {
+    public boolean playSelectedSong() {
         if (selectedSong != null) {
-            selectedSong.play();  // Assuming Song has a play method
-        } else {
-            System.out.println("No song selected.");
+            selectedSong.playSong();
+            return true;  
         }
+        return false;
     }
 
-    /**
-     * Uploads the currently selected song to the platform.
-     * Displays a message if no song is selected.
-     */
-    public void uploadSelectedSong() {
-        if (selectedSong != null) {
-            selectedSong.upload();  // Assuming Song has an upload method
-        } else {
-            System.out.println("No song selected to upload.");
-        }
+    public String[] getAvailableSongs() {
+        List<Song> songs = MusicLibrary.getInstance().getSongs();
+        return songs.stream().map(Song::getTitle).toArray(String[]::new);
     }
 
-    /**
-     * Downloads the currently selected song from the platform.
-     * Displays a message if no song is selected.
-     */
-    public void downloadSelectedSong() {
-        if (selectedSong != null) {
-            selectedSong.download();  // Assuming Song has a download method
-        } else {
-            System.out.println("No song selected to download.");
+    public boolean playSong(String songTitle) {
+        Song song = MusicLibrary.getInstance().getSongs().stream()
+                .filter(s -> s.getTitle().equalsIgnoreCase(songTitle))
+                .findFirst()
+                .orElse(null);
+        if (song == null || song.getSheetMusic() == null) {
+            return false;
         }
+        song.playSong();
+        return true;
+    }
+
+    public boolean createSong(String title, String difficultyLevel, boolean isPrivate, String notesInput) {
+        if (user == null) return false; // Ensure a user is logged in
+
+        List<String> noteNames = Arrays.asList(notesInput.split(",\\s*"));
+        ArrayList<Note> notes = new ArrayList<>();
+        for (String noteName : noteNames) {
+            notes.add(new Note(noteName, "q"));
+        }
+
+        Measure measure = new Measure(notes, 120, "4/4");
+        ArrayList<Measure> measures = new ArrayList<>(List.of(measure));
+        String id = UUID.randomUUID().toString();
+        SheetMusic sheetMusic = new SheetMusic(id, title, user.getUsername(), "UNKNOWN", 4, 4, "TREBLE", measures);
+        Song newSong = new Song(id, title, user.getUsername(), sheetMusic, isPrivate, new ArrayList<>());
+
+        user.addComposedSong(newSong);
+        MusicLibrary.getInstance().addSong(newSong);
+        return true;
     }
 }

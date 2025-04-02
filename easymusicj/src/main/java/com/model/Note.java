@@ -5,37 +5,24 @@ import org.jfugue.player.Player;
 
 public class Note {
     private String pitch;   //Range of the note "C5" or "D#4"
-    private double duration; //Duration in beats  quarter note = 1.0 beats  half note = 2.0 beats
-    private int volume;  
-    private boolean isPlaying;
+    private String duration; //Duration in beats  q = 1.0 beats  h = 2.0 beats
 
     //Constructor
-    public Note(String pitch, double duration, int volume) {
+    public Note(String pitch, String duration) {
         this.pitch = pitch;
         this.duration = duration;
-        this.volume = volume;
-        this.isPlaying = false;
     }
 
     //Playing using jfugue
     public void play() {
-        String noteString = pitch + "[" + duration + "]" + " !" + volume;  
+        String noteString = pitch + duration; 
         Pattern pattern = new Pattern(noteString);
         Player player = new Player();
         player.play(pattern);  // JFugue plays the note
-        this.isPlaying = true;
-    }
-
-    public void stop() {
-        this.isPlaying = false;
     }
 
     public void changePitch(String newPitch) {
         this.pitch = newPitch;
-    }
-
-    public void changeVolume(int newVolume) {
-        this.volume = newVolume;
     }
 
     //Getters and Setters
@@ -47,27 +34,12 @@ public class Note {
         this.pitch = pitch;
     }
 
-    public double getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(double duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
-    public int getVolume() {
-        return volume;
-    }
-
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
-
-    public boolean isPlaying() {
-        return isPlaying;
-    }
-
-    public void setPlaying(boolean isPlaying) {
-        this.isPlaying = isPlaying;
-    }
 }

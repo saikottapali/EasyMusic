@@ -17,24 +17,33 @@ public class DataWriter extends DataConstants {
      */
     public static void saveUsers(List<User> users) {
         JSONArray jsonArray = new JSONArray(); // Initialize an empty JSON array to hold user objects
-
+    
         for (User user : users) {
             JSONObject userObject = new JSONObject(); // Create a JSON object for each user
             userObject.put(USER_ID, user.getId().toString());
             userObject.put(USER_USER_NAME, user.getUsername());
-            userObject.put(USER_PASSWORD, user.getPassword());  // Use "hashedPassword" instead of "password"
+            userObject.put(USER_PASSWORD, user.getPassword());
             userObject.put(USER_EMAIL, user.getEmail());
             userObject.put(USER_FIRST_NAME, user.getFirstName());
             userObject.put(USER_LAST_NAME, user.getLastName());
             userObject.put(USER_PRACTICE_STREAK, user.getPracticeStreak());
             userObject.put(USER_LOGGED_IN, user.isLoggedIn());
-            userObject.put(USER_COMPOSED_SONGS, new JSONArray());  // Assuming empty composedSongs for simplicity
+    
+            // Serialize composed songs as a JSON array
+            JSONArray composedSongsArray = new JSONArray();
+            for (Song song : user.getComposedSongs()) {
+                JSONObject songObject = new JSONObject();
+                songObject.put(SONG_ID, song.getId().toString());
+                songObject.put(SONG_TITLE, song.getTitle());
+                songObject.put(SONG_SHEET_MUSIC, new JSONObject()); 
+            }
+    
+            userObject.put(USER_COMPOSED_SONGS, composedSongsArray);  // Add the composed songs array to the user object
             jsonArray.add(userObject); // Add the user JSON object to the array
         }
-        
+    
         // Write jsonArray to File
         writeToFile(USER_FILE_NAME, jsonArray);
-        
     }
 
     /**
@@ -45,39 +54,35 @@ public class DataWriter extends DataConstants {
      */
     public static void saveSongs(List<Song> songs) {
         JSONArray songArray = new JSONArray(); // Initialize an empty JSON array to hold song objects
-
+    
         for (Song song : songs) {
             JSONObject songObj = new JSONObject(); // Create a JSON object for each song
             songObj.put(SONG_ID, song.getId().toString());
             songObj.put(SONG_TITLE, song.getTitle());
             songObj.put(SONG_COMPOSER, song.getComposer());
             songObj.put(SONG_DIFFICULTY, song.getDifficultyLevel().toString());
-            songObj.put(SONG_DATE, song.getDate());
+            songObj.put(SONG_DATE, song.getDate().toString()); // Ensure date is in string format
             songObj.put(SONG_IS_PRIVATE, song.isPrivate());
-            songObj.put(SONG_NOTES, song.getSongNotes());
-            songObj.put(SONG_TAGS, song.getTags());
-
+    
             // Save the SheetMusic object for the song if it exists
             JSONObject sheetMusicObj = new JSONObject();
             if (song.getSheetMusic() != null) {
                 SheetMusic sheet = song.getSheetMusic();
-                sheetMusicObj.put(SHEET_MUSIC_ID, sheet.getMusicID());
+                sheetMusicObj.put(SHEET_MUSIC_ID, sheet.getMusicID().toString());
                 sheetMusicObj.put(SHEET_MUSIC_TITLE, sheet.getTitle());
                 sheetMusicObj.put(SHEET_MUSIC_COMPOSER, sheet.getComposer());
                 sheetMusicObj.put(SHEET_MUSIC_DIFFICULTY, sheet.getDifficultyLevel().toString());
-                sheetMusicObj.put(SHEET_MUSIC_NOTATION, sheet.getNotationType());
                 sheetMusicObj.put(SHEET_MUSIC_TEMPO_NUMERATOR, sheet.getTempoNumerator());
                 sheetMusicObj.put(SHEET_MUSIC_TEMPO_DENOMINATOR, sheet.getTempoDenominator());
                 sheetMusicObj.put(SHEET_MUSIC_CLEF, sheet.getClef());
-                sheetMusicObj.put(SHEET_MUSIC_MEASURES, sheet.getMeasures());
-
+    
                 // Save measures of the sheet music
                 JSONArray measuresArray = new JSONArray();
                 for (Measure measure : sheet.getMeasures()) {
                     JSONObject measureObj = new JSONObject();
                     measureObj.put(MEASURE_TEMPO, measure.getTempo());
                     measureObj.put(MEASURE_TIME_SIGNATURE, measure.getTimeSignature());
-
+    
                     // Save the notes of the measure
                     JSONArray notesArray = new JSONArray();
                     for (Note note : measure.getNotes()) {
@@ -91,7 +96,7 @@ public class DataWriter extends DataConstants {
                 }
                 sheetMusicObj.put(SHEET_MUSIC_MEASURES, measuresArray); // Add the measures to the sheet music
             }
-
+    
             songObj.put(SONG_SHEET_MUSIC, sheetMusicObj); // Add the sheet music object to the song JSON object
             songArray.add(songObj); // Add the song JSON object to the song array
         }
