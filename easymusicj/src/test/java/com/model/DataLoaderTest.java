@@ -13,7 +13,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.powermock.api.mockito.PowerMockito;
 
-//Savanna Welch
+/**
+* @author Savanna Welch
+*/
 
 class DataLoaderTest {
 

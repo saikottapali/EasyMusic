@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-//Savanna Welch
+/**
+* @author Savanna Welch
+*/
 
 public class SongTest {
     private Song song;

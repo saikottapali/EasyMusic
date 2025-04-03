@@ -5,7 +5,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-//Savanna Welch
+/**
+* @author Savanna Welch
+*/
 
 public class UserTest {
     
