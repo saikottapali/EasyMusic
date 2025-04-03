@@ -21,8 +21,8 @@ public class MusicLibrary {
         DataWriter.saveSongs(songs); // Save songs to file
     }
 
-    public List<Song> getSongs() {{
+    public List<Song> getSongs() {
         return songs;
-    }}
+    }
 
 }

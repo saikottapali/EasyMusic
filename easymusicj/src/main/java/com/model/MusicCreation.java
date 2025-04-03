@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class MusicCreation {
-    private List<Instrument> instruments;  // List of available instruments
     private List<Song> songs;              // List of songs in the system
     private List<SheetMusic> sheetMusic;   // List of sheet music available
 
@@ -14,7 +13,6 @@ public class MusicCreation {
      * Constructor to initialize the music creation system with empty lists for instruments, songs, and sheet music.
      */
     public MusicCreation() {
-        this.instruments = new ArrayList<>();
         this.songs = new ArrayList<>();
         this.sheetMusic = new ArrayList<>();
     }
@@ -29,19 +27,15 @@ public class MusicCreation {
      * @param date The date the song was created.
      * @param sheetMusic The sheet music associated with the song.
      * @param isPrivate Whether the song is private or public.
-     * @param comments List of comments for the song.
      * @param songNotes List of notes related to the song.
-     * @param loggedIn The login status of the user (not used in this method).
-     * @param tags Tags associated with the song.
      * @return The newly created song.
      */
-    public Song createMusic(String title, String composer, String difficultyLevel, Date date, 
-    boolean isPrivate, ArrayList<String> songNotes, SheetMusic sheetMusic) {
+    public Song createMusic(String title, String composer, String difficultyLevel, Date date, boolean isPrivate, ArrayList<String> songNotes, SheetMusic sheetMusic) {
         // Generate UUID for the new song
         String id = UUID.randomUUID().toString();
 
         // Create a new song object
-        Song newSong = new Song(id, title, composer, sheetMusic, isPrivate, songNotes);
+        Song newSong = new Song(id, title, composer, difficultyLevel ,sheetMusic, isPrivate, songNotes);
         // Save the song to a platform (like a database or list)
         sheetMusic.saveToFile(newSong);
 
@@ -59,19 +53,15 @@ public class MusicCreation {
      * Plays a song if it exists in the list of songs.
      * 
      * @param song The song to play.
+     * @param note The note to play.
+     * @param musicLibrary The music library containing the songs.
      */
     public void playSong(Song song, Note note) {
-        if (songs.contains(song)) {
-            System.out.println("Attempting to play song: " + song.getTitle());
-            
-            // Check if the song has valid sheet music
-            if (song.getSheetMusic() == null || song.getSheetMusic().getJFugueNotation().isEmpty()) {
-                System.out.println("No sheet music available for this song.");
-            } else {
-                note.play();  // Assuming Song has a play method to play the song
-            }
+        if (song.getSheetMusic() == null || song.getSheetMusic().getJFugueNotation() == null || song.getSheetMusic().getJFugueNotation().isEmpty()) {
+            System.out.println("No sheet music available for this song.");
         } else {
-            System.out.println("Song not found, cannot play.");
+            System.out.println("Attempting to play song: " + song.getTitle());
+            note.play();
         }
     }
 
