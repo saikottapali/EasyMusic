@@ -35,7 +35,7 @@ public class MusicCreation {
         String id = UUID.randomUUID().toString();
 
         // Create a new song object
-        Song newSong = new Song(id, title, composer, difficultyLevel ,sheetMusic, isPrivate, songNotes);
+        Song newSong = new Song(id, title, composer, sheetMusic, isPrivate, songNotes);
         // Save the song to a platform (like a database or list)
         sheetMusic.saveToFile(newSong);
 

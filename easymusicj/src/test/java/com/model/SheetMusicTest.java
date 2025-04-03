@@ -15,8 +15,7 @@ class SheetMusicTest {
         measure1 = new Measure(new ArrayList<>(), 120, "4/4");
         measure2 = new Measure(new ArrayList<>(), 100, "3/4");
 
-        sheetMusic = new SheetMusic("1234", "Test Sheet", "Test Composer", "Intermediate", 
-                                    4, 4, "Treble", new ArrayList<>());
+        sheetMusic = new SheetMusic();
         dummySong = new Song("1234", "Test Song", "Test Composer", sheetMusic, false, new ArrayList<>());
     }
 

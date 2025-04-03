@@ -90,8 +90,7 @@ public class DataLoader extends DataConstants {
                 measures.add(new Measure(notes, tempo, timeSignature)); // Create and add the measure to the list
             }
 
-            SheetMusic sheetMusic = new SheetMusic(musicID, sheetTitle, sheetComposer, sheetDifficultyLevel,
-            sheetTempoNumerator, sheetTempoDenominator, sheetClef, measuresJSON);
+            SheetMusic sheetMusic = new SheetMusic();
 
             songs.add(new Song(title, composer, difficultyLevel, sheetMusic, isPrivate, new ArrayList<>()));
         }

@@ -174,8 +174,8 @@ public class EasyMusicFacade {
         Measure measure = new Measure(notes, 120, "4/4");
         ArrayList<Measure> measures = new ArrayList<>(List.of(measure));
         String id = UUID.randomUUID().toString();
-        SheetMusic sheetMusic = new SheetMusic(id, title, user.getUsername(), "UNKNOWN", 4, 4, "TREBLE", measures);
-        Song newSong = new Song(id, title, user.getUsername(), " ",sheetMusic,isPrivate, new ArrayList<>());
+        SheetMusic sheetMusic = new SheetMusic();
+        Song newSong = new Song(id, title, user.getUsername(), sheetMusic,isPrivate, new ArrayList<>());
 
         user.addComposedSong(newSong);
         MusicLibrary.getInstance().addSong(newSong);

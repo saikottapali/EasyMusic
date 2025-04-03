@@ -3,6 +3,7 @@ package com.model;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class SheetMusic {
@@ -16,8 +17,7 @@ public class SheetMusic {
     private ArrayList<Measure> measures;
 
     // Constructor
-    public SheetMusic(String musicID, String title, String composer, String difficultyLevel, 
-        int tempoNumerator, int tempoDenominator, String clef, ArrayList<Measure> measures) {
+    public SheetMusic() {
         this.musicID = UUID.randomUUID().toString(); // Generate a new UUID for the music ID
         this.title = title;
         this.composer = composer;
@@ -26,6 +26,11 @@ public class SheetMusic {
         this.tempoNumerator = tempoNumerator;
         this.tempoDenominator = tempoDenominator;
         this.measures = measures != null ? measures : new ArrayList<>();
+    }
+
+    public SheetMusic(UUID randomUUID, String title2, String composer2, String difficultyLevel2, int tempoNumerator2,
+            int tempoDenominator2, String clef2, List<Object> of) {
+        //TODO Auto-generated constructor stub
     }
 
     public void addMeasure(Measure measure) {
