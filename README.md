@@ -8,4 +8,6 @@ Inspired by the success of apps like Duolingo, we have incorporated progress tra
 https://youtu.be/Sr3oOPCgW9Q video to our back end assignment
 
 
-https://mockitt.com/proto/mGdVasb3su5j09jXmaLxDk/sharing?view_mode=device&screen=rbpUhKCew2lt27z9a&canvasId=rcUhKIXxqx2VDyDZ #Easy Music- Team CS5-分享 Link to our Prototype on Mockitt
+https://mockitt.com/proto/mGdVasb3su5j09jXmaLxDk/sharing?view_mode=device&screen=rbpUhKCew2lt27z9a&canvasId=rcUhKIXxqx2VDyDZ #Easy Music- Team CS5-分享 
+
+^Link to our Prototype on Mockitt
