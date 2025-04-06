@@ -5,7 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
-//Cameron Long
+/**
+* @author Cameron Long
+*/
 
 class SheetMusicTest {
     private SheetMusic sheetMusic;
