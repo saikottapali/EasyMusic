@@ -1,71 +1,74 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-assignees: ''
+name: Cannot Mock DataLoader in Tests
+about: Issues with mocking DataLoader.class in unit tests for UserList, MusicLibrary, and DataLoader
+assignees: 'Bryson Sinclair'
 
 ---
 
 **Describe the bug**
-A clear and concise description of what the bug is.
-
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Additional context**
-Add any other context about the problem here.
---------------------------------------------------------------------------------------------------------------
----
-name: Bug report
-about: Create a report to help us improve
-assignees: ''
-
----
-
-**Describe the bug**
-A clear and concise description of what the bug is.
-
+While trying to run tests that mock `DataLoader.class` and `DataWriter.class`, Mockito is unable to mock these classes, leading to test failures in `UserListTest`, `MusicLibraryTest`, and `DataLoaderTest`.
 
 **Expected behavior**
-A clear and concise description of what you expected to happen.
+Tests should be able to mock `DataLoader` classes successfully.
 
 **Additional context**
-Add any other context about the problem here.
+- `UserListTest` and `MusicLibraryTest` fail to mock `DataLoader` and `DataWriter`.
+- `DataLoaderTest` fails because Mockito cannot mock `DataLoader`.
+- Possible that `DataWriterTest` is failing as well
 
 --------------------------------------------------------------------------------------------------------------
 ---
-name: Bug report
-about: Create a report to help us improve
-assignees: ''
+name: Mismatch in Difficulty Level in `MusicCreationTest`
+about: Difficulty level mismatch between expected and actual values in `MusicCreationTest`.
+assignees: `Cameron Long`
 
 ---
 
 **Describe the bug**
-A clear and concise description of what the bug is.
+In `MusicCreationTest`, the test is failing due to a mismatch in the expected `difficultyLevel`. The test expects the difficulty level to be `<UNKNOWN>`, but it's getting `<null>` instead.
 
 
 **Expected behavior**
-A clear and concise description of what you expected to happen.
+The difficulty level should default to `<UNKNOWN>` if no valid input is provided, instead of being `null`.
 
 **Additional context**
-Add any other context about the problem here.
+- The test case is validating the creation of a `Song` object, but the `difficultyLevel` is coming back as `null` rather than `<UNKNOWN>`.
+- The expected behavior is for the `difficultyLevel` to be set to `<UNKNOWN>` if it's not explicitly provided.
+
 
 --------------------------------------------------------------------------------------------------------------
 ---
-name: Bug report
-about: Create a report to help us improve
-assignees: ''
+name: Mockito Cannot Mock User Class in `DataWriterTest`
+about: "Mockito cannot mock `User.class` in unit tests."
+assignees: 'Savanna Welch'
 
 ---
 
 **Describe the bug**
-A clear and concise description of what the bug is.
+In `DataWriterTest`, Mockito is unable to mock the `User` class, which is causing the tests to fail. This issue is likely affecting other classes as well.
 
 
 **Expected behavior**
-A clear and concise description of what you expected to happen.
+Tests should be able to mock the `User` class and any other related classes.
 
 **Additional context**
-Add any other context about the problem here.
+- `User` class might not be the only class that cannot be mocked
 
+--------------------------------------------------------------------------------------------------------------
+---
+name: Mockito Cannot Mock `DataLoader` in `DataLoaderTest`
+about: Mockito cannot mock `DataLoader` class in unit tests.
+assignees: `Bryson Sinclair`
+
+---
+
+**Describe the bug**
+`DataLoaderTest` fails because Mockito is unable to mock `DataLoader`. This prevents the tests from running as expected.
+
+**Expected behavior**
+The `DataLoader` class should be mockable in tests.
+
+**Additional context**
+- `DataLoader` class seems to have restrictions (e.g., `final` or `private` methods) that prevent it from being mocked.
+- Investigate if `DataLoader` can be refactored or made more testable, possibly through interfaces or other design changes.
 
