@@ -25,7 +25,7 @@ public class SheetMusicTest {
     private String dummyDifficultyLevel = "INTERMEDIATE";
     private String dummyClef = "TREBLE";
     private boolean dummyIsPrivate = false;
-    private int dummyTempo;
+    private int dummyTempo = 4;
 
     @BeforeEach
     void setUp() {
@@ -41,8 +41,8 @@ public class SheetMusicTest {
         assertNotNull(sheetMusic, "SheetMusic object should not be null.");
         assertEquals("Test Sheet", sheetMusic.getTitle(), "Title should match.");
         assertEquals("Test Composer", sheetMusic.getComposer(), "Composer should match.");
-        assertEquals("Intermediate", sheetMusic.getDifficultyLevel(), "Difficulty level should match.");
-        assertEquals("Treble", sheetMusic.getClef(), "Clef should match.");
+        assertEquals("INTERMEDIATE", sheetMusic.getDifficultyLevel(), "Difficulty level should match.");
+        assertEquals("TREBLE", sheetMusic.getClef(), "Clef should match.");
         assertEquals(4, sheetMusic.getTempo(), "Tempo should match.");
         assertNotNull(sheetMusic.getMeasures(), "Measures list should be initialized.");
         assertTrue(sheetMusic.getMeasures().isEmpty(), "Measures should be empty initially.");

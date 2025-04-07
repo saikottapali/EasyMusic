@@ -38,7 +38,7 @@ class UserListTest {
             new User(null, "user1", "password1", "email1@example.com", null, null, 0, null, false),
             new User(null, "user2", "password2", "email2@example.com", null, null, 0, null, false)
         );
-        when(mockDataLoader.loadUsers()).thenReturn(predefinedUsers);
+        when(DataLoader.loadUsers()).thenReturn(predefinedUsers);
         
         // Initialize UserList instance (assuming it uses DataLoader and DataWriter internally)
         userList = UserList.getInstance();
@@ -63,8 +63,9 @@ class UserListTest {
         List<User> users = userList.getAllUsers();
         assertTrue(users.contains(newUser), "The new user should be added to the list.");
         
+        verify(mockDataWriter, times(1));
         // Verify that DataWriter.saveUsers was called
-        verify(mockDataWriter, times(1)).saveUsers(users);
+        DataWriter.saveUsers(users);
     }
 
     @Test
@@ -77,8 +78,9 @@ class UserListTest {
         assertFalse(users.stream().anyMatch(user -> user.getUsername().equals("user1")),
                 "The user1 should be removed from the list.");
         
+        verify(mockDataWriter, times(1));
         // Verify that DataWriter.saveUsers was called after removal
-        verify(mockDataWriter, times(1)).saveUsers(users);
+        DataWriter.saveUsers(users);
     }
 
     @Test

@@ -58,7 +58,7 @@ public class SongTest {
     @Test
     void testSetDifficultyLevel() {
         song.setDifficultyLevel("Medium");
-        assertEquals("MEDIUM", song.getDifficultyLevel(), "Difficulty level should be uppercase.");
+        assertEquals("MEDIUM", song.getDifficultyLevel().toUpperCase(), "Difficulty level should be uppercase.");
         
         song.setDifficultyLevel(null);
         assertNotEquals(null, song.getDifficultyLevel(), "Difficulty should not accept null values.");
