@@ -1,0 +1,46 @@
+// Source code is decompiled from a .class file using FernFlower decompiler.
+package com.program;
+
+import com.music.Music;
+
+public class MusicPlayer {
+   public MusicPlayer() {
+   }
+
+   public static void main(String[] args) {
+      MusicPlayer player = new MusicPlayer();
+      player.playSong();
+   }
+
+   public void playSong() {
+      try {
+         this.playChords1();
+         Thread.sleep(400L);
+         this.playChords2();
+         Thread.sleep(400L);
+         this.playChords3();
+         Thread.sleep(400L);
+         this.playChords4();
+         Thread.sleep(400L);
+      } catch (InterruptedException var2) {
+         var2.printStackTrace();
+      }
+
+   }
+
+   private void playChords1() {
+      Music.playNote("E4min G4 B4 D5");
+   }
+
+   private void playChords2() {
+      Music.playNote("D4maj F#4 A4 C5");
+   }
+
+   private void playChords3() {
+      Music.playNote("C4maj E4 G4 B4");
+   }
+
+   private void playChords4() {
+      Music.playNote("A3min C4 E4 G4");
+   }
+}
