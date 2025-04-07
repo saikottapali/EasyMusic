@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 /**
 * @author Savanna Welch
+* Tests Run by Bryson Sinclair
 */
 
 class ChordTest {
@@ -24,10 +25,10 @@ class ChordTest {
 
         Chord chord = new Chord("C Major", notes, "major", "q");
 
-        assertEquals("C Major", chord.getChordName());
-        assertEquals("major", chord.getChordType());
-        assertEquals("q", chord.getDuration());
-        assertEquals(3, chord.getNotes().size());
+        assertEquals("C Major", chord.getChordName(), "Chord name should match");
+        assertEquals("major", chord.getChordType(), "Chord type should match");
+        assertEquals("q", chord.getDuration(), "Chord duration should match");
+        assertEquals(3, chord.getNotes().size(), "Chord should have 3 notes");
     }
 
     @Test
@@ -38,8 +39,8 @@ class ChordTest {
         Note newNote = new Note("D5", "q");
         chord.addNote(newNote);
 
-        assertTrue(chord.getNotes().contains(newNote));
-        assertEquals(1, chord.getNotes().size());
+        assertTrue(chord.getNotes().contains(newNote), "Chord should contain the new note");
+        assertEquals(1, chord.getNotes().size(), "Chord should have 1 note after adding");
     }
 
     @Test
@@ -50,8 +51,8 @@ class ChordTest {
         Chord chord = new Chord("C Major", notes, "major", "q");
 
         chord.removeNote(note);
-        assertFalse(chord.getNotes().contains(note));
-        assertEquals(0, chord.getNotes().size());
+        assertFalse(chord.getNotes().contains(note), "Chord should not contain the removed note");
+        assertEquals(0, chord.getNotes().size(), "Chord should have 0 notes after removing");
     }
 
     @Test
@@ -60,7 +61,7 @@ class ChordTest {
         Chord chord = new Chord("C Major", notes, "major", "q");
 
         chord.setChordType("minor");
-        assertEquals("minor", chord.getChordType());
+        assertEquals("minor", chord.getChordType(), "Chord type should be updated");
     }
 
     @Test
@@ -69,7 +70,7 @@ class ChordTest {
         Chord chord = new Chord("C Major", notes, "major", "q");
 
         chord.setChordName("C Minor");
-        assertEquals("C Minor", chord.getChordName());
+        assertEquals("C Minor", chord.getChordName(), "Chord name should be updated");
     }
 
     @Test
@@ -78,7 +79,7 @@ class ChordTest {
         Chord chord = new Chord("C Major", notes, "major", "q");
 
         chord.setDuration("q");
-        assertEquals("q", chord.getDuration());
+        assertEquals("q", chord.getDuration(), "Chord duration should be updated");
     }
 
     @Test
@@ -86,7 +87,7 @@ class ChordTest {
         List<Note> notes = new ArrayList<>();
         Chord chord = new Chord("G Major", notes, "major", "q");
 
-        assertEquals("Chord: G Major, Type: major", chord.getChordDetails());
+        assertEquals("Chord: G Major, Type: major", chord.getChordDetails(), "Chord details should match");
     }
 
     @Test
@@ -94,7 +95,7 @@ class ChordTest {
         List<Note> notes = new ArrayList<>();
         Chord chord = new Chord("C Major", notes, "major", "q");
 
-        assertDoesNotThrow(() -> chord.displayChordNotation());
+        assertDoesNotThrow(() -> chord.displayChordNotation(), "Should not throw an exception when displaying chord notation");
     }
 }
 

@@ -70,10 +70,10 @@ public class DataLoaderTest {
         List<User> users = DataLoader.loadUsers();
 
         // Perform assertions
-        assertFalse(users.isEmpty());
-        assertEquals("testUser", users.get(0).getUsername());
-        assertEquals("test@example.com", users.get(0).getEmail());
-        assertEquals(5, users.get(0).getPracticeStreak());
+        assertFalse(users.isEmpty(), "User list should not be empty");
+        assertEquals("testUser", users.get(0).getUsername(), "Username should match");
+        assertEquals("test@example.com", users.get(0).getEmail(), "Email should match");
+        assertEquals(5, users.get(0).getPracticeStreak(), "Practice streak should match");
     }
 
     @Test
@@ -86,11 +86,11 @@ public class DataLoaderTest {
         List<Song> songs = DataLoader.loadSongs();
 
         // Perform assertions
-        assertFalse(songs.isEmpty());
-        assertEquals("Test Song", songs.get(0).getTitle());
-        assertEquals("John Doe", songs.get(0).getComposer());
-        assertEquals("Easy", songs.get(0).getDifficultyLevel());
-        assertFalse(songs.get(0).isPrivate());
+        assertFalse(songs.isEmpty(), "Song list should not be empty");
+        assertEquals("Test Song", songs.get(0).getTitle(), "Title should match");
+        assertEquals("John Doe", songs.get(0).getComposer(), "Composer should match");
+        assertEquals("Easy", songs.get(0).getDifficultyLevel(), "Difficulty level should match");
+        assertFalse(songs.get(0).isPrivate(), "Song should not be private");
     }
 }
 

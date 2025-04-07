@@ -91,7 +91,7 @@ public class DataWriterTest {
 
             Exception exception = assertThrows(RuntimeException.class, () -> DataWriter.saveUsers(List.of(testUser)));
 
-            assertEquals("File write error", exception.getMessage());
+            assertEquals("File write error", exception.getMessage(), "Exception message should match");
         }
     }
 

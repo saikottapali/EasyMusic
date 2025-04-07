@@ -16,29 +16,29 @@ public class NoteTest {
     @Test
     void testNoteCreation() {
         Note note = new Note("C5", "q");
-        assertEquals("C5", note.getPitch());
-        assertEquals("q", note.getDuration());
+        assertEquals("C5", note.getPitch(), "Pitch should match");
+        assertEquals("q", note.getDuration(), "Duration should match");
     }
 
     @Test
     void testSetPitch() {
         Note note = new Note("C5", "q");
         note.setPitch("D#4");
-        assertEquals("D#4", note.getPitch());
+        assertEquals("D#4", note.getPitch(), "Pitch should be updated");
     }
 
     @Test
     void testSetDuration() {
         Note note = new Note("C5", "q");
         note.setDuration("h");
-        assertEquals("h", note.getDuration());
+        assertEquals("h", note.getDuration(), "Duration should be updated");
     }
 
     @Test
     void testChangePitch() {
         Note note = new Note("C5", "q");
         note.changePitch("F#3");
-        assertEquals("F#3", note.getPitch());
+        assertEquals("F#3", note.getPitch(), "Pitch should be changed");
     }
 
     @Test

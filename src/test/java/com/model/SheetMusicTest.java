@@ -39,11 +39,11 @@ public class SheetMusicTest {
     @Test
     void testSheetMusicCreation() {
         assertNotNull(sheetMusic, "SheetMusic object should not be null.");
-        assertEquals("Test Sheet", sheetMusic.getTitle());
-        assertEquals("Test Composer", sheetMusic.getComposer());
-        assertEquals("Intermediate", sheetMusic.getDifficultyLevel());
-        assertEquals("Treble", sheetMusic.getClef());
-        assertEquals(4, sheetMusic.getTempo());
+        assertEquals("Test Sheet", sheetMusic.getTitle(), "Title should match.");
+        assertEquals("Test Composer", sheetMusic.getComposer(), "Composer should match.");
+        assertEquals("Intermediate", sheetMusic.getDifficultyLevel(), "Difficulty level should match.");
+        assertEquals("Treble", sheetMusic.getClef(), "Clef should match.");
+        assertEquals(4, sheetMusic.getTempo(), "Tempo should match.");
         assertNotNull(sheetMusic.getMeasures(), "Measures list should be initialized.");
         assertTrue(sheetMusic.getMeasures().isEmpty(), "Measures should be empty initially.");
     }

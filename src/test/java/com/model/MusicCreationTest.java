@@ -48,13 +48,13 @@ public class MusicCreationTest {
         Song song = musicCreation.createMusic(dummyTitle, dummyComposer, dummyDifficultyLevel, dummyDate, dummyIsPrivate, mockSheetMusic, dummySongNotes);
 
         // Assert
-        assertNotNull(song);
-        assertEquals(dummyTitle, song.getTitle());
-        assertEquals(dummyComposer, song.getComposer());
-        assertEquals(dummyDifficultyLevel, song.getDifficultyLevel());
-        assertEquals(mockSheetMusic, song.getSheetMusic());
-        assertEquals(dummyIsPrivate, song.isPrivate());
-        assertEquals(dummySongNotes, song.getSongNotes());
+        assertNotNull(song, "Song should not be null");
+        assertEquals(dummyTitle, song.getTitle(), "Title should match");
+        assertEquals(dummyComposer, song.getComposer(), "Composer should match");
+        assertEquals(dummyDifficultyLevel, song.getDifficultyLevel(), "Difficulty level should match");
+        assertEquals(mockSheetMusic, song.getSheetMusic(), "Sheet music should match");
+        assertEquals(dummyIsPrivate, song.isPrivate(), "Privacy status should match");
+        assertEquals(dummySongNotes, song.getSongNotes(), "Song notes should match");
     }
 
     @Test
@@ -62,14 +62,14 @@ public class MusicCreationTest {
         Song song = new Song(dummyId, dummyTitle, dummyComposer, mockSheetMusic, dummyIsPrivate, dummySongNotes);
 
         // Act & Assert: No exception should be thrown
-        assertDoesNotThrow(() -> musicCreation.playSong(song, mockNote));
+        assertDoesNotThrow(() -> musicCreation.playSong(song, mockNote), "Should not throw an exception when sheet music is provided");
     }
 
     @Test
     void testPlaySong_NoSheetMusic() {
         Song song = new Song(dummyId, dummyTitle, dummyComposer, null, dummyIsPrivate, dummySongNotes);
         // Act & Assert: Ensure playSong() does not attempt to play if sheet music is missing
-        assertDoesNotThrow(() -> musicCreation.playSong(song, mockNote));
+        assertDoesNotThrow(() -> musicCreation.playSong(song, mockNote), "Should not throw an exception when no sheet music is provided");
     }
 }
 
