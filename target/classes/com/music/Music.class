@@ -1,0 +1,14 @@
+// Source code is decompiled from a .class file using FernFlower decompiler.
+package com.music;
+
+import org.jfugue.player.Player;
+
+public class Music {
+   public Music() {
+   }
+
+   public static void playNote(String note) {
+      Player player = new Player();
+      player.play(note);
+   }
+}
