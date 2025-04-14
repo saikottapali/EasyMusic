@@ -47,15 +47,6 @@ public class User {
         this.composedSongs = (composedSongs != null) ? composedSongs : new ArrayList<>();
         this.isLoggedIn = isLoggedIn;
     }
-
-    /**
-     * Retrieves the user's password (not hashed).
-     * 
-     * @return The user's password.
-     */
-    public String getHashedPassword() {
-        return password;
-    }
     
     /**
      * Increases the user's practice streak by one if the user is logged in.
