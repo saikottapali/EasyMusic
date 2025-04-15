@@ -7,20 +7,21 @@ import java.util.List;
 import java.util.UUID;
 
 public class EasyMusicFacade {
-    private User user;                  // The logged-in user
+    private List<User> user;                  // The logged-in user
     private MusicCreation musicPost;
     private MusicLibrary songList;    // The music creation platform (handles song creation, saving, etc.)
-    private Song selectedSong;          // The selected song for playback, upload, or download
+    private List<Song> song;          // The selected song for playback, upload, or download
     /**
      * Constructor for EasyMusicFacade.
      * Initializes the facade with the logged-in user and the music creation platform.
      *
-     * @param user The logged-in user.
-     * @param musicPost The music creation platform.
+     * 
      */
-    public EasyMusicFacade(User user, MusicCreation musicPost) {
-        this.user = user;
-        this.musicPost = musicPost;
+    public EasyMusicFacade() {
+        user = DataLoader.loadUsers();
+        song = DataLoader.loadSongs();
+        musicPost = new MusicCreation();
+        songList = MusicLibrary.getInstance();
     }
 
     public boolean createAccount(String firstName, String lastName, String username, String password, String email) {
@@ -39,14 +40,15 @@ public class EasyMusicFacade {
      * @param username The username.
      * @param password The password.
      */
-    public boolean logIn(String username, String password) {
-        UserList userList = UserList.getInstance();
-        User user = userList.getUser(username);
-        if (user != null && user.getPassword().equals(password)) {
-            this.user = user; // Set the logged-in user
-            return true;
+    public User login(String username, String password) {
+        for (User user : user) {
+            if (user.getUsername() != null && user.getPassword() != null &&
+                user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                user.setLoggedIn(true);
+                return user;
+            }
         }
-        return false;
+        return null;
     }
 
     /**
@@ -68,10 +70,7 @@ public class EasyMusicFacade {
      */
     public boolean chooseSong(List<Song> selectedSong) {
         selectedSong = songList.getSongs();
-        if (selectedSong != null) {
-            return true;  // Song found and selected
-        }
-        return false;  // Song not found
+        return selectedSong != null;  
     }
 
     /**
@@ -107,8 +106,8 @@ public class EasyMusicFacade {
      * @return True if the song was saved successfully.
      */
     public boolean saveMusic(SheetMusic sheetMusic) {
-        if (selectedSong != null) {
-            return sheetMusic.saveToFile(selectedSong);  // Prints sheet music to a text file
+        if (song != null) {
+            return sheetMusic.saveToFile(song);  // Prints sheet music to a text file
       }  
         return false;  // Return false if no song is selected
     }
@@ -126,8 +125,8 @@ public class EasyMusicFacade {
      */
     public boolean createMusic(String title, String difficultyLevel, boolean isPrivate, 
     SheetMusic sheetMusic, List<Note> songNotes) {
-        if(user != null && user.isLoggedIn()) {
-            String composer = user.getFirstName() + " " + user.getLastName();
+        if(user != null && ((User) user).isLoggedIn()) {
+            String composer = user.getFirst() + " " + user.getLast();
             Song newSong = musicPost.createMusic(title, composer, difficultyLevel, 
             new Date(), isPrivate, sheetMusic, songNotes);
             return newSong != null;
@@ -138,8 +137,8 @@ public class EasyMusicFacade {
      * Plays the currently selected song.
      */
     public boolean playSelectedSong() {
-        if (selectedSong != null) {
-            selectedSong.playSong();
+        if (song != null) {
+            ((Song) song).playSong();
             return true;  
         }
         return false;
@@ -175,9 +174,9 @@ public class EasyMusicFacade {
         ArrayList<Measure> measures = new ArrayList<>(List.of(measure));
         UUID id = UUID.randomUUID();
         SheetMusic sheetMusic = new SheetMusic(id, notesInput, notesInput, notesInput, notesInput, 0, measures);
-        Song newSong = new Song(id, title, user.getUsername(), sheetMusic,isPrivate, new ArrayList<>());
+        Song newSong = new Song(id, title, ((User) user).getUsername(), sheetMusic,isPrivate, new ArrayList<>());
 
-        user.addComposedSong(newSong);
+        ((User) user).addComposedSong(newSong);
         MusicLibrary.getInstance().addSong(newSong);
         return true;
     }
