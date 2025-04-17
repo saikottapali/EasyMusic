@@ -12,7 +12,6 @@
             <Font size="22.0" />
          </font>
       </Text>
-      <Button fx:id="btn_playSong" layoutX="251.0" layoutY="290.0" mnemonicParsing="false" onAction="#playSong" prefHeight="40.0" prefWidth="98.0" text="PlaySong" />
       <Button fx:id="btn_logOut" layoutX="251.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleLogOut" prefHeight="40.0" prefWidth="98.0" text="LogOut" />
    </children>
 </AnchorPane>
