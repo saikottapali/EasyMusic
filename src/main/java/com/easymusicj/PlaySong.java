@@ -16,6 +16,10 @@ public class PlaySong {
     @FXML
     private Label dashboard_message;
 
+    
+    /** 
+     * @throws IOException
+     */
     @FXML
     private void playSong() throws IOException {
         // Your logic to play a song
