@@ -3,8 +3,7 @@ package com.easymusicj;
 import java.io.IOException;
 import java.util.List;
 
-import com.model.DataLoader;
-import com.model.User;
+import com.model.EasyMusicFacade;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -48,16 +47,14 @@ public class LoginController {
             return;
         }
 
-        List<User> users = DataLoader.loadUsers();
-
-        for (User user : users) {
-            if (user.getUsername().equals(usernameInput) && user.getPassword().equals(passwordInput)) {
-                App.setRoot("dashboard");
-                return;
-            }
+        EasyMusicFacade facade =  new EasyMusicFacade();
+        facade.login(usernameInput, passwordInput);
+        
+        if (facade.login(usernameInput, passwordInput) != null) {
+            App.setRoot("dashboard");
+        } else {
+            wrongLogin();
         }
-
-        wrongLogin();
     }
 
     @FXML

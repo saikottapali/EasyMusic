@@ -33,11 +33,11 @@ public class MusicCreation {
         UUID id = UUID.randomUUID();
 
         // Create a new song object
-        Song newSong = new Song(id, title, composer, sheetMusic, isPrivate, songNotes);
+        List<Song> newSong = (List<Song>) new Song(id, title, composer, sheetMusic, isPrivate, songNotes);
         // Save the song to a platform (like a database or list)
         sheetMusic.saveToFile(newSong);
 
-        return newSong;
+        return (Song) newSong;
     }
 
     /**
