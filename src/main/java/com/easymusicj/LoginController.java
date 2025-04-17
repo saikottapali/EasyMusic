@@ -1,7 +1,6 @@
 package com.easymusicj;
 
 import java.io.IOException;
-import java.util.List;
 
 import com.model.EasyMusicFacade;
 
@@ -19,6 +18,9 @@ public class LoginController {
 
     @FXML
     private Button btn_cancel;
+
+    @FXML
+    private Button btn_account;
 
     @FXML
     private TextField txt_username;
@@ -68,5 +70,11 @@ public class LoginController {
         
         Stage stage = (Stage) btn_cancel.getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    private void createUser() throws IOException {
+        Stage stage = (Stage) btn_account.getScene().getWindow();
+        App.setRoot("createAccount");
     }
 }
