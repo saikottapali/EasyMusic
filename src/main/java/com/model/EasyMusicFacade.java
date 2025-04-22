@@ -59,7 +59,6 @@ public class EasyMusicFacade {
         for (User user : UserList.getInstance().getAllUsers()) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 this.currentUser = user;  // Set the currentUser to the logged-in user
-                System.out.println("User logged in: " + currentUser.getUsername());  // Debug statement
                 currentUser.setLoggedIn(true);
                 DataWriter.saveUsers(UserList.getInstance().getAllUsers()); // Save updated user data
                 break;
@@ -73,13 +72,9 @@ public class EasyMusicFacade {
      */
     public void logOut() {
         if (currentUser != null) {
-            System.out.println("Logging out user: " + currentUser.getUsername());  // Debug output
             currentUser.setLoggedIn(false);  // Ensure the loggedIn status is set to false
             DataWriter.saveUsers(UserList.getInstance().getAllUsers());  // Persist changes
             currentUser = null;  // Clear the current user
-            System.out.println("User successfully logged out.");
-        } else {
-            System.out.println("No user is logged in.");
         }
     }
     
