@@ -26,9 +26,9 @@
       </Button>
       <PasswordField fx:id="txt_password" layoutX="399.0" layoutY="195.0" promptText="Password" />
       <Label fx:id="login_message" layoutX="317.0" layoutY="103.0" prefHeight="18.0" prefWidth="244.0" textFill="RED" />
-      <Button fx:id="btn_cancel" layoutX="399.0" layoutY="335.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="26.0" prefWidth="118.0" text="Cancel">
+      <Button fx:id="btn_account" layoutX="399.0" layoutY="335.0" mnemonicParsing="false" onAction="#createUser" prefHeight="26.0" prefWidth="118.0" text="Create Account">
          <font>
-            <Font size="18.0" />
+            <Font size="12.0" />
          </font>
       </Button>
    </children>
