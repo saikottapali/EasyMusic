@@ -31,6 +31,11 @@ public class LoginController {
     @FXML
     private Label login_message;
 
+    private EasyMusicFacade facade;
+
+    public LoginController() {
+        facade = EasyMusicFacade.getInstance();
+    }
 
     @FXML
     private void userLogin() throws IOException {
@@ -39,8 +44,8 @@ public class LoginController {
 
     }
 
+    @FXML
     private void checkLogin() throws IOException {
-
         String usernameInput = txt_username.getText();
         String passwordInput = txt_password.getText();
 
@@ -49,11 +54,10 @@ public class LoginController {
             return;
         }
 
-        EasyMusicFacade facade =  new EasyMusicFacade();
-        facade.login(usernameInput, passwordInput);
+        facade.login(usernameInput, passwordInput);  // This should set the currentUser in facade
         
-        if (facade.login(usernameInput, passwordInput) != null) {
-            App.setRoot("dashboard");
+        if (facade.getCurrentUser() != null) {
+            App.setRoot("dashboard");  // Go to the dashboard if login is successful
         } else {
             wrongLogin();
         }
@@ -74,7 +78,6 @@ public class LoginController {
 
     @FXML
     private void createUser() throws IOException {
-        Stage stage = (Stage) btn_account.getScene().getWindow();
         App.setRoot("createAccount");
     }
-}
+} 
