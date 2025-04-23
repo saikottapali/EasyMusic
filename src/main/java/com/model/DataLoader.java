@@ -37,9 +37,10 @@ public class DataLoader extends DataConstants {
             String lastName = (String) userJSON.get(USER_LAST_NAME);
             long practiceStreak = (long) userJSON.get(USER_PRACTICE_STREAK);
             List<Song> composedSongs = loadComposedSongs((JSONArray) userJSON.get(USER_COMPOSED_SONGS));
+            boolean isLoggedIn = (boolean) userJSON.get(USER_LOGGED_IN);
 
             // Add the user object to the users list
-            users.add(new User(id, username, password, email, firstName, lastName, (int) practiceStreak, composedSongs, false));
+            users.add(new User(id, username, password, email, firstName, lastName, (int) practiceStreak, composedSongs, isLoggedIn));
         }
         return users; // Return the list of users
     }
