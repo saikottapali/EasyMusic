@@ -11,17 +11,27 @@ public class EasyMusicFacade {
     private MusicCreation musicPost;
     private MusicLibrary songList;    // The music creation platform (handles song creation, saving, etc.)
     private List<Song> song;          // The selected song for playback, upload, or download
+
     /**
      * Constructor for EasyMusicFacade.
      * Initializes the facade with the logged-in user and the music creation platform.
-     *
-     * 
      */
     public EasyMusicFacade() {
         user = DataLoader.loadUsers();
         song = DataLoader.loadSongs();
         musicPost = new MusicCreation();
         songList = MusicLibrary.getInstance();
+    }
+
+    /**
+     * Overloaded constructor that allows passing custom user and song lists (or null).
+     * If null, defaults to loading data from DataLoader.
+     */
+    public EasyMusicFacade(List<User> user, List<Song> song) {
+        this.user = (user != null) ? user : DataLoader.loadUsers();
+        this.song = (song != null) ? song : DataLoader.loadSongs();
+        this.musicPost = new MusicCreation();
+        this.songList = MusicLibrary.getInstance();
     }
 
     public boolean createAccount(String firstName, String lastName, String username, String password, String email) {
@@ -111,6 +121,7 @@ public class EasyMusicFacade {
       }  
         return false;  // Return false if no song is selected
     }
+
     /**
      * Creates a new song with the given details and returns the created song.
      *
@@ -133,6 +144,7 @@ public class EasyMusicFacade {
         }
         return false;
     }
+
     /**
      * Plays the currently selected song.
      */
@@ -174,11 +186,10 @@ public class EasyMusicFacade {
         ArrayList<Measure> measures = new ArrayList<>(List.of(measure));
         UUID id = UUID.randomUUID();
         SheetMusic sheetMusic = new SheetMusic(id, notesInput, notesInput, notesInput, notesInput, 0, measures);
-        Song newSong = new Song(id, title, ((User) user).getUsername(), sheetMusic,isPrivate, new ArrayList<>());
+        Song newSong = new Song(id, title, ((User) user).getUsername(), sheetMusic, isPrivate, new ArrayList<>());
 
         ((User) user).addComposedSong(newSong);
         MusicLibrary.getInstance().addSong(newSong);
         return true;
     }
 }
-

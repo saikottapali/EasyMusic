@@ -1,6 +1,7 @@
 package com.driver;
 
 import java.util.Scanner;
+import com.model.User;
 
 import com.model.EasyMusicFacade;
 
