@@ -36,6 +36,7 @@ public class DataWriter extends DataConstants {
                 songObject.put(SONG_ID, song.getId().toString());
                 songObject.put(SONG_TITLE, song.getTitle());
                 songObject.put(SONG_SHEET_MUSIC, new JSONObject()); 
+                composedSongsArray.add(songObject); // Add the song object to the array
             }
     
             userObject.put(USER_COMPOSED_SONGS, composedSongsArray);  // Add the composed songs array to the user object

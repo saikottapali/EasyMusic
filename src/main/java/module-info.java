@@ -1,12 +1,12 @@
-module com.easymusicj {
+module com.controllers {
     
     requires javafx.fxml;
     requires javafx.controls;
     requires json.simple;
     requires jfugue;
     requires junit;
-    requires javafx.base;
+    requires javafx.graphics;
 
-    exports com.easymusicj;
-    opens com.easymusicj to javafx.fxml;
+    exports com.controllers;
+    opens com.controllers to javafx.fxml;
 }

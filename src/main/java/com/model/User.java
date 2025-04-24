@@ -90,7 +90,7 @@ public class User {
      * @return {@code true} if the user is logged in, {@code false} otherwise.
      */
     public boolean isLoggedIn() {
-        return isLoggedIn;
+       return isLoggedIn;
     }
     
     /**
@@ -101,8 +101,9 @@ public class User {
      */
     public boolean logIn(String enteredPassword) {
         if (this.password.equals(enteredPassword)){
-            isLoggedIn = true;
-            return true; 
+            setLoggedIn(true);
+            DataWriter.saveUsers(UserList.getInstance().getAllUsers());
+            return true;
         }
         return false;
     }
@@ -110,8 +111,9 @@ public class User {
     /**
      * Logs the user out.
      */
-    public void logOut(){
+    public void logOutUser(){
         isLoggedIn = false;
+        DataWriter.saveUsers(UserList.getInstance().getAllUsers());
     }
     
     /**

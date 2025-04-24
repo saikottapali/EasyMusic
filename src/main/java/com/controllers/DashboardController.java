@@ -1,4 +1,4 @@
-package com.easymusicj;
+package com.controllers;
 
 import java.io.IOException;
 
