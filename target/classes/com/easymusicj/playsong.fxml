@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F29544;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="600.0" style="-fx-background-color: #F29544;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ButtonBar layoutX="245.0" layoutY="246.0" prefHeight="40.0" prefWidth="70.0">
-        <buttons>
-          <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="play song" textFill="#382100" />
-        </buttons>
-      </ButtonBar>
+      <ListView id="songListView" fx:id="songListView" layoutX="50.0" prefHeight="389.0" prefWidth="600.0" style="-fx-background-color: #F29545;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </ListView>
    </children>
 </AnchorPane>
