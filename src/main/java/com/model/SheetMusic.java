@@ -36,9 +36,9 @@ public class SheetMusic {
     }
 
     // Method to save sheet music to a text file
-    public boolean saveToFile(Song dummySong) {
-        if (dummySong != null) {
-            try (FileWriter writer = new FileWriter(((SheetMusic) dummySong).getTitle() + ".txt")) {
+    public boolean saveToFile(List<Song> selectedSong) {
+        if (selectedSong != null) {
+            try (FileWriter writer = new FileWriter(((SheetMusic) selectedSong).getTitle() + ".txt")) {
                 writer.write("Sheet Music: " + title + "\n");
                 writer.write("Composer: " + composer + ", Difficulty: " + difficultyLevel + "\n");
                 writer.write("Tempo: " + tempo + ", Clef: " + clef + "\n");
@@ -51,7 +51,7 @@ public class SheetMusic {
                 }
 
                 writer.write("JFugue Notation: " + getJFugueNotation() + "\n");
-                System.out.println("Sheet music saved to " + ((SheetMusic) dummySong).getTitle() + ".txt");
+                System.out.println("Sheet music saved to " + ((SheetMusic) selectedSong).getTitle() + ".txt");
                 return true;
 
             } catch (IOException e) {
