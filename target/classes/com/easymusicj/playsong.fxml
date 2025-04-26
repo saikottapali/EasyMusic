@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="600.0" style="-fx-background-color: #F29544;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView id="songListView" fx:id="songListView" layoutX="50.0" prefHeight="389.0" prefWidth="600.0" style="-fx-background-color: #F29545;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ListView id="songListView" fx:id="songListView" accessibleText="song 1" editable="true" fixedCellSize="10.0" layoutX="50.0" prefHeight="389.0" prefWidth="600.0" style="-fx-background-color: #F29545; -fx-border-color: black; -fx-padding: 20px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
             <Insets top="20.0" />
          </padding>

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "com.controllers/com.easymusicj.App",
+            "projectName": "easymusic"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -17,7 +24,6 @@
             "mainClass": "com.easymusicj/com.driver.Main",
             "projectName": "easymusic",
             "vmArgs": "--module-path\"C:Program Files/Java?javafx-sdk-21/lib\" --add-modules javafx.controls,javafx.fxml"
-
         },
         {
             "type": "java",
