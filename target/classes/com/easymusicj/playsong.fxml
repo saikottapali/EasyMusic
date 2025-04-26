@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.AnchorPane?>
 
+<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.easymusicj.PlaySong"
+      spacing="15" alignment="CENTER" prefWidth="400" prefHeight="500">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="600.0" style="-fx-background-color: #F29544;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ListView id="songListView" fx:id="songListView" accessibleText="song 1" editable="true" fixedCellSize="10.0" layoutX="50.0" prefHeight="389.0" prefWidth="600.0" style="-fx-background-color: #F29545; -fx-border-color: black; -fx-padding: 20px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <padding>
-            <Insets top="20.0" />
-         </padding>
-      </ListView>
-   </children>
-</AnchorPane>
+    <!-- Dashboard message label -->
+    <Label fx:id="dashboard_message" text="Select a song to play!" />
+
+    <!-- List of songs -->
+    <ListView fx:id="songListView" prefHeight="300" prefWidth="300" />
+
+    <!-- Play button (optional if you want manual play) -->
+    <Button fx:id="btn_playSong" text="Play Selected Song" onAction="#playSong" />
+
+    <!-- Logout button -->
+    <Button fx:id="btn_logout" text="Logout" onAction="#logout" />
+
+</VBox>

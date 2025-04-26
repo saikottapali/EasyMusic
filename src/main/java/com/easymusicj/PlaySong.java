@@ -2,6 +2,8 @@ package com.easymusicj;
 
 import java.io.IOException;
 
+import org.jfugue.player.Player;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -43,10 +45,28 @@ public class PlaySong {
     }
 
     private void playSong(String songName){
-        System.out.println("Playing: " + songName);
+    Player player = new Player();
+    String notes = getNotesForSong(songName);
+    if (notes != null) {
+        player.play(notes);
+    } else {
+        dashboard_message.setText("No notes available for this song.");
     }
+}
 
-    
+private String getNotesForSong(String songName) {
+    switch (songName) {
+        case "Fur Elise":
+            return "E D# E D# E B D C A"; // <--- put correct notes here
+        case "I Won't Back Down":
+            return "G G G A G F G"; // <--- example notes
+        case "American Girl":
+            return "G G G F E D"; // <--- example notes
+        default:
+            return null;
+    }
+}
+
     /** 
      * @throws IOException
      */
