@@ -3,9 +3,11 @@ package com.model;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.lang.reflect.Type;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -35,13 +37,16 @@ public class DataLoader extends DataConstants {
      * @return A list of songs loaded from the file.
      */
     public static List<Song> loadSongs() {
-        try (Reader reader = new FileReader(SONG_FILE)) {
-            List<Song> songs = gson.fromJson(reader, new TypeToken<List<Song>>() {}.getType());
-            return songs != null ? songs : new ArrayList<>();
+        // Load songs from the file and parse them into Song objects
+        Gson gson = new Gson();
+        List<Song> songs = new ArrayList<>();
+        try (FileReader reader = new FileReader(SONG_FILE)) {
+            Type listType = new TypeToken<List<Song>>(){}.getType();
+            songs = gson.fromJson(reader, listType);
         } catch (IOException e) {
             e.printStackTrace();
-            return new ArrayList<>();
         }
+        return songs;
     }
 
     /**

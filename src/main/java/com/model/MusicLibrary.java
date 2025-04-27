@@ -1,5 +1,6 @@
 package com.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MusicLibrary {
@@ -9,6 +10,10 @@ public class MusicLibrary {
 
     public MusicLibrary() {
         songs = DataLoader.loadSongs(); // Load songs from DataLoader
+        if (songs == null) {
+            songs = new ArrayList<>(); // Initialize with an empty list if loading fails
+            System.out.println("Failed to load songs from file. Initialized with an empty list.");
+        }
     }
 
     public static MusicLibrary getInstance() {

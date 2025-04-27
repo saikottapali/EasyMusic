@@ -8,10 +8,18 @@
     "lastName": "Nimda",
     "composedSongs": [
       {
-        "id": "728038e7-0e50-4146-a63c-3457d1391120",
-        "title": "Scale"
+        "id": "e4867ab5-a653-49fd-8230-df748e8a97de",
+        "title": "Fur Elise"
+      },
+      {
+        "id": "3e2aaace-86f9-4b99-8434-7b9770acd278",
+        "title": "Twinkle Twinkle Little Star"
+      },
+      {
+        "id": "32a09cc4-2942-499f-9d81-12078040ec2d",
+        "title": "Happy Birthday"
       }
     ],
-    "isLoggedIn": true
+    "isLoggedIn": false
   }
 ]

@@ -9,13 +9,13 @@ import java.util.UUID;
 
 public class EasyMusicFacade {
     private User currentUser;
-    private MusicLibrary songList;
+    private MusicLibrary musicLibrary;
     private UserList userList;
     private Song selectedSong;  // Now a single Song, not a List
     private static EasyMusicFacade instance;
 
     public EasyMusicFacade() {
-        songList = MusicLibrary.getInstance();
+        musicLibrary = MusicLibrary.getInstance();
         userList = UserList.getInstance();
         this.currentUser = null;
         this.selectedSong = null;
@@ -26,6 +26,10 @@ public class EasyMusicFacade {
             instance = new EasyMusicFacade();
         }
         return instance;
+    }
+
+    public MusicLibrary getMusicLibrary() {
+        return musicLibrary;
     }
 
     public User login(String username, String password) {
@@ -63,7 +67,7 @@ public class EasyMusicFacade {
     }
 
     public Song chooseSong(String songTitle) {
-        return songList.getSongs().stream()
+        return musicLibrary.getSongs().stream()
                 .filter(s -> s.getTitle().equalsIgnoreCase(songTitle))
                 .findFirst()
                 .orElse(null);
@@ -88,8 +92,10 @@ public class EasyMusicFacade {
             measures.add(measure);
             SheetMusic sheetMusic = new SheetMusic(songId, title, composerName, difficultyLevel, "Treble", 120, measures);
             Song song = new Song(songId, title, composerName, difficultyLevel, sheetMusic, isPrivate, notes);
-            songList.getSongs().add(song);
-            DataWriter.saveSongs(songList.getSongs());   
+
+            musicLibrary.addSong(song);
+            DataWriter.saveSongs(MusicLibrary.getInstance().getSongs());
+
             currentUser.getComposedSongs().add(new ComposedSongEntry(songId, title));
             DataWriter.saveUsers(userList.getAllUsers());
             saveSongAsTxt(song);
