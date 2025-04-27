@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.easymusicj</groupId>
-    <artifactId>easymusic</artifactId>
+    <groupId>com.controllers</groupId>
+    <artifactId>controllers</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -64,11 +64,11 @@
     <scope>test</scope>
     </dependency>
 
-    <!-- JSON-Simple for JSON Parsing -->
+    <!-- GSON for JSON Parsing -->
     <dependency>
-        <groupId>com.googlecode.json-simple</groupId>
-        <artifactId>json-simple</artifactId>
-        <version>1.1.1</version>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.10.1</version> 
     </dependency>
 
     <!-- JavaFX Dependencies (For UI Elements) -->
@@ -112,7 +112,7 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.easymusicj.App</mainClass>
+                            <mainClass>com.controllers.App</mainClass>
                         </configuration>
                     </execution>
                 </executions>

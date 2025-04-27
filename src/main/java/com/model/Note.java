@@ -4,12 +4,15 @@ import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
 
 public class Note {
-    private String pitch;   //Range of the note "C5" or "D#4"
-    private String duration; //Duration in beats  q = 1.0 beats  h = 2.0 beats
+    private String noteName; // E.g., "C5", "D#5", etc.
+    private String pitch; // E.g., "C", "D#", etc.
+    private int octave; // E.g., 4, 5, etc.
+    private String duration; // Duration like "q", "e", etc.
 
-    //Constructor
-    public Note(String pitch, String duration) {
+    public Note(String noteName, String pitch, int octave, String duration) {
+        this.noteName = noteName;
         this.pitch = pitch;
+        this.octave = octave;
         this.duration = duration;
     }
 
@@ -25,13 +28,30 @@ public class Note {
         this.pitch = newPitch;
     }
 
-    //Getters and Setters
+    // Getters and Setters
+    
+    public String getNoteName() {
+        return noteName;
+    }
+
+    public void setNoteName(String noteName) {
+        this.noteName = pitch + octave;
+    }
+
     public String getPitch() {
         return pitch;
     }
 
     public void setPitch(String pitch) {
         this.pitch = pitch;
+    }
+
+    public int getOctave() {
+        return octave;
+    }
+
+    public void setOctave(int octave) {
+        this.octave = octave;
     }
 
     public String getDuration() {

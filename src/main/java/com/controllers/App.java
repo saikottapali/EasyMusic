@@ -37,6 +37,8 @@ public class App extends Application {
             }
             Platform.exit();  // Close the application
         });
+
+        stage.setResizable(false);
         stage.show();
     }
     

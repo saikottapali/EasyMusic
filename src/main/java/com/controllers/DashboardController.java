@@ -6,6 +6,7 @@ import com.model.EasyMusicFacade;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 
 public class DashboardController {
@@ -16,11 +17,23 @@ public class DashboardController {
     @FXML
     private Button btn_playSong;
 
+    @FXML
+    private Button btn_composeSong;
+
+    @FXML
+    private Label welcome_label;
+
     private EasyMusicFacade facade;
 
     public DashboardController() {
 
         facade = EasyMusicFacade.getInstance();
+    }
+
+    public void initialize() {
+
+        String username = facade.getCurrentUser().getUsername();
+        welcome_label.setText("Welcome " + username + "!");
     }
 
     @FXML
@@ -31,7 +44,11 @@ public class DashboardController {
 
     @FXML
     private void playSong() throws IOException {
-        // Add logic to play a song
         App.setRoot("playsong");
+    }
+
+    @FXML
+    private void composeSong() throws IOException {
+        App.setRoot("composer");
     }
 }

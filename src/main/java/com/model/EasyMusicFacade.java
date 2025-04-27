@@ -1,29 +1,24 @@
 package com.model;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 public class EasyMusicFacade {
-    private User currentUser;   // The logged-in user
-    private List<User> allUsers;                  
-    private MusicCreation musicPost;
-    private MusicLibrary songList;    // The music creation platform (handles song creation, saving, etc.)
-    private List<Song> selectedSong;          // The selected song for playback, upload, or download
+    private User currentUser;
+    private MusicLibrary songList;
+    private UserList userList;
+    private Song selectedSong;  // Now a single Song, not a List
     private static EasyMusicFacade instance;
-    /**
-     * Constructor for EasyMusicFacade.
-     * Initializes the facade with the logged-in user and the music creation platform.
-     */
-    public EasyMusicFacade() {
-        allUsers = DataLoader.loadUsers();
-        selectedSong = DataLoader.loadSongs();
-        musicPost = new MusicCreation();
-        songList = MusicLibrary.getInstance();
 
+    public EasyMusicFacade() {
+        songList = MusicLibrary.getInstance();
+        userList = UserList.getInstance();
         this.currentUser = null;
+        this.selectedSong = null;
     }
 
     public static EasyMusicFacade getInstance() {
@@ -33,8 +28,24 @@ public class EasyMusicFacade {
         return instance;
     }
 
-    public User getCurrentUser() {
-        return currentUser;
+    public User login(String username, String password) {
+        for (User user : UserList.getInstance().getAllUsers()) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                currentUser = user;
+                currentUser.setLoggedIn(true);
+                DataWriter.saveUsers(userList.getInstance().getAllUsers());
+                return currentUser;
+            }
+        }
+        return null;
+    }
+
+    public void logOut() {
+        if (currentUser != null) {
+            currentUser.setLoggedIn(false);
+            DataWriter.saveUsers(UserList.getInstance().getAllUsers());
+            currentUser = null;
+        }
     }
 
     public boolean createAccount(String firstName, String lastName, String email, String username, String password) {
@@ -42,160 +53,80 @@ public class EasyMusicFacade {
         if (userList.getUser(username) != null) {
             return false; // Username already exists
         }
-        User newUser = new User(UUID.randomUUID(), username, password, email, firstName, lastName, 0, new ArrayList<>(), false);
+        User newUser = new User(UUID.randomUUID(), username, password, email, firstName, lastName, new ArrayList<>(), false);
         userList.addUser(newUser);
         return true;
     }
 
-    /**
-     * Logs in the user using the provided username and password.
-     *
-     * @param username The username.
-     * @param password The password.
-     */
-    public User login(String username, String password) {
-        for (User user : UserList.getInstance().getAllUsers()) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                this.currentUser = user;  // Set the currentUser to the logged-in user
-                currentUser.setLoggedIn(true);
-                DataWriter.saveUsers(UserList.getInstance().getAllUsers()); // Save updated user data
-                break;
-            }
-        }
-        return null;
+    public User getCurrentUser() {
+        return currentUser;
     }
 
-    /**
-     * Logs out the user.
-     */
-    public void logOut() {
-        if (currentUser != null) {
-            currentUser.setLoggedIn(false);  // Ensure the loggedIn status is set to false
-            DataWriter.saveUsers(UserList.getInstance().getAllUsers());  // Persist changes
-            currentUser = null;  // Clear the current user
-        }
-    }
-    
-    
-
-    /**
-     * Allows the user to select a song by its title.
-     *
-     * @param selectedSong The title of the song to select.
-     * @return The selected song, or null if the song is not found.
-     */
-    public boolean chooseSong(List<Song> selectedSong) {
-        selectedSong = songList.getSongs();
-        return selectedSong != null;  
-    }
-
-    /**
-     * Views the sheet music of a selected song.
-     *
-     * @param selectedSong The title of the song to view sheet music for.
-     * @return The sheet music for the song, or null if the song is not found.
-     */
-    public String viewSheetMusic(List<Song> selectedSong) {
-        Song song = songList.getSongs().stream()
-                .filter(s -> s.getTitle().equals(selectedSong))
-                .findFirst()
-                .orElse(null);
-        if (song != null) {
-            return song.getSheetMusic().toString();
-        }
-        return null;
-    }
-
-    /**
-     * Plays a given note.
-     *
-     * @param note The note to play.
-     */
-    public void playNote(Note note) {
-        note.play();  // Assuming Note has a play method to play the note's sound
-    }
-
-    /**
-     * Saves the selected song to the music platform.
-     *
-     * @param song The song to save.
-     * @return True if the song was saved successfully.
-     */
-    public boolean saveMusic(SheetMusic sheetMusic) {
-        if (selectedSong != null) {
-            return sheetMusic.saveToFile(selectedSong);  // Prints sheet music to a text file
-      }  
-        return false;  // Return false if no song is selected
-    }
-
-    /**
-     * Creates a new song with the given details and returns the created song.
-     *
-     * @param id The ID of the song.
-     * @param title The title of the song.
-     * @param composer The composer of the song.
-     * @param difficultyLevel The difficulty level of the song.
-     * @param date The date of creation.
-     * @param sheetMusic The sheet music for the song.
-     * @param isPrivate Whether the song is private or public.
-     * @return The created song.
-     */
-    public boolean createMusic(String title, String difficultyLevel, boolean isPrivate, 
-    SheetMusic sheetMusic, List<Note> songNotes) {
-        if(currentUser != null && ((User) currentUser).isLoggedIn()) {
-            String composer = currentUser.getFirstName() + " " + currentUser.getLastName();
-            Song newSong = musicPost.createMusic(title, composer, difficultyLevel, 
-            new Date(), isPrivate, sheetMusic, songNotes);
-            return newSong != null;
-        }
-        return false;
-    }
-
-    /**
-     * Plays the currently selected song.
-     */
-    public boolean playSelectedSong() {
-        if (selectedSong != null) {
-            ((Song) selectedSong).playSong();
-            return true;  
-        }
-        return false;
-    }
-
-    public String[] getAvailableSongs() {
-        List<Song> songs = MusicLibrary.getInstance().getSongs();
-        return songs.stream().map(Song::getTitle).toArray(String[]::new);
-    }
-
-    public boolean playSong(String songTitle) {
-        Song song = MusicLibrary.getInstance().getSongs().stream()
+    public Song chooseSong(String songTitle) {
+        return songList.getSongs().stream()
                 .filter(s -> s.getTitle().equalsIgnoreCase(songTitle))
                 .findFirst()
                 .orElse(null);
-        if (song == null || song.getSheetMusic() == null) {
+    }
+
+    public boolean playSelectedSong() {
+        if (selectedSong != null) {
+            selectedSong.playSong();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean createSong(String title, String difficultyLevel, boolean isPrivate, List<Note> notes) {
+        if (currentUser == null) return false; // Ensure a user is logged in
+        try {
+            UUID songId = UUID.randomUUID();
+            String composerName = getCurrentUser().getUsername();
+            Measure measure = new Measure(notes, 120, "4/4"); // assuming 4/4 and 120 bpm for now
+            measure.setNotes(notes);
+            List<Measure> measures = new ArrayList<>();
+            measures.add(measure);
+            SheetMusic sheetMusic = new SheetMusic(songId, title, composerName, difficultyLevel, "Treble", 120, measures);
+            Song song = new Song(songId, title, composerName, difficultyLevel, sheetMusic, isPrivate, notes);
+            songList.getSongs().add(song);
+            DataWriter.saveSongs(songList.getSongs());   
+            currentUser.getComposedSongs().add(new ComposedSongEntry(songId, title));
+            DataWriter.saveUsers(userList.getAllUsers());
+            saveSongAsTxt(song);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
-        song.playSong();
-        return true;
     }
 
-    public boolean createSong(String title, String difficultyLevel, boolean isPrivate, String notesInput) {
-        if (currentUser == null) return false; // Ensure a user is logged in
-
-        List<String> noteNames = Arrays.asList(notesInput.split(",\\s*"));
-        ArrayList<Note> notes = new ArrayList<>();
-        for (String noteName : noteNames) {
-            notes.add(new Note(noteName, "q"));
+    private void saveSongAsTxt(Song song) {
+    try {
+        File dir = new File("saved_songs");
+        if (!dir.exists()) {
+            dir.mkdirs(); // Make directory if it doesn't exist
         }
 
-        Measure measure = new Measure(notes, 120, "4/4");
-        ArrayList<Measure> measures = new ArrayList<>(List.of(measure));
-        UUID id = UUID.randomUUID();
-        SheetMusic sheetMusic = new SheetMusic(id, notesInput, notesInput, notesInput, notesInput, 0, measures);
-        Song newSong = new Song(id, title, ((User) currentUser).getUsername(), sheetMusic,isPrivate, new ArrayList<>());
+        File songFile = new File(dir, song.getTitle().replaceAll("\\s+", "_") + ".txt");
+        FileWriter writer = new FileWriter(songFile);
 
-        ((User) currentUser).addComposedSong(newSong);
-        MusicLibrary.getInstance().addSong(newSong);
-        return true;
+        writer.write("Title: " + song.getTitle() + "\n");
+        writer.write("Composer: " + song.getComposer() + "\n");
+        writer.write("Difficulty Level: " + song.getDifficultyLevel() + "\n");
+        writer.write("Date: " + song.getDate() + "\n");
+        writer.write("Private: " + song.isPrivate() + "\n");
+        writer.write("Notes:\n");
+
+        for (Note note : song.getSongNotes()) {
+            writer.write(note.getNoteName() + note.getDuration() + " ");
+        }
+
+        writer.close();
+    } catch (IOException e) {
+        e.printStackTrace();
     }
 }
+
+
+}
+    

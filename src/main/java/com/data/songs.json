@@ -1,1 +1,64 @@
-[]
+[
+  {
+    "id": "8c6058c9-19b4-472a-9a98-de11d27edea2",
+    "title": "Scale",
+    "composer": "admin",
+    "difficultyLevel": "EASY",
+    "date": "Apr 27, 2025, 6:18:22 AM",
+    "sheetMusic": {
+      "musicID": "6c0b666b-8c07-4326-a0c9-f9100cce4899",
+      "title": "Scale",
+      "composer": "admin",
+      "difficultyLevel": "EASY",
+      "clef": "Treble",
+      "tempo": 120,
+      "measures": [
+        {
+          "notes": [
+            {
+              "noteName": "C5",
+              "pitch": "C",
+              "octave": 5,
+              "duration": "q"
+            },
+            {
+              "noteName": "C#5",
+              "pitch": "C#",
+              "octave": 5,
+              "duration": "q"
+            },
+            {
+              "noteName": "D5",
+              "pitch": "D",
+              "octave": 5,
+              "duration": "q"
+            }
+          ],
+          "tempo": 120,
+          "timeSignature": "4/4"
+        }
+      ]
+    },
+    "isPrivate": true,
+    "songNotes": [
+      {
+        "noteName": "C5",
+        "pitch": "C",
+        "octave": 5,
+        "duration": "q"
+      },
+      {
+        "noteName": "C#5",
+        "pitch": "C#",
+        "octave": 5,
+        "duration": "q"
+      },
+      {
+        "noteName": "D5",
+        "pitch": "D",
+        "octave": 5,
+        "duration": "q"
+      }
+    ]
+  }
+]

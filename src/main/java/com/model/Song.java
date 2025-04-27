@@ -17,12 +17,12 @@ public class Song {
     private List<Note> songNotes;
     
     // Constructor
-    public Song(UUID id, String title, String composer, SheetMusic sheetMusic, boolean isPrivate, List<Note> songNotes) {
+    public Song(UUID id, String title, String composer, String difficultyLevel, SheetMusic sheetMusic, boolean isPrivate, List<Note> songNotes) {
         this.id = UUID.randomUUID();  // Fix: Preserve the given UUID instead of overriding with random UUID
         this.title = title;
         this.composer = composer;
         this.date = new Date();  // Default to current date
-        this.difficultyLevel = "UNKNOWN";  // Default difficulty level
+        this.difficultyLevel = difficultyLevel;  // Default difficulty level
         this.sheetMusic = sheetMusic;
         this.isPrivate = isPrivate;
         this.songNotes = (songNotes != null) ? songNotes : new ArrayList<>();  // Initialize comments to prevent NullPointerException

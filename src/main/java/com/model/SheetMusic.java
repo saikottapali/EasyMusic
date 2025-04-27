@@ -2,6 +2,7 @@ package com.model;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -35,31 +36,28 @@ public class SheetMusic {
         measures.remove(measure);
     }
 
-    // Method to save sheet music to a text file
-    public boolean saveToFile(List<Song> selectedSong) {
-        if (selectedSong != null) {
-            try (FileWriter writer = new FileWriter(((SheetMusic) selectedSong).getTitle() + ".txt")) {
-                writer.write("Sheet Music: " + title + "\n");
-                writer.write("Composer: " + composer + ", Difficulty: " + difficultyLevel + "\n");
-                writer.write("Tempo: " + tempo + ", Clef: " + clef + "\n");
-                for (Measure measure : measures) {
-                    writer.write("Time Signature: " + measure.getTimeSignature() + ", Tempo: " + measure.getTempo() + "\n");
-                    for (Note note : measure.getNotes()) {
-                        writer.write("Note: " + note.getPitch() + " - " + note.getDuration() + " beats\n");
-                    }
-                    writer.write("\n"); // Separate measures with a blank line
-                }
+    public void saveToFile(String filePath, String songTitle, String composerName, String difficulty) {
+    try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+        writer.println("Title: " + songTitle);
+        writer.println("Composer: " + composerName);
+        writer.println("Difficulty: " + difficulty);
+        writer.println("Tempo: " + tempo);
+        writer.println("Clef: " + clef);
+        writer.println("Measures:");
 
-                writer.write("JFugue Notation: " + getJFugueNotation() + "\n");
-                System.out.println("Sheet music saved to " + ((SheetMusic) selectedSong).getTitle() + ".txt");
-                return true;
-
-            } catch (IOException e) {
-                System.out.println("Error saving sheet music: " + e.getMessage());
+        for (Measure measure : measures) {
+            for (Note note : measure.getNotes()) {
+                writer.print(note.getNoteName() + note.getPitch() + note.getOctave() + note.getDuration() + " ");
             }
+            writer.println(); // newline for each measure
         }
-        return false;
+
+        writer.flush();
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
+
 
     // Helper method to generate JFugue notation
     public String getJFugueNotation() {

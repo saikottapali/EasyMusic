@@ -17,8 +17,7 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
-    private int practiceStreak;
-    private List<Song> composedSongs;
+    private List<ComposedSongEntry> composedSongs = new ArrayList<>();
     private boolean isLoggedIn;
 
     /**
@@ -35,26 +34,16 @@ public class User {
      * @param isLoggedIn The login status of the user.
      */
     public User(UUID id, String username, String password, String email, 
-                String firstName, String lastName, int practiceStreak, 
-                List<Song> composedSongs, boolean isLoggedIn) {
+                String firstName, String lastName, 
+                List<ComposedSongEntry> composedSongs, boolean isLoggedIn) {
         this.id = (id == null) ? UUID.randomUUID() : id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.practiceStreak = practiceStreak;
         this.composedSongs = (composedSongs != null) ? composedSongs : new ArrayList<>();
         this.isLoggedIn = isLoggedIn;
-    }
-    
-    /**
-     * Increases the user's practice streak by one if the user is logged in.
-     */
-    public void practice() {
-        if (isLoggedIn) {
-            practiceStreak++;
-        }
     }
     
     /**
@@ -115,28 +104,13 @@ public class User {
         isLoggedIn = false;
         DataWriter.saveUsers(UserList.getInstance().getAllUsers());
     }
-    
-    /**
-     * Adds a composed song to the user's list of composed songs.
-     * 
-     * @param song The song to add.
-     */
-    public void addComposedSong(Song song) {
-        composedSongs.add(song);
-        DataWriter.saveUsers(UserList.getInstance().getAllUsers()); // Save updated user list
-    }
 
-    public void removeComposedSong(String title) {
-        composedSongs.removeIf(Song -> Song.getTitle().equals(title));
-        DataWriter.saveUsers(UserList.getInstance().getAllUsers()); // Save updated user list
-    }
-    
     /**
      * Retrieves the list of songs composed by the user.
      * 
      * @return The list of composed songs.
      */
-    public List<Song> getComposedSongs() {
+    public List<ComposedSongEntry> getComposedSongs() {
         return composedSongs;
     }
 
@@ -217,29 +191,11 @@ public class User {
     }
     
     /**
-     * Retrieves the user's practice streak.
-     * 
-     * @return The user's practice streak.
-     */
-    public int getPracticeStreak() {
-        return practiceStreak;
-    }
-    
-    /**
-     * Sets the user's practice streak.
-     * 
-     * @param practiceStreak The practice streak to set.
-     */
-    public void setPracticeStreak(int practiceStreak) {
-        this.practiceStreak = practiceStreak;
-    }
-    
-    /**
      * Sets the list of songs composed by the user.
      * 
      * @param composedSongs The list of composed songs to set.
      */
-    public void setComposedSongs(List<Song> composedSongs) {
+    public void setComposedSongs(List<ComposedSongEntry> composedSongs) {
         this.composedSongs = composedSongs;
     }
 

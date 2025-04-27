@@ -1,6 +1,5 @@
 package com.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jfugue.pattern.Pattern;
@@ -62,8 +61,8 @@ public class Measure {
         return notes;
     }
 
-    public void setNotes(ArrayList<Note> notes) {
-        this.notes = notes;
+    public void setNotes(List<Note> notes2) {
+        this.notes = notes2;
     }
 
     public int getTempo() {
