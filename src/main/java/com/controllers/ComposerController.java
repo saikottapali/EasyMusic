@@ -50,6 +50,7 @@ public class ComposerController {
     private final StringBuilder pattern = new StringBuilder();
 
     private EasyMusicFacade facade;
+    private List<Note> notesList = new ArrayList<>();
 
     public ComposerController() {
         facade = EasyMusicFacade.getInstance();
@@ -75,21 +76,38 @@ public class ComposerController {
         }
 
         patternDisplay.appendText(note + duration + " ");
+        String name = note.substring(0, note.length() - 1);  // "C", "C#", etc.
+        int octave = Integer.parseInt(note.substring(note.length() - 1));  // Last char is the octave
+        Note newNote = new Note(note, name, octave, duration); // New Note Object
+        notesList.add(newNote);
     }
     
     @FXML
     private void handlePlay() {
         
-        if (pattern.length() == 0) return;
+        if (notesList.isEmpty()) {
+            composer_label.setText("No notes to play.");
+            return;
+        }
 
         Player player = new Player();
-        player.play(pattern.toString().trim());
-        
+        StringBuilder musicString = new StringBuilder();
+
+        // Build the music string for jfugue
+        for (Note note : notesList) {
+            String noteName = note.getNoteName();
+            String duration = note.getDuration();
+            musicString.append(noteName).append(duration).append(" ");
+        }
+
+        player.play(musicString.toString().trim());
     }
+    
     @FXML
     private void handleClear() {
         pattern.setLength(0);
         patternDisplay.clear();
+        notesList.clear();
     }
 
     @FXML
