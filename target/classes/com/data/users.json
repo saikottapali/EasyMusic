@@ -18,8 +18,47 @@
       {
         "id": "32a09cc4-2942-499f-9d81-12078040ec2d",
         "title": "Happy Birthday"
+      },
+      {
+        "id": "b1010eb1-90c1-4a5d-b96d-3b4639e67e02",
+        "title": "Fur Elise"
+      },
+      {
+        "id": "399f2d82-0632-4328-9860-886b87913304",
+        "title": "Happy Birthday"
+      },
+      {
+        "id": "386878e7-be29-4bf1-92f4-155dd4df5f7a",
+        "title": "Happy Birthday"
+      },
+      {
+        "id": "64f2b0d2-99c4-497b-afd3-fcdf2897fecf",
+        "title": "Happy Birthday"
+      },
+      {
+        "id": "22c135ce-ce0f-4c9a-9671-8cc492739ce5",
+        "title": "Twinkle Twinkle Little Star"
       }
     ],
-    "isLoggedIn": true
+    "isLoggedIn": false
+  },
+  {
+    "id": "8968230f-8bc4-44af-ba8f-0e4c556acd56",
+    "username": "sawelch",
+    "password": "123pass",
+    "email": "sawelch@email.sc.edu",
+    "firstName": "Savanna",
+    "lastName": "Welch",
+    "composedSongs": [
+      {
+        "id": "35fd1d6a-76b7-4345-af34-195eee8bfc3c",
+        "title": "killer"
+      },
+      {
+        "id": "ce5172a8-f712-487e-83b0-e61461fa59d9",
+        "title": "peacemaker"
+      }
+    ],
+    "isLoggedIn": false
   }
 ]
